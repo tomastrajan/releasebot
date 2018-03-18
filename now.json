@@ -1,0 +1,15 @@
+{
+  "env": {
+    "DB_URL": "ds117469.mlab.com:17469/releasebot",
+    "DB_USER": "@DB_USER",
+    "DB_PASSWORD": "@DB_PASSWORD",
+    "GITHUB_URL": "https://api.github.com",
+    "GITHUB_TOKEN": "@GITHUB_TOKEN",
+    "TWITTER_URL": "https://api.twitter.com",
+    "TWITTER_VERSION": "/1.1",
+    "TWITTER_CONSUMER_KEY": "@TWITTER_CONSUMER_KEY",
+    "TWITTER_CONSUMER_SECRET": "@TWITTER_CONSUMER_SECRET",
+    "TWITTER_TOKEN": "@TWITTER_TOKEN",
+    "TWITTER_TOKEN_SECRET": "@TWITTER_TOKEN_SECRET"
+  }
+}
