@@ -56,7 +56,7 @@ const request = (type, url, body) => {
     const callback = (err, res) => {
       console.log(
         'Twitter API -',
-        err ? `ERROR ${err.statusCode} - ${err.data}` : `OK ${res.slice(0, 70)}...`
+        err ? `ERROR ${err.statusCode} - ${err.data}` : `OK ${res.slice(0, 80)}...`
       );
       err ? reject(err) : resolve(JSON.parse(res));
     };

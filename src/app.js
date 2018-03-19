@@ -1,55 +1,73 @@
 import 'now-env';
 import schedule from 'node-schedule';
-import http from 'http-debug';
+import yargs from 'yargs';
 
-import { init } from './persistence/db';
-import { findProjects, updateProjectVersions } from './persistence/project';
+import { initDb } from './persistence/db';
+import {
+  findProjects,
+  updateProjectVersions,
+  insertProject
+} from './persistence/project';
 import { getRepoVersions } from './api/github';
-import { getTimeline, getPlaceId, tweet, deleteAllTweets } from './api/twitter';
+import { resolveNewVersions, buildTweetStatus } from './release/release';
+import { deleteAllTweets, tweet } from './api/twitter';
 
-// http.https.debug = 1;
+// node . init Angular angular/angular changelog https://www.github.com... angular,typescript
+// node . delete-tweets
+const argv = yargs.argv._;
+const mode = argv.shift();
 
 (async () => {
   try {
-    console.log(await getPlaceId('San Francisco'));
-    // await deleteAllTweets();
-//     await tweet(`
-// 🚨🚨🚨NEW ANGULAR RELEASE🚨🚨🚨
-// ${Date.now()}
-//
-// #angular #release #releasebot #changelog
-// https://github.com/angular/angular/blob/master/CHANGELOG.md
-//     `);
-  } catch (err) {
-    console.log(err);
+    console.log('App - START');
+    await initDb();
+
+    if (mode === 'init') {
+      console.log('App - INIT MODE: ', ...argv);
+      const versions = await getRepoVersions(argv[1]);
+      if (versions.length > 0) {
+        await insertProject(...argv, versions);
+      } else {
+        console.log('App - INIT MODE - SKIP - no versions found');
+      }
+      console.log('App - INIT MODE - DONE');
+      process.exit(0);
+    }
+
+    if (mode === 'delete-tweets') {
+      console.log('App - DELETE TWEETS MODE');
+      await deleteAllTweets();
+      console.log('App - DELETE TWEETS MODE - DONE');
+      process.exit(0);
+    }
+
+    schedule.scheduleJob('*/30 * * * * *', async executionDate => {
+      try {
+        console.log('\nApp Scheduler - START -', executionDate);
+        const projects = await findProjects();
+        console.log(
+          'App Scheduler - PROJECTS:',
+          projects.map(p => p.name).join(', ')
+        );
+        for (let project of projects) {
+          const versions = await getRepoVersions(project.repo);
+          const newVersions = resolveNewVersions(project.versions, versions);
+          if (newVersions.length) {
+            console.log('App Scheduler - NEW VERSIONS:', newVersions);
+            for (let version of newVersions) {
+              await tweet(buildTweetStatus(project, version));
+            }
+            await updateProjectVersions(project, versions);
+          } else {
+            console.log('App Scheduler - SKIP:', project.name);
+          }
+        }
+        console.log('App Scheduler - DONE');
+      } catch (schedulerErr) {
+        console.error('\nApp Scheduler - ERROR\n', schedulerErr, '\n');
+      }
+    });
+  } catch (appErr) {
+    console.error('\nAPP - ERROR\n', appErr, '\n');
   }
-
-  // await init();
-  // const projects = await findProjects();
-  // console.log(
-  //   'Projects: ',
-  //   projects
-  //     .map(p => `${p.name} - ${p.versions.length} - ${p.versions[0]}`)
-  //     .join('\n')
-  // );
-
-  // schedule.scheduleJob('*/10 * * * * *', () =>
-  //   projects.forEach(async project => {
-  //     const versions = await getRepoVersions(project.repo);
-  //     console.log(versions.length, ' - ', versions.join(', '));
-  //     if (project.versions.length < versions.length) {
-  //       await updateProjectVersions(project.name, versions);
-  //     }
-  //   })
-  // );
-
-  // schedule.scheduleJob('*/10 * * * * *', async () => {
-  //   try {
-  //     console.log('TWEET');
-  //     console.log(await deleteAllTweets());
-  //     // console.log((await tweet('It works ' + Date.now())));
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // });
 })();
