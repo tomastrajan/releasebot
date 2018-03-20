@@ -1,5 +1,8 @@
 import oauth from 'oauth';
 import qp from 'query-params';
+import { getLogger } from 'log4js';
+
+const logger = getLogger('Twitter API');
 
 const {
   TWITTER_URL,
@@ -10,7 +13,6 @@ const {
   TWITTER_TOKEN_SECRET
 } = process.env;
 
-const user_id = '975234629299986432';
 const place_id = '5a110d312052166f';
 
 const client = new oauth.OAuth(
@@ -30,16 +32,10 @@ export const getPlaceId = async query => {
 
 export const tweet = status => post('/statuses/update', { status, place_id });
 
-export const deleteAllTweets = async () => {
-  const tweets = await getTimeline();
-  const destroyPromises = [];
-  tweets.forEach(tweet =>
-    destroyPromises.push(post(`/statuses/destroy/${tweet.id_str}`))
-  );
-  return Promise.all(destroyPromises);
-};
+export const deleteTweet = id => post(`/statuses/destroy/${id}`);
 
-export const getTimeline = () => get('/statuses/user_timeline', { user_id });
+export const getTweets = userId =>
+  get('/statuses/user_timeline', { user_id: userId });
 
 const get = (url, params) =>
   request(
@@ -51,14 +47,19 @@ const post = (url, body) =>
   request('post', `${TWITTER_URL}${TWITTER_VERSION}${url}.json`, body);
 
 const request = (type, url, body) => {
-  console.log('Twitter API -', type.toUpperCase(), url, body || '');
+  logger.debug(type.toUpperCase(), url, body || '');
   return new Promise((resolve, reject) => {
     const callback = (err, res) => {
-      console.log(
-        'Twitter API -',
-        err ? `ERROR ${err.statusCode} - ${err.data}` : `OK ${res.slice(0, 80)}...`
-      );
-      err ? reject(err) : resolve(JSON.parse(res));
+      if (err) {
+        logger.error(
+          err.statusCode ? err.statusCode : err,
+          err.data ? err.data : ''
+        );
+        return reject(err);
+      } else {
+        logger.debug(`${type.toUpperCase()} OK - ${res.slice(0, 60)} ...`);
+        return resolve(JSON.parse(res));
+      }
     };
     const args = [url, TWITTER_TOKEN, TWITTER_TOKEN_SECRET];
     if (type === 'post') {

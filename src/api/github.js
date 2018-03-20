@@ -1,4 +1,7 @@
 import fetch from 'node-fetch';
+import { getLogger } from 'log4js';
+
+const logger = getLogger('Github API');
 
 const { GITHUB_URL, GITHUB_TOKEN } = process.env;
 
@@ -10,17 +13,17 @@ export const getRepoVersions = async repo => {
 };
 
 const request = url => {
-  console.log('Github API -', 'GET', url);
+  logger.debug('GET', url);
   return fetch(`${GITHUB_URL}${url}`, {
     headers: { Authorization: `token ${GITHUB_TOKEN}` }
   })
     .then(res => res.json())
     .then(data => {
-      console.log(`Github API - OK ${JSON.stringify(data).slice(0, 80)}...`);
+      logger.debug(`OK ${JSON.stringify(data).slice(0, 60)} ...`);
       return data;
     })
     .catch(err => {
-      console.log(`Github API - ERROR ${err}`);
+      logger.error(err);
       return Promise.reject(err);
     });
 };

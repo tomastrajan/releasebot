@@ -28,3 +28,5 @@ export const insertProject = (name, repo, urlType, url, hashtags, versions) =>
     hashtags: hashtags.split(','),
     versions
   });
+
+export const removeProject = name => Project.remove({ name });

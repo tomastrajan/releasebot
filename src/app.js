@@ -1,73 +1,99 @@
 import 'now-env';
-import schedule from 'node-schedule';
 import yargs from 'yargs';
+import { configure } from 'log4js';
 
-import { initDb } from './persistence/db';
-import {
-  findProjects,
-  updateProjectVersions,
-  insertProject
-} from './persistence/project';
-import { getRepoVersions } from './api/github';
-import { resolveNewVersions, buildTweetStatus } from './release/release';
-import { deleteAllTweets, tweet } from './api/twitter';
+import { removeAllTweets } from './services/twitter';
+import { runReleaseWatcher } from './services/release';
+import { initProjectData, removeAllProjectData } from './services/project';
 
-// node . init Angular angular/angular changelog https://www.github.com... angular,typescript
-// node . delete-tweets
-const argv = yargs.argv._;
-const mode = argv.shift();
-
-(async () => {
-  try {
-    console.log('App - START');
-    await initDb();
-
-    if (mode === 'init') {
-      console.log('App - INIT MODE: ', ...argv);
-      const versions = await getRepoVersions(argv[1]);
-      if (versions.length > 0) {
-        await insertProject(...argv, versions);
-      } else {
-        console.log('App - INIT MODE - SKIP - no versions found');
-      }
-      console.log('App - INIT MODE - DONE');
-      process.exit(0);
+const configureLogger = debug =>
+  configure({
+    appenders: { out: { type: 'stdout' } },
+    categories: {
+      default: { appenders: ['out'], level: debug ? 'debug' : 'info' }
     }
+  });
 
-    if (mode === 'delete-tweets') {
-      console.log('App - DELETE TWEETS MODE');
-      await deleteAllTweets();
-      console.log('App - DELETE TWEETS MODE - DONE');
-      process.exit(0);
-    }
-
-    schedule.scheduleJob('*/30 * * * * *', async executionDate => {
-      try {
-        console.log('\nApp Scheduler - START -', executionDate);
-        const projects = await findProjects();
-        console.log(
-          'App Scheduler - PROJECTS:',
-          projects.map(p => p.name).join(', ')
-        );
-        for (let project of projects) {
-          const versions = await getRepoVersions(project.repo);
-          const newVersions = resolveNewVersions(project.versions, versions);
-          if (newVersions.length) {
-            console.log('App Scheduler - NEW VERSIONS:', newVersions);
-            for (let version of newVersions) {
-              await tweet(buildTweetStatus(project, version));
-            }
-            await updateProjectVersions(project, versions);
-          } else {
-            console.log('App Scheduler - SKIP:', project.name);
-          }
-        }
-        console.log('App Scheduler - DONE');
-      } catch (schedulerErr) {
-        console.error('\nApp Scheduler - ERROR\n', schedulerErr, '\n');
+const argv = yargs
+  .command(
+    'remove',
+    'Removes application data',
+    {
+      twitter: {
+        type: 'boolean',
+        description: 'Removes all tweets from user timeline'
+      },
+      database: {
+        type: 'boolean',
+        description: 'Removes all project data from database'
       }
-    });
-  } catch (appErr) {
-    console.error('\nAPP - ERROR\n', appErr, '\n');
-  }
-})();
+    },
+    async ({ twitter, database, debug }) => {
+      configureLogger(debug);
+      if (twitter) {
+        await removeAllTweets();
+      }
+      if (database) {
+        await removeAllProjectData();
+      }
+    }
+  )
+  .command(
+    'init',
+    'Adds project and initial versions to the database',
+    {
+      name: {
+        alias: 'n',
+        type: 'string',
+        description: 'Project name, eg: Angular',
+        demandOption: true
+      },
+      repo: {
+        alias: 'p',
+        type: 'string',
+        description: 'Project Github repo path, eg: angular/angular',
+        demandOption: true
+      },
+      url: {
+        alias: 'u',
+        type: 'string',
+        description: 'Project Github changelog url',
+        demandOption: true
+      },
+      urlType: {
+        alias: 'ut',
+        type: 'string',
+        description:
+          'Project Github changelog url type, eg: changelog or github',
+        demandOption: true
+      },
+      hashtags: {
+        alias: 'h',
+        type: 'string',
+        description: 'Comma separated list of hashtags',
+        demandOption: true
+      }
+    },
+    async ({ name, repo, urlType, url, hashtags, debug }) => {
+      configureLogger(debug);
+      await initProjectData(name, repo, urlType, url, hashtags);
+    }
+  )
+  .command(
+    ['start'],
+    'Run releasebot app, check for and tweet about new releases of projects',
+    {
+      schedule: {
+        alias: 's',
+        type: 'string',
+        description: 'Cron style schedule',
+        default: '0 * * * * *'
+      },
+    },
+    ({ debug, schedule }) => {
+      configureLogger(debug);
+      runReleaseWatcher(schedule)
+    }
+  )
+  .option('debug', { type: 'boolean', description: 'Set debug log level' })
+  .help().argv;
