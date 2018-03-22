@@ -2,17 +2,17 @@
   "alias": "releasebot",
 
   "env": {
-    "DB_URL": "@DB_URL",
-    "DB_USER": "@DB_USER",
-    "DB_PASSWORD": "@DB_PASSWORD",
+    "DB_URL": "@db_url",
+    "DB_USER": "@db_user",
+    "DB_PASSWORD": "@db_password",
     "GITHUB_URL": "https://api.github.com",
-    "GITHUB_TOKEN": "@GITHUB_TOKEN",
+    "GITHUB_TOKEN": "@github_token",
     "TWITTER_URL": "https://api.twitter.com",
     "TWITTER_VERSION": "/1.1",
-    "TWITTER_CONSUMER_KEY": "@TWITTER_CONSUMER_KEY",
-    "TWITTER_CONSUMER_SECRET": "@TWITTER_CONSUMER_SECRET",
-    "TWITTER_TOKEN": "@TWITTER_TOKEN",
-    "TWITTER_TOKEN_SECRET": "@TWITTER_TOKEN_SECRET",
-    "TWITTER_USER_ID": "@TWITTER_USER_ID"
+    "TWITTER_CONSUMER_KEY": "@twitter_consumer_key",
+    "TWITTER_CONSUMER_SECRET": "@twitter_consumer_secret",
+    "TWITTER_TOKEN": "@twitter_token",
+    "TWITTER_TOKEN_SECRET": "@twitter_token_secret",
+    "TWITTER_USER_ID": "@twitter_user_id"
   }
 }

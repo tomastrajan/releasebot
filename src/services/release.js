@@ -10,6 +10,7 @@ import { tweetNewRelease } from './twitter';
 const logger = getLogger('Release Service');
 
 export const runReleaseWatcher = cronSchedule => {
+  logger.info('Setup scheduler with schedule', cronSchedule);
   schedule.scheduleJob(cronSchedule, async executionDate => {
     try {
       await initDb();

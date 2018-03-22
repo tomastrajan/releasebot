@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js start",
+    "start": "node main.js start --debug",
     "dev": "node main.js start --schedule \"0 * * * * *\" --debug",
     "debug": "node --inspect main.js start --schedule \"0 * * * * *\" --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,7 @@
   "@std/esm": "cjs",
   "dependencies": {
     "@std/esm": "^0.25.3",
+    "express": "^4.16.3",
     "http-debug": "^0.1.2",
     "log4js": "^2.5.3",
     "mongoose": "^5.0.10",

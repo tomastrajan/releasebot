@@ -1,5 +1,6 @@
 import 'now-env';
 import yargs from 'yargs';
+import express from 'express';
 import { configure } from 'log4js';
 
 import { removeAllTweets } from './services/twitter';
@@ -97,3 +98,8 @@ const argv = yargs
   )
   .option('debug', { type: 'boolean', description: 'Set debug log level' })
   .help().argv;
+
+// zeit now stuff
+const app = express();
+app.get('/', (req, res) => res.send('It works!'));
+app.listen(3000);
