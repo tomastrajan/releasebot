@@ -30,12 +30,18 @@ export const getPlaceId = async query => {
   return places.result.places[0].id;
 };
 
+export const getTweets = userId =>
+  get('/statuses/user_timeline', { user_id: userId });
+
 export const tweet = status => post('/statuses/update', { status, place_id });
+
+export const tweetWithMedia = (status, mediaId) =>
+  post('/statuses/update', { status, place_id, media_ids: mediaId });
 
 export const deleteTweet = id => post(`/statuses/destroy/${id}`);
 
-export const getTweets = userId =>
-  get('/statuses/user_timeline', { user_id: userId });
+export const uploadMedia = media =>
+  upload(`/media/upload`, { media_data: media.toString('base64') });
 
 const get = (url, params) =>
   request(
@@ -46,8 +52,11 @@ const get = (url, params) =>
 const post = (url, body) =>
   request('post', `${TWITTER_URL}${TWITTER_VERSION}${url}.json`, body);
 
-const request = (type, url, body) => {
-  logger.debug(type.toUpperCase(), url, body || '');
+const upload = (url, body) =>
+  request('post', `${TWITTER_URL}${TWITTER_VERSION}${url}.json`, body, true);
+
+const request = (type, url, body, isUpload) => {
+  logger.debug(type.toUpperCase(), url, isUpload ? '' : body);
   return new Promise((resolve, reject) => {
     const callback = (err, res) => {
       if (err) {
@@ -64,6 +73,9 @@ const request = (type, url, body) => {
     const args = [url, TWITTER_TOKEN, TWITTER_TOKEN_SECRET];
     if (type === 'post') {
       args.push(body, 'application/x-www-form-urlencoded');
+    }
+    if (isUpload) {
+      args[0] = url.replace('api', 'upload');
     }
     args.push(callback);
     client[type](...args);

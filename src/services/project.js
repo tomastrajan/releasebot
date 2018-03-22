@@ -15,6 +15,7 @@ export const initProjectData = async (name, repo, urlType, url, hashtags) => {
     await initDb();
     logger.info('Init project data', name, repo, urlType, url, hashtags);
     const versions = await getRepoVersions(repo);
+    versions.shift(); // remove latest version to trigger first release
     if (versions.length) {
       await insertProject(name, repo, urlType, url, hashtags, versions);
     } else {

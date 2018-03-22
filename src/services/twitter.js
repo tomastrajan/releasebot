@@ -1,7 +1,12 @@
 import { getLogger } from 'log4js';
+import webshot from 'webshot';
 
-import { getTweets, deleteTweet, tweet } from '../api/twitter';
-import { getReleaseByTagName } from '../api/github';
+import {
+  getTweets,
+  tweetWithMedia,
+  deleteTweet,
+  uploadMedia
+} from '../api/twitter';
 
 const logger = getLogger('Twitter Service');
 
@@ -20,25 +25,79 @@ export const removeAllTweets = async () => {
 };
 
 export const tweetNewRelease = async (project, version) => {
-  logger.info('Posting new tweet for release:', project.name, version);
-  return tweet(buildTweetStatus(project, version))
+  try {
+    logger.info('Posting new tweet for release:', project.name, version);
+    const status = buildTweetStatus(project, version);
+    const isGithub = project.urlType === 'github';
+    const image = await getChangelogAsImageBuffer(
+      isGithub ? `${project.url}/tag/${version}` : project.url,
+      isGithub
+        ? { captureSelector: '.release-body' }
+        : {
+            // captureSelector: '.markdown-body',
+            shotOffset: {
+              left: 40,
+              right: 40,
+              top: 670,
+              bottom: 0
+            }
+          }
+    );
+    const { media_id_string: mediaId } = await uploadMedia(image);
+    await tweetWithMedia(status, mediaId);
+  } catch (err) {
+    logger.error(err);
+  }
 };
 
 const buildTweetStatus = (project, version) => {
   const { name, url, urlType, hashtags } = project;
-  const isPrerelease = version.includes('alpha') || version.includes('beta');
   const finalUrl = urlType === 'github' ? `${url}/tag/${version}` : url;
   return `
-🔥📦 New ${name} Release 🚀🔥
+🔥 New ${name} Release 🚀
   
 📦 ${version} 
-${isPrerelease ? '🚧 PRE-RELEASE 🚧' : ''}
+${RELEASE_TYPES[getReleaseType(version)]}
 
 ${hashtags.map(h => `#${h}`).join(' ')} #release #changelog
-${finalUrl}
+
+🔗 ${finalUrl}
 `;
 };
 
-const getRandomElement = array => array[getRandomInt(0, array.length - 1)];
-const getRandomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
+const getChangelogAsImageBuffer = (url, options) =>
+  new Promise((resolve, reject) => {
+    logger.info('Get changelog as image', url);
+    const stream = webshot(url, {
+      streamType: 'jpeg',
+      ...options
+    });
+    const receivedDataChunks = [];
+    stream.on('error', err => reject(err));
+    stream.on('data', data => receivedDataChunks.push(data));
+    stream.on('end', () => {
+      logger.info('Get changelog as image finished');
+      resolve(Buffer.concat(receivedDataChunks));
+    });
+  });
+
+const RELEASE_TYPES = {
+  alpha: '🚧 ALPHA PRE-RELEASE',
+  beta: '🚧 BETA PRE-RELEASE',
+  rc: '🏗 RELEASE CANDIDATE',
+  other: '🤷 OTHER RELEASE',
+  normal: ''
+};
+
+const getReleaseType = version =>
+  version.includes('alpha')
+    ? 'alpha'
+    : version.includes('beta')
+      ? 'beta'
+      : version.includes('rc')
+        ? 'rc'
+        : version.includes('-') ? 'other' : 'normal';
+
+/*
+  TODO scrape info: bugfix count, feature count, breaking changes count
+ */

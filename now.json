@@ -2,7 +2,7 @@
   "alias": "releasebot",
 
   "env": {
-    "DB_URL": "ds117469.mlab.com:17469/releasebot",
+    "DB_URL": "@DB_URL",
     "DB_USER": "@DB_USER",
     "DB_PASSWORD": "@DB_PASSWORD",
     "GITHUB_URL": "https://api.github.com",

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
+    "start": "node main.js start",
+    "dev": "node main.js start --schedule \"0 * * * * *\" --debug",
+    "debug": "node --inspect main.js start --schedule \"0 * * * * *\" --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "@std/esm": "cjs",
@@ -16,6 +19,7 @@
     "now-env": "^3.0.4",
     "oauth": "^0.9.15",
     "query-params": "0.0.1",
+    "webshot": "^0.18.0",
     "yargs": "^11.0.0"
   },
   "description": "",

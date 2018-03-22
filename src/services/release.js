@@ -17,14 +17,15 @@ export const runReleaseWatcher = cronSchedule => {
       const projects = await findProjects();
       logger.info('Projects:', projects.map(p => p.name).join(', '));
       for (let project of projects) {
-        const versions = await getRepoVersions(project.repo);
-        const newVersions = resolveNewVersions(project.versions, versions);
+        const currentVersions = await getRepoVersions(project.repo);
+        const oldVersions = project.versions;
+        const newVersions = resolveNewVersions(oldVersions, currentVersions);
         if (newVersions.length) {
           logger.info('New versions:', project.name, newVersions);
-          for (let version of newVersions) {
-            await tweetNewRelease(project, version);
+          for (let newVersion of newVersions) {
+            await tweetNewRelease(project, newVersion);
           }
-          await updateProjectVersions(project, versions);
+          await updateProjectVersions(project, currentVersions);
         } else {
           logger.info('No new versions:', project.name);
         }
@@ -38,11 +39,3 @@ export const runReleaseWatcher = cronSchedule => {
 
 const resolveNewVersions = (oldVersions, currentVersions) =>
   currentVersions.filter(version => !oldVersions.includes(version));
-
-/*
-  TODO
-
-  link to version if github changelog...
-  multiple templates, randomize
-
- */
