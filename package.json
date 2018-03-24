@@ -5,8 +5,7 @@
   "scripts": {
     "start": "node main.js start",
     "dev": "node main.js start --schedule \"0 * * * * *\"",
-    "debug": "node --inspect main.js start --schedule \"0 * * * * *\" --debug",
-    "deploy": "now && now alias && now scale relasebot.now.sh 1"
+    "debug": "node --inspect main.js start --schedule \"0 * * * * *\" --debug"
   },
   "@std/esm": "cjs",
   "dependencies": {
