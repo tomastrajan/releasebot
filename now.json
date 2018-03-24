@@ -6,6 +6,7 @@
     "DB_USER": "@db_user",
     "DB_PASSWORD": "@db_password",
     "GITHUB_URL": "https://api.github.com",
+    "GITHUB_CHANGELOG_URL": "https://github.com/",
     "GITHUB_TOKEN": "@github_token",
     "TWITTER_URL": "https://api.twitter.com",
     "TWITTER_VERSION": "/1.1",

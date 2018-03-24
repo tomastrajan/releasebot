@@ -12,14 +12,22 @@ import { getRepoVersions } from '../api/github';
 
 const logger = getLogger('Project Service');
 
-export const initProjectData = async (name, repo, urlType, url, hashtags) => {
+export const initProjectData = async (
+  name,
+  repo,
+  type,
+  hashtags,
+  skipLatestVersion
+) => {
   try {
     await initDb();
-    logger.info('Init project data', name, repo, urlType, url, hashtags);
+    logger.info('Init project data', name, repo, type, hashtags);
     const versions = await getRepoVersions(repo);
-    versions.shift(); // remove latest version to trigger first release
+    if (skipLatestVersion) {
+      versions.shift(); // remove latest version to trigger first release
+    }
     if (versions.length) {
-      await insertProject(name, repo, urlType, url, hashtags, versions);
+      await insertProject(name, repo, type, hashtags, versions);
     } else {
       logger.warn('No versions found');
     }

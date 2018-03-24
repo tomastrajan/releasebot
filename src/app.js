@@ -65,26 +65,26 @@ const argv = yargs
         description: 'Project Github repo path, eg: angular/angular',
         demandOption: true
       },
-      url: {
+      type: {
         type: 'string',
-        description: 'Project Github changelog url',
-        demandOption: true
-      },
-      urlType: {
-        type: 'string',
-        description:
-          'Project Github changelog url type, eg: changelog or github',
+        choices: ['changelog', 'github'],
+        description: 'Project changelog type',
         demandOption: true
       },
       hashtags: {
         type: 'string',
         description: 'Comma separated list of hashtags',
         demandOption: true
+      },
+      skip: {
+        type: 'boolean',
+        description: 'Skip latest version to trigger first release',
+        default: false
       }
     },
-    async ({ name, repo, urlType, url, hashtags, debug }) => {
+    async ({ name, repo, type, hashtags, debug }) => {
       configureLogger(debug);
-      await initProjectData(name, repo, urlType, url, hashtags);
+      await initProjectData(name, repo, type, hashtags);
     }
   )
   .command(
@@ -93,14 +93,8 @@ const argv = yargs
     {
       type: {
         type: 'string',
-        description: 'Release type',
-        default: 'changelog',
+        description: 'Project changelog type',
         choices: ['changelog', 'github'],
-        demandOption: true
-      },
-      url: {
-        type: 'string',
-        description: 'Changelog url ( eg: github releases or changelog file)',
         demandOption: true
       },
       repo: {
@@ -114,9 +108,9 @@ const argv = yargs
         demandOption: true
       }
     },
-    async ({ debug, repo, type, url, release }) => {
+    async ({ debug, repo, type, release }) => {
       configureLogger(debug);
-      const project = { repo, urlType: type, url };
+      const project = { repo, type };
       await getChangelogAsImage(project, release, true)
     }
   )

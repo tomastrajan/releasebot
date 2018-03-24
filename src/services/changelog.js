@@ -8,30 +8,35 @@ import {
   changelogReleaseStyles,
   githubReleaseStyles
 } from './changelog-styles';
+import { getChangelogFileUrl, getChangelogReleaseUrl } from './url';
 
 const logger = getLogger('Changelog Service');
 
 export const getChangelogAsImage = async (project, version, asFile) =>
-  await (project.urlType === 'github'
+  await (project.type === 'github'
     ? getChangelogFromGithubRelease(project, version, asFile)
     : getChangelogFromChangelogMd(project, version, asFile));
 
-const getChangelogFromChangelogMd = async (project, version, asFile) => {
-  const options = {
-    renderDelay: 1000,
-    customCSS: changelogReleaseStyles,
-    ...changelogReleaseOffsetOption
-  };
-  return getUrlAsImageBuffer(url, options, asFile);
-};
+const getChangelogFromChangelogMd = async (project, version, asFile) =>
+  getUrlAsImageBuffer(
+    getChangelogFileUrl(project.repo),
+    {
+      renderDelay: 1000,
+      customCSS: changelogReleaseStyles,
+      ...changelogReleaseOffsetOption
+    },
+    asFile
+  );
 
-const getChangelogFromGithubRelease = (project, version, asFile) => {
-  const options = {
-    captureSelector: '.release',
-    customCSS: githubReleaseStyles
-  };
-  return getUrlAsImageBuffer(`${project.url}/tag/${version}`, options, asFile);
-};
+const getChangelogFromGithubRelease = (project, version, asFile) =>
+  getUrlAsImageBuffer(
+    getChangelogReleaseUrl(project.repo, version),
+    {
+      captureSelector: '.release',
+      customCSS: githubReleaseStyles
+    },
+    asFile
+  );
 
 const getUrlAsImageBuffer = (url, options, asFile) =>
   new Promise((resolve, reject) => {

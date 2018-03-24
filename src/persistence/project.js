@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 const Project = mongoose.model('Project', {
   name: String,
   repo: String,
-  urlType: String,
-  url: String,
+  type: String,
   hashtags: [String],
   versions: [String]
 });
@@ -21,13 +20,12 @@ export const findProject = name => Project.findOne({ name }).exec();
 export const updateProjectVersions = (name, versions) =>
   Project.findOneAndUpdate({ name }, { versions });
 
-export const insertProject = (name, repo, urlType, url, hashtags, versions) =>
+export const insertProject = (name, repo, type, hashtags, versions) =>
   Project.create({
     name,
     repo,
-    urlType,
-    url,
-    hashtags: hashtags.split(','),
+    type,
+    hashtags: hashtags.split(',').map(h => h.trim()),
     versions
   });
 

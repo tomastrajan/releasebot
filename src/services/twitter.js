@@ -6,11 +6,13 @@ import {
   deleteTweet,
   uploadMedia
 } from '../api/twitter';
-import { getChangelogAsImage } from './changelog';
 
-const logger = getLogger('Twitter Service');
+import { getChangelogAsImage } from './changelog';
+import { getChangelogFileUrl, getChangelogReleaseUrl } from './url';
 
 const { TWITTER_USER_ID } = process.env;
+
+const logger = getLogger('Twitter Service');
 
 export const removeAllTweets = async () => {
   try {
@@ -36,8 +38,11 @@ export const tweetNewRelease = async (project, version) => {
 
 // TODO: scrape and show counts of bugfix, feature & breaking changes
 const buildTweetStatus = (project, version) => {
-  const { name, url, urlType, hashtags } = project;
-  const finalUrl = urlType === 'github' ? `${url}/tag/${version}` : url;
+  const { name, repo, type, hashtags } = project;
+  const url =
+    type === 'github'
+      ? getChangelogReleaseUrl(repo, version)
+      : getChangelogFileUrl(repo);
   return `
 🔥 New ${name} Release 🚀
   
@@ -46,7 +51,7 @@ ${RELEASE_TYPES[getReleaseType(version)]}
 
 ${hashtags.map(h => `#${h}`).join(' ')} #release #changelog
 
-🔗 ${finalUrl}
+🔗 ${url}
 `;
 };
 
@@ -55,7 +60,7 @@ const RELEASE_TYPES = {
   beta: '🚧 BETA PRE-RELEASE',
   rc: '🏗 RELEASE CANDIDATE',
   other: '🤷 OTHER RELEASE',
-  normal: ''
+  stable: '🏛 STABLE RELEASE 🎉🎉🎉'
 };
 
 const getReleaseType = version =>
@@ -65,4 +70,4 @@ const getReleaseType = version =>
       ? 'beta'
       : version.includes('rc')
         ? 'rc'
-        : version.includes('-') ? 'other' : 'normal';
+        : version.includes('-') ? 'other' : 'stable';
