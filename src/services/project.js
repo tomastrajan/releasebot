@@ -39,7 +39,7 @@ export const removeAllProjectData = async () => {
       logger.warn('Removing project data', name);
       await removeProject(name);
     }
-    logger.warn('Removed all project data', names.join(', '));
+    logger.warn('Removed data of all', names.length, 'projects');
   } catch (err) {
     logger.error('Remove all project data failed', err);
   }
