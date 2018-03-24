@@ -8,3 +8,4 @@ node . init --name "React" --repo "facebook/react" --urlType github --url https:
 node . init --name "Ember.js" --repo "emberjs/ember.js" --urlType github --url https://github.com/emberjs/ember.js/releases --hashtags ember,emberjs
 node . init --name "Create React App" --repo "facebook/create-react-app" --urlType github --url https://github.com/facebook/create-react-app/releases --hashtags cra,react,tooling
 node . init --name "Prettier" --repo "prettier/prettier" --urlType github --url https://github.com/prettier/prettier/releases --hashtags prettier,codestyle,tooling
+node . init --name "NPM" --repo "npm/npm" --urlType github --url https://github.com/npm/npm/releases --hashtags npm,node,packagemanager
