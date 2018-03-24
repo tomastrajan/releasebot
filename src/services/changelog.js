@@ -51,7 +51,7 @@ const getUrlAsImageBuffer = (url, options, asFile) =>
       return;
     }
     logger.info('Get url as image buffer', url, options);
-    const stream = webshot(url, { streamType: 'jpeg', ...options });
+    const stream = webshot(url, { streamType: 'png', ...options });
     const receivedDataChunks = [];
     stream.on('error', err => {
       logger.error('Get url as image buffer failed', err);
