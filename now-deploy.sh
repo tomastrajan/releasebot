@@ -1,2 +1,1 @@
-now rm $(now ls | egrep ".*now\.sh" -o)
-now alias && now scale relasebot.now.sh 1
+echo y | now rm $(now ls | egrep ".*now\.sh" -o) && now --public && now alias && now scale $(now ls | egrep ".*now\.sh" -o) 1
