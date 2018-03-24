@@ -3,6 +3,12 @@ import webshot from 'webshot';
 
 import { getCommitDate, getRepoTags } from '../api/github';
 
+import {
+  changelogReleaseOffsetOption,
+  changelogReleaseStyles,
+  githubReleaseStyles
+} from './changelog-styles';
+
 const logger = getLogger('Changelog Service');
 
 export const getChangelogAsImage = async (project, version, asFile) =>
@@ -11,59 +17,21 @@ export const getChangelogAsImage = async (project, version, asFile) =>
     : getChangelogFromChangelogMd(project, version, asFile));
 
 const getChangelogFromChangelogMd = async (project, version, asFile) => {
-  const { repo, url } = project;
-  const tags = await getRepoTags(repo);
-  const sha = tags.filter(t => t.name === version)[0].commit.sha;
-  const date = await getCommitDate(repo, sha);
-  const anchor = `${version.replace(/\./gi, '')}-${date.split('T')[0]}`;
-  return getUrlAsImageBuffer(
-    `${url}#${anchor}`,
-    {
-      renderDelay: 1000,
-      customCSS: '.markdown-body h1 { padding-top: 1000px }',
-      shotOffset: {
-        left: 40,
-        right: 40,
-        top: 1680,
-        bottom: 0
-      }
-    },
-    asFile
-  );
+  const options = {
+    renderDelay: 1000,
+    customCSS: changelogReleaseStyles,
+    ...changelogReleaseOffsetOption
+  };
+  return getUrlAsImageBuffer(url, options, asFile);
 };
 
-const getChangelogFromGithubRelease = (project, version, asFile) =>
-  getUrlAsImageBuffer(
-    `${project.url}/tag/${version}`,
-    {
-      captureSelector: '.release',
-      customCSS: `
-        .release-meta { display: none; } 
-        .release-body { 
-          width: 93% !important;
-          border: 0 !important; 
-          margin: 40px 30px; 
-          box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px; 
-          border-radius: 5px; 
-          background-color: #322931;
-          color: #e4eaeb;
-        }
-        .release-body li strong, .release-body h1 a {
-          color: #ffde24;
-        }
-        .release-body li a, .release-header p a {
-          color: #c4932d;
-        }
-        .release-body code {
-          background-color: #3c303b !important;
-        }
-        .release-body pre {
-          background-color: #3c303b !important;
-        }
-      `
-    },
-    asFile
-  );
+const getChangelogFromGithubRelease = (project, version, asFile) => {
+  const options = {
+    captureSelector: '.release',
+    customCSS: githubReleaseStyles
+  };
+  return getUrlAsImageBuffer(`${project.url}/tag/${version}`, options, asFile);
+};
 
 const getUrlAsImageBuffer = (url, options, asFile) =>
   new Promise((resolve, reject) => {
@@ -90,3 +58,10 @@ const getUrlAsImageBuffer = (url, options, asFile) =>
       resolve(Buffer.concat(receivedDataChunks));
     });
   });
+
+const resolveChangelogReleaseAnchorLink = async repo => {
+  const tags = await getRepoTags(repo);
+  const sha = tags.filter(t => t.name === version)[0].commit.sha;
+  const date = await getCommitDate(repo, sha);
+  return `${version.replace(/\./gi, '')}-${date.split('T')[0]}`;
+};
