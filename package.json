@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js start --debug",
+    "start": "node main.js start",
     "dev": "node main.js start --schedule \"0 * * * * *\"",
     "debug": "node --inspect main.js start --schedule \"0 * * * * *\" --debug",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "now && now alias && now scale relasebot.now.sh 1"
   },
   "@std/esm": "cjs",
   "dependencies": {
