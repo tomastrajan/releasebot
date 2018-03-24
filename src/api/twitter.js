@@ -40,8 +40,8 @@ export const tweetWithMedia = (status, mediaId) =>
 
 export const deleteTweet = id => post(`/statuses/destroy/${id}`);
 
-export const uploadMedia = media =>
-  upload(`/media/upload`, { media_data: media.toString('base64') });
+export const uploadMedia = dataBuffer =>
+  upload(`/media/upload`, { media_data: dataBuffer.toString('base64') });
 
 const get = (url, params) =>
   request(

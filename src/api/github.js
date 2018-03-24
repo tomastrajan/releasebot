@@ -5,12 +5,18 @@ const logger = getLogger('Github API');
 
 const { GITHUB_URL, GITHUB_TOKEN } = process.env;
 
-export const getRepoVersions = async repo => {
-  const tags = await request(`/repos/${repo}/tags?per_page=30`);
-  return tags
+export const getCommitDate = async (repo, sha) => {
+  const commit = await request(`/repos/${repo}/commits/${sha}`);
+  return commit.commit.committer.date;
+};
+
+export const getRepoVersions = async repo =>
+  (await getRepoTags(repo))
     .filter(tag => /^(v[0-9]|[0-9])/.test(tag.name))
     .map(tag => tag.name);
-};
+
+export const getRepoTags = async repo =>
+  await request(`/repos/${repo}/tags?per_page=30`);
 
 const request = url => {
   logger.debug('GET', url);

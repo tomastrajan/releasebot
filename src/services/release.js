@@ -26,7 +26,7 @@ export const runReleaseWatcher = cronSchedule => {
           for (let newVersion of newVersions) {
             await tweetNewRelease(project, newVersion);
           }
-          await updateProjectVersions(project, currentVersions);
+          await updateProjectVersions(project.name, currentVersions);
         } else {
           logger.info('No new versions:', project.name);
         }

@@ -1,9 +1,11 @@
 import { getLogger } from 'log4js';
 
 import {
+  findProject,
   findProjectNames,
   insertProject,
-  removeProject
+  removeProject,
+  updateProjectVersions
 } from '../persistence/project';
 import { initDb } from '../persistence/db';
 import { getRepoVersions } from '../api/github';
@@ -40,6 +42,20 @@ export const removeAllProjectData = async () => {
     logger.warn('Removed all project data', names.join(', '));
   } catch (err) {
     logger.error('Remove all project data failed', err);
+  }
+  process.exit(0);
+};
+
+export const removeProjectLastVersion = async projectName => {
+  try {
+    await initDb();
+    logger.warn('Remove project last version: ', projectName);
+    const project = await findProject(projectName);
+    const [removedVersion, ...versions] = project.versions;
+    await updateProjectVersions(projectName, versions);
+    logger.warn('Remove project last version: ', removedVersion);
+  } catch (err) {
+    logger.error('Remove project last versio failed', err);
   }
   process.exit(0);
 };

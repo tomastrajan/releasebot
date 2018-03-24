@@ -1,5 +1,4 @@
 import { getLogger } from 'log4js';
-import webshot from 'webshot';
 
 import {
   getTweets,
@@ -7,6 +6,7 @@ import {
   deleteTweet,
   uploadMedia
 } from '../api/twitter';
+import { getChangelogAsImage } from './changelog';
 
 const logger = getLogger('Twitter Service');
 
@@ -25,31 +25,16 @@ export const removeAllTweets = async () => {
 };
 
 export const tweetNewRelease = async (project, version) => {
-  try {
-    logger.info('Posting new tweet for release:', project.name, version);
-    const status = buildTweetStatus(project, version);
-    const isGithub = project.urlType === 'github';
-    const image = await getChangelogAsImageBuffer(
-      isGithub ? `${project.url}/tag/${version}` : project.url,
-      isGithub
-        ? { captureSelector: '.release-body' }
-        : {
-            // captureSelector: '.markdown-body',
-            shotOffset: {
-              left: 40,
-              right: 40,
-              top: 670,
-              bottom: 0
-            }
-          }
-    );
-    const { media_id_string: mediaId } = await uploadMedia(image);
-    await tweetWithMedia(status, mediaId);
-  } catch (err) {
-    logger.error(err);
-  }
+  logger.info('Preparing tweet for new release:', project.name, version);
+  const status = buildTweetStatus(project, version);
+  const imageBuffer = await getChangelogAsImage(project, version);
+  logger.info('Uploading changelog image for new release');
+  const { media_id_string } = await uploadMedia(imageBuffer);
+  logger.info('Posting tweet for a new release', project.name, version);
+  await tweetWithMedia(status, media_id_string);
 };
 
+// TODO: scrape and show counts of bugfix, feature & breaking changes
 const buildTweetStatus = (project, version) => {
   const { name, url, urlType, hashtags } = project;
   const finalUrl = urlType === 'github' ? `${url}/tag/${version}` : url;
@@ -64,22 +49,6 @@ ${hashtags.map(h => `#${h}`).join(' ')} #release #changelog
 🔗 ${finalUrl}
 `;
 };
-
-const getChangelogAsImageBuffer = (url, options) =>
-  new Promise((resolve, reject) => {
-    logger.info('Get changelog as image', url);
-    const stream = webshot(url, {
-      streamType: 'jpeg',
-      ...options
-    });
-    const receivedDataChunks = [];
-    stream.on('error', err => reject(err));
-    stream.on('data', data => receivedDataChunks.push(data));
-    stream.on('end', () => {
-      logger.info('Get changelog as image finished');
-      resolve(Buffer.concat(receivedDataChunks));
-    });
-  });
 
 const RELEASE_TYPES = {
   alpha: '🚧 ALPHA PRE-RELEASE',
@@ -97,7 +66,3 @@ const getReleaseType = version =>
       : version.includes('rc')
         ? 'rc'
         : version.includes('-') ? 'other' : 'normal';
-
-/*
-  TODO scrape info: bugfix count, feature count, breaking changes count
- */

@@ -5,7 +5,12 @@ import { configure } from 'log4js';
 
 import { removeAllTweets } from './services/twitter';
 import { runReleaseWatcher } from './services/release';
-import { initProjectData, removeAllProjectData } from './services/project';
+import {
+  initProjectData,
+  removeAllProjectData,
+  removeProjectLastVersion
+} from './services/project';
+import { getChangelogAsImage } from './services/changelog';
 
 const configureLogger = debug =>
   configure({
@@ -27,15 +32,22 @@ const argv = yargs
       database: {
         type: 'boolean',
         description: 'Removes all project data from database'
+      },
+      project: {
+        type: 'string',
+        description: 'Removes last version of a project'
       }
     },
-    async ({ twitter, database, debug }) => {
+    async ({ twitter, database, project, debug }) => {
       configureLogger(debug);
       if (twitter) {
         await removeAllTweets();
       }
       if (database) {
         await removeAllProjectData();
+      }
+      if (project) {
+        await removeProjectLastVersion(project);
       }
     }
   )
@@ -44,32 +56,27 @@ const argv = yargs
     'Adds project and initial versions to the database',
     {
       name: {
-        alias: 'n',
         type: 'string',
         description: 'Project name, eg: Angular',
         demandOption: true
       },
       repo: {
-        alias: 'p',
         type: 'string',
         description: 'Project Github repo path, eg: angular/angular',
         demandOption: true
       },
       url: {
-        alias: 'u',
         type: 'string',
         description: 'Project Github changelog url',
         demandOption: true
       },
       urlType: {
-        alias: 'ut',
         type: 'string',
         description:
           'Project Github changelog url type, eg: changelog or github',
         demandOption: true
       },
       hashtags: {
-        alias: 'h',
         type: 'string',
         description: 'Comma separated list of hashtags',
         demandOption: true
@@ -81,6 +88,39 @@ const argv = yargs
     }
   )
   .command(
+    ['changelog'],
+    'Retrieve release changelog as image',
+    {
+      type: {
+        type: 'string',
+        description: 'Release type',
+        default: 'changelog',
+        choices: ['changelog', 'github'],
+        demandOption: true
+      },
+      url: {
+        type: 'string',
+        description: 'Changelog url ( eg: github releases or changelog file)',
+        demandOption: true
+      },
+      repo: {
+        type: 'string',
+        description: 'Project Github repo path, eg: angular/angular',
+        demandOption: true
+      },
+      release: {
+        type: 'string',
+        description: 'Release version name (eg: 6.0.0-rc.0)',
+        demandOption: true
+      }
+    },
+    async ({ debug, repo, type, url, release }) => {
+      configureLogger(debug);
+      const project = { repo, urlType: type, url };
+      await getChangelogAsImage(project, release, true)
+    }
+  )
+  .command(
     ['start'],
     'Run releasebot app, check for and tweet about new releases of projects',
     {
@@ -89,11 +129,11 @@ const argv = yargs
         type: 'string',
         description: 'Cron style schedule',
         default: '*/30 * * * *'
-      },
+      }
     },
     ({ debug, schedule }) => {
       configureLogger(debug);
-      runReleaseWatcher(schedule)
+      runReleaseWatcher(schedule);
     }
   )
   .option('debug', { type: 'boolean', description: 'Set debug log level' })

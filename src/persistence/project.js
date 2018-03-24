@@ -16,8 +16,10 @@ export const findProjectNames = () =>
 
 export const findProjects = () => Project.find().exec();
 
-export const updateProjectVersions = (project, versions) =>
-  Project.findOneAndUpdate({ name: project.name }, { versions });
+export const findProject = name => Project.findOne({ name }).exec();
+
+export const updateProjectVersions = (name, versions) =>
+  Project.findOneAndUpdate({ name }, { versions });
 
 export const insertProject = (name, repo, urlType, url, hashtags, versions) =>
   Project.create({
