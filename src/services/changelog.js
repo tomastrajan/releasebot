@@ -54,6 +54,12 @@ const getChangelogFromGithubRelease = (project, version, asFile) =>
         .release-body li a, .release-header p a {
           color: #c4932d;
         }
+        .release-body code {
+          background-color: #3c303b !important;
+        }
+        .release-body pre {
+          background-color: #3c303b !important;
+        }
       `
     },
     asFile
