@@ -36,7 +36,25 @@ const getChangelogFromGithubRelease = (project, version, asFile) =>
   getUrlAsImageBuffer(
     `${project.url}/tag/${version}`,
     {
-      captureSelector: '.release-body'
+      captureSelector: '.release',
+      customCSS: `
+        .release-meta { display: none; } 
+        .release-body { 
+          width: 93% !important;
+          border: 0 !important; 
+          margin: 40px 30px; 
+          box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px; 
+          border-radius: 5px; 
+          background-color: #322931;
+          color: #e4eaeb;
+        }
+        .release-body li strong, .release-body h1 a {
+          color: #ffde24;
+        }
+        .release-body li a, .release-header p a {
+          color: #c4932d;
+        }
+      `
     },
     asFile
   );
@@ -54,10 +72,7 @@ const getUrlAsImageBuffer = (url, options, asFile) =>
       return;
     }
     logger.info('Get url as image buffer', url, options);
-    const stream = webshot(url, {
-      streamType: 'jpeg',
-      ...options
-    });
+    const stream = webshot(url, { streamType: 'jpeg', ...options });
     const receivedDataChunks = [];
     stream.on('error', err => {
       logger.error('Get url as image buffer failed', err);
