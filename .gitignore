@@ -1,4 +1,4 @@
 now-secrets.json
 node_modules/
 .idea/
-test.png
+changelog_*.png
