@@ -82,9 +82,9 @@ const argv = yargs
         default: false
       }
     },
-    async ({ name, repo, type, hashtags, debug }) => {
+    async ({ name, repo, type, hashtags, skip, debug }) => {
       configureLogger(debug);
-      await initProjectData(name, repo, type, hashtags);
+      await initProjectData(name, repo, type, hashtags, skip);
     }
   )
   .command(
