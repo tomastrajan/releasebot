@@ -16,7 +16,7 @@ export const runReleaseWatcher = cronSchedule => {
       await initDb();
       logger.info('Execution start', executionDate);
       const projects = await findProjects();
-      logger.info('Projects:', projects.map(p => p.name).join(', '));
+      logger.info('Projects:', projects.length);
       for (let project of projects) {
         const currentVersions = await getRepoVersions(project.repo);
         const oldVersions = project.versions;
@@ -31,7 +31,7 @@ export const runReleaseWatcher = cronSchedule => {
           logger.info('No new versions:', project.name);
         }
       }
-      logger.info('Execution end');
+      logger.info('Execution ends\n');
     } catch (err) {
       logger.error(err);
     }
