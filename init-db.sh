@@ -9,3 +9,4 @@ node . init --name "Ember.js" --repo "emberjs/ember.js" --type github --hashtags
 node . init --name "Create React App" --repo "facebook/create-react-app" --type github --hashtags cra,react,tooling
 node . init --name "Prettier" --repo "prettier/prettier" --type github --hashtags prettier,codestyle,tooling
 node . init --name "NPM" --repo "npm/npm" --type github --hashtags npm,node,packagemanager
+node . init --name "nest" --repo "nestjs/nest" --type github --hashtags nest,nestjs,nodejs-framework,typescript
