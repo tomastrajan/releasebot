@@ -7,12 +7,6 @@ body {
     flex-direction: column;
 }
 
-iframe {
-    border: 0;
-    width: 80%;
-    margin: -20px;
-}
-
 p {
     font-family: 'Roboto', sans-serif;
 }
@@ -41,7 +35,7 @@ h1, h2, h3, h4 {
 
 .description {
     font-size: 24px;
-    margin: 20px 0 20px 40px;
+    margin: 20px 10px 20px 40px;
 }
 
 .libraries {
@@ -63,25 +57,32 @@ h1, h2, h3, h4 {
 }
 
 .actions {
-    padding: 20px 0;
+    padding: 10px 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     font-family: 'Roboto', sans-serif;
 }
 
 .actions a, .actions button {
-    margin: 0 10px;
-    padding: 10px 20px;
+    margin: 10px;
+    padding: 10px 25px;
 }
 
 .signup {
     overflow: hidden;
-    height: 0px;
+    height: 0;
     transition: height 0.5s;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.signup iframe {
+    border: 0;
+    width: 80%;
+    margin: -20px;
 }
 
 .timeline {
@@ -108,8 +109,7 @@ h1, h2, h3, h4 {
     padding: 0 5px;
 }
 
-/* RESPONSIVE BREAKPOINTS 540px	720px 960px 1140px */
-@media (max-width: 720px) {
+@media (max-width: 767px) {
     .branding {
         text-align: center;
     }
