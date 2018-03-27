@@ -1,4 +1,6 @@
 {
+  "public": true,
+  "type": "docker",
   "alias": "releasebutler",
   "env": {
     "DB_URL": "@db_url",
