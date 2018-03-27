@@ -1,6 +1,5 @@
 {
-  "alias": "releasebot",
-
+  "alias": "releasebutler",
   "env": {
     "DB_URL": "@db_url",
     "DB_USER": "@db_user",

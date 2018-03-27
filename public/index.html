@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Release Butler - Releases of popular frontend libraries & frameworks</title>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-53234284-6"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-53234284-6');
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto:300" >
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="branding">
+                        <img class="logo" src="images/logo.png" alt="Release Butler" />
+                        <h1>Release Butler</h1>
+                    </div>
+                    <p class="description">Get notified about releases of popular frontend libraries & frameworks!</p>
+                    <div class="actions">
+                        <button type="button"
+                                class="btn btn-lg btn-outline-dark action-add-library"
+                                onclick="ga('send', 'event', 'button', 'click', 'add-library-request');">
+                            Add your library
+                        </button>
+                        <a role="button"
+                           class="btn btn-lg btn-danger"
+                           href="https://twitter.com/releasebutler"
+                           target="_blank"
+                           onclick="ga('send', 'event', 'button', 'click', 'twitter-profile');">
+                            Follow releases
+                        </a>
+                    </div>
+                    <div class="signup">
+                        <iframe src="https://upscri.be/1f0f56?as_embed"></iframe>
+                    </div>
+                    <div class="libraries">
+                        <img src="images/angular.png" alt="Angular">
+                        <img src="images/react.png" alt="React">
+                        <img src="images/vue.png" alt="Vue">
+                        <img src="images/rxjs.png" alt="RxJS">
+                        <img src="images/webpack.png" alt="Webpack">
+                        <img src="images/typescript.png" alt="Typescript">
+                        <img src="images/prettier.png" alt="Prettier">
+                        <p>and many more...</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="timeline">
+                        <a class="twitter-timeline"
+                           data-lang="en"
+                           data-height="500"
+                           data-theme="light"
+                           data-link-color="#c4932d"
+                           href="https://twitter.com/releasebutler?ref_src=twsrc%5Etfw">
+                            Tweets by Release Butler
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            © <span class="year"></span> - Release Butler by Tomas Trajan
+        </div>
+        <script src="app.js"></script>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </body>
+</html>

@@ -128,12 +128,12 @@ const argv = yargs
     ({ debug, schedule }) => {
       configureLogger(debug);
       runReleaseWatcher(schedule);
+
+      const app = express();
+      app.use(express.static('public'));
+      app.listen(3000);
     }
   )
   .option('debug', { type: 'boolean', description: 'Set debug log level' })
   .help().argv;
 
-// zeit now stuff
-const app = express();
-app.get('/', (req, res) => res.send('It works!'));
-app.listen(3000);

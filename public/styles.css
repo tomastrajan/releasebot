@@ -1,0 +1,121 @@
+body {
+    background: #a77d29;
+    background: linear-gradient(165deg, #ffde24 0%,#ffde24 60%,#c4932d 60%,#b2852c 100%);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+iframe {
+    border: 0;
+    width: 80%;
+    margin: -20px;
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    flex: 1;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Roboto Slab', serif;
+}
+
+.branding .logo {
+    height: 96px;
+    width: 96px;
+}
+
+.branding h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 30px;
+    white-space: nowrap;
+    position: relative;
+    top: 8px;
+    display: inline-block;
+}
+
+.description {
+    font-size: 24px;
+    margin: 20px 0 20px 40px;
+}
+
+.libraries {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.libraries img {
+    height: 48px;
+    width: 48px;
+    margin: 10px;
+}
+
+.libraries p {
+    margin: 10px;
+}
+
+.actions {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.actions a, .actions button {
+    margin: 0 10px;
+    padding: 10px 20px;
+}
+
+.signup {
+    overflow: hidden;
+    height: 0px;
+    transition: height 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timeline {
+    padding: 5% 0;
+}
+
+.timeline .twitter-timeline {
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.55) 0 20px 68px;
+}
+
+.footer {
+    padding: 20px 0;
+    background: #a77d29;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footer .year {
+    padding: 0 5px;
+}
+
+/* RESPONSIVE BREAKPOINTS 540px	720px 960px 1140px */
+@media (max-width: 720px) {
+    .branding {
+        text-align: center;
+    }
+
+    .description {
+        text-align: center;
+        margin: 20px 0;
+    }
+}
