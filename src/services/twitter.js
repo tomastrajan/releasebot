@@ -8,7 +8,11 @@ import {
 } from '../api/twitter';
 
 import { getChangelogAsImage } from './changelog';
-import { getChangelogFileUrl, getChangelogReleaseUrl } from './url';
+import {
+  getChangelogFileUrl,
+  getChangelogFileUrlHash,
+  getChangelogReleaseUrl
+} from './url';
 
 const { TWITTER_USER_ID } = process.env;
 
@@ -42,7 +46,7 @@ const buildTweetStatus = (project, version) => {
   const url =
     type === 'github'
       ? getChangelogReleaseUrl(repo, version)
-      : getChangelogFileUrl(repo);
+      : getChangelogFileUrl(repo) + getChangelogFileUrlHash(repo);
   return `
 🔥 New ${name} Release 🚀
   
