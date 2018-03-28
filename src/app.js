@@ -122,7 +122,7 @@ const argv = yargs
         alias: 's',
         type: 'string',
         description: 'Cron style schedule',
-        default: '*/30 * * * *'
+        default: '*/10 * * * *'
       }
     },
     ({ debug, schedule }) => {

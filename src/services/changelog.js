@@ -66,7 +66,9 @@ const getScreenShot = async (page, selector) => {
 };
 
 const getPage = async (url, styles) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
   await page.setViewport({ width: 1024, height: 768, deviceScaleFactor: 2 });
