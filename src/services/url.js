@@ -8,7 +8,7 @@ export const getChangelogReleaseUrl = (repo, version) =>
 export const getChangelogFileUrl = repo =>
   `${GITHUB_CHANGELOG_URL}/${repo}/blob/master/CHANGELOG.md`;
 
-export const getChangelogFileUrlHash = async repo => {
+export const getChangelogFileUrlHash = async (repo, version) => {
   const tags = await getRepoTags(repo);
   const sha = tags.filter(t => t.name === version)[0].commit.sha;
   const date = await getCommitDate(repo, sha);

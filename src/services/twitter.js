@@ -46,7 +46,7 @@ const buildTweetStatus = (project, version) => {
   const url =
     type === 'github'
       ? getChangelogReleaseUrl(repo, version)
-      : getChangelogFileUrl(repo) + getChangelogFileUrlHash(repo);
+      : getChangelogFileUrl(repo) + getChangelogFileUrlHash(repo, version);
   return `
 🔥 New ${name} Release 🚀
   
