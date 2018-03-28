@@ -32,7 +32,7 @@ export const removeAllTweets = async () => {
 
 export const tweetNewRelease = async (project, version) => {
   logger.info('Preparing tweet for new release:', project.name, version);
-  const status = buildTweetStatus(project, version);
+  const status = await buildTweetStatus(project, version);
   const imageBuffer = await getChangelogAsImage(project, version);
   logger.info('Uploading changelog image for new release');
   const { media_id_string } = await uploadMedia(imageBuffer);
@@ -40,13 +40,14 @@ export const tweetNewRelease = async (project, version) => {
   await tweetWithMedia(status, media_id_string);
 };
 
-// TODO: scrape and show counts of bugfix, feature & breaking changes
-const buildTweetStatus = (project, version) => {
+const buildTweetStatus = async (project, version) => {
   const { name, repo, type, hashtags } = project;
-  const url =
-    type === 'github'
-      ? getChangelogReleaseUrl(repo, version)
-      : getChangelogFileUrl(repo) + getChangelogFileUrlHash(repo, version);
+  const isGithub = type === 'github';
+  let url = getChangelogReleaseUrl(repo, version);
+  if (!isGithub) {
+    const urlHash = await getChangelogFileUrlHash(repo, version);
+    url = getChangelogFileUrl(repo) + urlHash;
+  }
   return `
 🔥 New ${name} Release 🚀
   
