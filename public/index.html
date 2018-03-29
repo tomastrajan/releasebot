@@ -106,7 +106,9 @@
                                        placeholder="eg: 5.2.1">
                             </div>
                             <div class="form-group col-md-6 col-lg-3">
-                                <button id="changelog-submit" class="btn btn-outline-warning">
+                                <button id="changelog-submit"
+                                        class="btn btn-outline-warning"
+                                        onclick="ga('send', 'event', 'button', 'click', 'changelog-download');">
                                     Download
                                 </button>
                                 <button id="changelog-spinner" disabled
