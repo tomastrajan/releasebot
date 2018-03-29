@@ -18,14 +18,15 @@ export const getChangelogStyles = selector => `
     background-color: ${COLOR_BACKGROUND} !important;
     color: ${COLOR_TEXT};
   }
-  ${selector} h1 a {
-    color: ${COLOR_TEXT_HIGHLIGHT_DARKER};
+  ${selector} h1 a,
+  ${selector} h2 a {
+    color: ${COLOR_TEXT_HIGHLIGHT_DARKER} !important;
   }
   ${selector} li strong, 
   ${selector} h2, 
   ${selector} h3, 
   ${selector} h4 {
-    color: ${COLOR_TEXT_HIGHLIGHT};
+    color: ${COLOR_TEXT_HIGHLIGHT} !important;
   }
   ${selector} li a, .release-header p a {
     color: ${COLOR_TEXT_LINK};

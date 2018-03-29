@@ -1,7 +1,7 @@
 import 'now-env';
 import yargs from 'yargs';
 import express from 'express';
-import { configure } from 'log4js';
+import { configure, getLogger } from 'log4js';
 
 import { removeAllTweets } from './services/twitter';
 import { runReleaseWatcher } from './services/release';
@@ -11,6 +11,9 @@ import {
   removeProjectLastVersion
 } from './services/project';
 import { getChangelogAsImage } from './services/changelog';
+import { getChangelogImage } from './handlers/changelog';
+
+const logger = getLogger('App');
 
 const configureLogger = debug =>
   configure({
@@ -111,7 +114,7 @@ const argv = yargs
     async ({ debug, repo, type, release }) => {
       configureLogger(debug);
       const project = { repo, type };
-      await getChangelogAsImage(project, release, true)
+      await getChangelogAsImage(project, release, true);
     }
   )
   .command(
@@ -131,9 +134,10 @@ const argv = yargs
 
       const app = express();
       app.use(express.static('public'));
+      app.get('/changelog', getChangelogImage);
       app.listen(8080);
+      logger.info('Server started, port:', 8080);
     }
   )
   .option('debug', { type: 'boolean', description: 'Set debug log level' })
   .help().argv;
-

@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node main.js start",
     "dev": "node main.js start --schedule \"0 * * * * *\"",
+    "dev:server": "node main.js start --schedule \"* * * 31 2 *\"",
     "debug": "node --inspect main.js start --schedule \"0 * * * * *\" --debug"
   },
   "@std/esm": "cjs",

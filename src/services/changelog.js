@@ -27,6 +27,7 @@ export const getChangelogAsImage = async (project, version, asFile) => {
     return asFile ? saveToFileAndExit(screenShot, repo) : screenShot;
   } catch (err) {
     logger.error('Get changelog from github release failed', err);
+    throw err;
   }
 };
 
