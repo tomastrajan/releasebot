@@ -34,6 +34,7 @@ export const getChangelogAsImage = async (project, version, asFile) => {
 const removeIrrelevantVersions = async (page, selector, version) =>
   page.evaluate(
     (selector, version) => {
+      version = version[0] === 'v' ? version.slice(1) : version;
       const isVersionNode = node =>
         ['h1', 'h2', 'h3'].includes(node.nodeName.toLowerCase()) &&
         /v?\d\.\d\.\d.*/.test(node.innerText);
