@@ -9,15 +9,9 @@ const $changelogFormType = document.querySelector('#changelog-type');
 const $changelogFormRepo = document.querySelector('#changelog-repo');
 const $changelogFormVersion = document.querySelector('#changelog-version');
 
-$changelogFormSpinner.style.display = 'none';
-$changelogFormFeedback.style.display = 'none';
-
 $footerYear.innerText = new Date().getFullYear();
 
-$actionAddLibrary.addEventListener(
-  'click',
-  () => ($signup.style.height = 'auto')
-);
+$actionAddLibrary.addEventListener('click', () => ($signup.style.height = 'auto'));
 
 $changelogFormSubmit.addEventListener('click', event => {
   event.preventDefault();
