@@ -28,7 +28,9 @@ export const getChangelogStyles = selector => `
   ${selector} h4 {
     color: ${COLOR_TEXT_HIGHLIGHT} !important;
   }
-  ${selector} li a, .release-header p a {
+  ${selector} li a, 
+  ${selector} p a,
+  .release-header p a { 
     color: ${COLOR_TEXT_LINK};
   }
   ${selector} code {

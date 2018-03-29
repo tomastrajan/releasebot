@@ -34,17 +34,17 @@ export const getChangelogAsImage = async (project, version, asFile) => {
 const removeIrrelevantVersions = async (page, selector, version) =>
   page.evaluate(
     (selector, version) => {
-      version = version[0] === 'v' ? version.slice(1) : version;
+      const finalVersion = version[0] === 'v' ? version.slice(1) : version;
       const isVersionNode = node =>
-        ['h1', 'h2', 'h3'].includes(node.nodeName.toLowerCase()) &&
-        /v?\d\.\d\.\d.*/.test(node.innerText);
+        ['h1', 'h2', 'h3', 'h4'].includes(node.nodeName.toLowerCase()) &&
+        /v?\d+\.\d+\.\d+.*/.test(node.innerText);
       let isIrrelevantNode = true;
       Array.from(document.querySelector(selector).childNodes)
         .filter(node => {
           if (!isIrrelevantNode && isVersionNode(node)) {
             isIrrelevantNode = true;
           }
-          if (isVersionNode(node) && node.innerText.includes(version)) {
+          if (isVersionNode(node) && node.innerText.includes(finalVersion)) {
             isIrrelevantNode = false;
           }
           return isIrrelevantNode;
