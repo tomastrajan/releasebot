@@ -10,3 +10,5 @@ node . init --name "Create React App" --repo "facebook/create-react-app" --type 
 node . init --name "Prettier" --repo "prettier/prettier" --type github --hashtags prettier,codestyle,tooling
 node . init --name "NPM" --repo "npm/npm" --type github --hashtags npm,node,packagemanager
 node . init --name "nest" --repo "nestjs/nest" --type github --hashtags nest,nestjs,nodejs-framework,typescript
+node . init --name "Next.js" --repo "zeit/next.js" --type github --hashtags nextjs,react,node,universal,ssr
+node . init --name "Svetle" --repo "sveltejs/svelte" --type changelog --hashtags svetlejs,svetle,javascript,compiler
