@@ -74,6 +74,7 @@ const getPage = async (url, styles) => {
   await page.goto(url, { waitUntil: 'networkidle2' });
   await page.setViewport({ width: 1024, height: 768, deviceScaleFactor: 2 });
   await page.addStyleTag({ content: styles });
+  page.setDefaultNavigationTimeout(60);
   page.on('console', msg => logger.debug(msg.text()));
   return page;
 };
