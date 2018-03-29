@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffde24">
+        <meta name="theme-color" content="#c4932d">
 
         <title>Release Butler - Releases of popular frontend libraries & frameworks</title>
 
@@ -20,9 +20,9 @@
 
         <link rel="icon" type="image/png" href="http://releasebutler.now.sh/images/logo.png" />
 
-        <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto:300" >
+        <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
     <body>
         <div class="container">
@@ -74,11 +74,59 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col changelog">
+                    <h2>Get and share beautiful changelog</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-1 d-none d-lg-block"></div>
+                <div class="col-md-12 col-lg-10 changelog-form">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-lg-3">
+                                <label for="changelog-type">Changelog type</label>
+                                <select id="changelog-type" class="form-control">
+                                    <option value="changelog" selected>Changelog.md file</option>
+                                    <option value="github">Github releases</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 col-lg-3">
+                                <label for="changelog-repo">GitHub Repository</label>
+                                <input type="text" class="form-control"
+                                       id="changelog-repo"
+                                       value="angular/angular"
+                                       placeholder="eg: angular/angular">
+                            </div>
+                            <div class="form-group col-md-6 col-lg-3">
+                                <label for="changelog-version">Version</label>
+                                <input type="text" class="form-control"
+                                       id="changelog-version"
+                                       value="5.2.1"
+                                       placeholder="eg: 5.2.1">
+                            </div>
+                            <div class="form-group col-md-6 col-lg-3">
+                                <button id="changelog-submit" class="btn btn-outline-warning">
+                                    Download
+                                </button>
+                                <button id="changelog-spinner" disabled
+                                        class="btn btn-outline-warning">
+                                    <i class="fas fa-cog fa-spin"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="changelog-feedback" class="alert alert-danger" role="alert">
+                        Something went wrong, please check if you used correct values...
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="footer">
             © <span class="year"></span> - Release Butler by Tomas Trajan
         </div>
         <script src="app.js"></script>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"></script>
     </body>
 </html>

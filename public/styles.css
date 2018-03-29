@@ -5,9 +5,6 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-p {
     font-family: 'Roboto', sans-serif;
 }
 
@@ -17,6 +14,7 @@ p {
 
 h1, h2, h3, h4 {
     font-family: 'Roboto Slab', serif;
+    margin: 0;
 }
 
 .branding .logo {
@@ -25,7 +23,6 @@ h1, h2, h3, h4 {
 }
 
 .branding h1 {
-    font-family: 'Roboto Slab', serif;
     font-size: 30px;
     white-space: nowrap;
     position: relative;
@@ -62,7 +59,6 @@ h1, h2, h3, h4 {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    font-family: 'Roboto', sans-serif;
 }
 
 .actions a, .actions button {
@@ -94,6 +90,32 @@ h1, h2, h3, h4 {
     box-shadow: rgba(0, 0, 0, 0.55) 0 20px 68px;
 }
 
+.changelog h2 {
+    padding: 40px 0 20px 0;
+    text-align: center;
+}
+
+.changelog-form {
+    padding: 40px;
+    background-color: #473D47;
+    box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px;
+    border-radius: 5px  !important;
+    margin: 0 0 60px 0;
+}
+
+.changelog-form label {
+    color: #c4932d;
+}
+
+.changelog-form button {
+    margin: 32px 0 0 0;
+    width: 100%;
+}
+
+.changelog-form .alert {
+    margin: 30px 0 0 0;
+}
+
 .footer {
     padding: 20px 0;
     background: #a77d29;
@@ -102,7 +124,6 @@ h1, h2, h3, h4 {
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
 }
 
 .footer .year {
@@ -118,4 +139,13 @@ h1, h2, h3, h4 {
         text-align: center;
         margin: 20px 0;
     }
+}
+
+/* Bootstrap override */
+.form-control {
+    border-color: #333;
+}
+.form-control:focus {
+    border-color: #ffde24;
+    box-shadow: 0 0 0 0.2rem rgba(255, 222, 36, 0.25);
 }
