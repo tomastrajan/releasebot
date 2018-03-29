@@ -8,6 +8,8 @@ import { getChangelogFileUrl, getChangelogReleaseUrl } from './url';
 const logger = getLogger('Changelog Service');
 
 export const getChangelogAsImage = async (project, version, asFile) => {
+  let browser;
+  let page;
   try {
     const { type, repo } = project;
     logger.info('Get changelog as image for:', type, repo, version);
@@ -16,7 +18,10 @@ export const getChangelogAsImage = async (project, version, asFile) => {
       ? getChangelogReleaseUrl(repo, version)
       : getChangelogFileUrl(repo, version);
     const selector = isGithub ? '.release-body' : '.markdown-body';
-    const page = await getPage(url, getChangelogStyles(selector));
+    browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    page = await getPage(browser, url, getChangelogStyles(selector));
     if (!isGithub) {
       logger.info('Get changelog as image remove other versions');
       await removeIrrelevantVersions(page, selector, version);
@@ -28,6 +33,10 @@ export const getChangelogAsImage = async (project, version, asFile) => {
   } catch (err) {
     logger.error('Get changelog from github release failed', err);
     throw err;
+  } finally {
+    page.removeListener('console', puppeteerLogger);
+    await page.close();
+    await browser.close();
   }
 };
 
@@ -67,16 +76,13 @@ const getScreenShot = async (page, selector) => {
   });
 };
 
-const getPage = async (url, styles) => {
-  const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+const getPage = async (browser, url, styles) => {
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
   await page.setViewport({ width: 1024, height: 768, deviceScaleFactor: 2 });
   await page.addStyleTag({ content: styles });
   page.setDefaultNavigationTimeout(60);
-  page.on('console', msg => logger.debug(msg.text()));
+  page.on('console', puppeteerLogger);
   return page;
 };
 
@@ -90,3 +96,7 @@ const saveToFileAndExit = (screenShot, repo) => {
     process.exit(0);
   });
 };
+
+function puppeteerLogger(msg) {
+  logger.debug(msg.text());
+}
