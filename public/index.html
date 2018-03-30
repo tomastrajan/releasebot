@@ -29,15 +29,10 @@
                 <div class="col-md-6">
                     <div class="branding">
                         <img class="logo" src="/images/logo.png" alt="Release Butler" />
-                        <h1>Release Butler</h1>
+                        <h1>Release Butler <span class="badge badge-danger">BETA</span></h1>
                     </div>
-                    <p class="description">Get notified about releases of popular frontend libraries & frameworks!</p>
+                    <p class="description">A Twitter bot that helps you stay up to date with releases of popular frontend frameworks & libraries!</p>
                     <div class="actions">
-                        <button type="button"
-                                class="btn btn-lg btn-outline-dark action-add-library"
-                                onclick="analytics('request-add-library-feature');">
-                            Add your library
-                        </button>
                         <a role="button"
                            class="btn btn-lg btn-danger"
                            href="https://twitter.com/releasebutler"
@@ -45,6 +40,11 @@
                            onclick="analytics('open-twitter-profile');">
                             Follow releases
                         </a>
+                        <button type="button"
+                                class="btn btn-lg btn-outline-dark action-add-library"
+                                onclick="analytics('request-add-library-feature');">
+                            Add your library
+                        </button>
                     </div>
                     <div class="signup">
                         <iframe src="https://upscri.be/1f0f56?as_embed"></iframe>
@@ -77,7 +77,7 @@
             </div>
             <div class="row">
                 <div class="col changelog">
-                    <h2>Get and share beautiful changelog</h2>
+                    <h2>Get and share beautiful changelogs</h2>
                 </div>
             </div>
             <div class="row">
@@ -88,7 +88,7 @@
                             <div class="form-group col-md-6 col-lg-3">
                                 <label for="changelog-type">Changelog type</label>
                                 <select id="changelog-type" class="form-control">
-                                    <option value="changelog" selected>Changelog.md file</option>
+                                    <option value="changelog" selected>Changelog.md</option>
                                     <option value="github">Github releases</option>
                                 </select>
                             </div>
@@ -109,18 +109,28 @@
                             <div class="form-group col-md-6 col-lg-3">
                                 <button id="changelog-submit"
                                         class="btn btn-outline-warning">
-                                    Download
+                                    Get changelog
                                 </button>
                                 <button id="changelog-spinner" disabled
                                         class="btn btn-outline-warning">
                                     <i class="fas fa-cog fa-spin"></i>
                                 </button>
                             </div>
+                            <a role="button"
+                               id="changelog-download"
+                               class="btn btn-lg btn-danger">
+                                <i class="fas fa-download"></i> Download changelog
+                            </a>
                         </div>
                         <div id="changelog-feedback" class="alert alert-danger" role="alert">
                             Something went wrong, please check if you used correct values...
                         </div>
                     </form>
+                </div>
+            </div><div class="row">
+                <div class="col-lg-1 d-none d-lg-block"></div>
+                <div class="col-md-12 col-lg-10">
+                    <img id="changelog-image" alt="changelog">
                 </div>
             </div>
         </div>

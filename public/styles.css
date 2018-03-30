@@ -30,6 +30,14 @@ h1, h2, h3, h4 {
     display: inline-block;
 }
 
+.branding h1 span {
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    top: -15px;
+    left: -5px;
+    font-size: 12px;
+}
+
 .description {
     font-size: 24px;
     margin: 20px 10px 20px 40px;
@@ -96,9 +104,10 @@ h1, h2, h3, h4 {
 }
 
 .changelog-form {
+    position: relative;
     padding: 40px;
     background-color: #473D47;
-    box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px;
+    box-shadow: rgba(0, 0, 0, 0.55) 0 20px 68px;
     border-radius: 5px  !important;
     margin: 0 0 60px 0;
 }
@@ -112,6 +121,8 @@ h1, h2, h3, h4 {
     width: 100%;
 }
 
+#changelog-download,
+#changelog-image,
 .changelog-form #changelog-spinner,
 .changelog-form #changelog-feedback {
     display: none;
@@ -119,6 +130,22 @@ h1, h2, h3, h4 {
 
 .changelog-form .alert {
     margin: 30px 0 0 0;
+}
+
+#changelog-image {
+    width: 100%;
+}
+
+#changelog-download {
+    position: absolute;
+    left: 50%;
+    bottom: -70px;
+    margin-left: -110px;
+    box-shadow: rgba(0, 0, 0, 0.40) 0 0 40px;
+}
+
+#changelog-download .svg-inline--fa {
+    margin: 0 8px 0 0;
 }
 
 .footer {

@@ -8,6 +8,10 @@ const $changelogFormSpinner = document.querySelector('#changelog-spinner');
 const $changelogFormType = document.querySelector('#changelog-type');
 const $changelogFormRepo = document.querySelector('#changelog-repo');
 const $changelogFormVersion = document.querySelector('#changelog-version');
+const $changelogImage = document.querySelector('#changelog-image');
+const $changelogDownload = document.querySelector('#changelog-download');
+
+let changelogBlobUrl;
 
 $footerYear.innerText = new Date().getFullYear();
 
@@ -33,7 +37,7 @@ $changelogFormSubmit.addEventListener('click', event => {
       .then(response => response.blob())
       .then(blob => {
         downloadEnd();
-        downloadBlob(blob, filename);
+        displayBlob(blob, filename);
       })
       .catch(err => {
         downloadEnd(err);
@@ -44,8 +48,11 @@ $changelogFormSubmit.addEventListener('click', event => {
 });
 
 function downloadStart() {
+  $changelogImage.style.display = 'none';
+  $changelogDownload.style.display = 'none';
   $changelogFormSubmit.style.display = 'none';
   $changelogFormSpinner.style.display = 'block';
+  window.URL.revokeObjectURL(changelogBlobUrl);
 }
 
 function downloadEnd(err) {
@@ -59,23 +66,23 @@ function downloadEnd(err) {
   }
 }
 
-function downloadBlob(blob, filename) {
-  const newBlob = new Blob([blob], { type: 'image/png' });
+function displayBlob(blob, filename) {
+  const imageBlob = new Blob([blob], { type: 'image/png' });
   if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(newBlob);
+    window.navigator.msSaveOrOpenBlob(imageBlob);
     return;
   }
-  const data = window.URL.createObjectURL(newBlob);
-  const link = document.createElement('a');
-  link.href = data;
-  link.download = filename;
-  link.style.display = 'none';
-  document.body.appendChild(link);
-  link.click();
-  setTimeout(() => {
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(data);
-  }, 100);
+  changelogBlobUrl = window.URL.createObjectURL(imageBlob);
+  $changelogDownload.href = changelogBlobUrl;
+  $changelogDownload.download = filename;
+  $changelogDownload.style.display = 'inline-block';
+  $changelogImage.src = changelogBlobUrl;
+  $changelogImage.style.display = 'block';
+  setTimeout(
+    () =>
+      $changelogDownload.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+    100
+  );
 }
 
 function fetchStatusHandler(response) {
