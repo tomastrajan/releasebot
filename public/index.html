@@ -1,13 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#c4932d">
-
-        <title>Release Butler - Releases of popular frontend libraries & frameworks</title>
-
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-53234284-6"></script>
         <script>
@@ -17,6 +10,11 @@
 
           gtag('config', 'UA-53234284-6');
         </script>
+
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#c4932d">
 
         <link rel="icon" type="image/png" href="/images/logo.png" />
 
@@ -36,14 +34,14 @@
                     <div class="actions">
                         <button type="button"
                                 class="btn btn-lg btn-outline-dark action-add-library"
-                                onclick="ga('send', 'event', 'button', 'click', 'add-library-request');">
+                                onclick="analytics('request-add-library-feature');">
                             Add your library
                         </button>
                         <a role="button"
                            class="btn btn-lg btn-danger"
                            href="https://twitter.com/releasebutler"
                            target="_blank"
-                           onclick="ga('send', 'event', 'button', 'click', 'twitter-profile');">
+                           onclick="analytics('open-twitter-profile');">
                             Follow releases
                         </a>
                     </div>
@@ -107,8 +105,7 @@
                             </div>
                             <div class="form-group col-md-6 col-lg-3">
                                 <button id="changelog-submit"
-                                        class="btn btn-outline-warning"
-                                        onclick="ga('send', 'event', 'button', 'click', 'changelog-download');">
+                                        class="btn btn-outline-warning">
                                     Download
                                 </button>
                                 <button id="changelog-spinner" disabled

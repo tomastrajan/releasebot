@@ -11,7 +11,10 @@ const $changelogFormVersion = document.querySelector('#changelog-version');
 
 $footerYear.innerText = new Date().getFullYear();
 
-$actionAddLibrary.addEventListener('click', () => ($signup.style.height = 'auto'));
+$actionAddLibrary.addEventListener(
+  'click',
+  () => ($signup.style.height = 'auto')
+);
 
 $changelogFormSubmit.addEventListener('click', event => {
   event.preventDefault();
@@ -22,6 +25,7 @@ $changelogFormSubmit.addEventListener('click', event => {
   const filename = `changelog-${repo}-${version}.png`;
   const params = `type=${type}&repo=${e(repo)}&version=${e(version)}`;
   if (!!type && !!repo && !!version) {
+    analytics('download-changelog', repo, version);
     console.log('Download changelog', type, repo, version);
     downloadStart();
     fetch(`/changelog?${params}`)
@@ -69,7 +73,7 @@ function downloadBlob(blob, filename) {
   link.click();
   setTimeout(() => {
     document.body.removeChild(link);
-    window.URL.revokeObjectURL(data)
+    window.URL.revokeObjectURL(data);
   }, 100);
 }
 
@@ -79,4 +83,12 @@ function fetchStatusHandler(response) {
   } else {
     throw new Error(response);
   }
+}
+
+function analytics(action, label, value) {
+  gtag('event', action, {
+    event_category: 'engagement',
+    event_label: label,
+    value
+  });
 }
