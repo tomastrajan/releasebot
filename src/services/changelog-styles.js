@@ -1,6 +1,7 @@
 const COLOR_BACKGROUND = '#473D47';
 const COLOR_BACKGROUND_CODE = '#685768';
 const COLOR_TEXT = '#e4eaeb';
+const COLOR_MUTED = '#927a92';
 const COLOR_TEXT_LINK = '#ffde24';
 const COLOR_TEXT_HIGHLIGHT = '#ffffff';
 const COLOR_TEXT_HIGHLIGHT_DARKER = '#c4932d';
@@ -36,6 +37,9 @@ export const getChangelogStyles = selector => `
   ${selector} p a,
   .release-header p a { 
     color: ${COLOR_TEXT_LINK};
+  }
+  ${selector} .text-gray { 
+    color: ${COLOR_MUTED} !important;
   }
   ${selector} code {
     background-color: ${COLOR_BACKGROUND_CODE} !important;
