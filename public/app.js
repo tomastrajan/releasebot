@@ -37,6 +37,7 @@ $changelogFormSubmit.addEventListener('click', event => {
       })
       .catch(err => {
         downloadEnd(err);
+        analytics('download-changelog', 'error');
         console.error('Download changelog', JSON.stringify(err));
       });
   }
