@@ -12,3 +12,5 @@ node . init --name "NPM" --repo "npm/npm" --type github --hashtags npm,node,pack
 node . init --name "nest" --repo "nestjs/nest" --type github --hashtags nest,nestjs,nodejs-framework,typescript
 node . init --name "Next.js" --repo "zeit/next.js" --type github --hashtags nextjs,react,node,universal,ssr
 node . init --name "Svetle" --repo "sveltejs/svelte" --type changelog --hashtags svetlejs,svetle,javascript,compiler
+node . init --name "Redux" --repo "reactjs/redux" --type github --hashtags redux,react,reactjs,flow
+node . init --name "MobX" --repo "mobxjs/mobx" --type changelog --hashtags mobx,reactive,javascript,statemanagement
