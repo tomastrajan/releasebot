@@ -46,6 +46,16 @@ const removeIrrelevantVersions = async (page, selector, version) =>
   page.evaluate(
     (selector, version) => {
       const finalVersion = version[0] === 'v' ? version.slice(1) : version;
+      const isMatchingVersion = (node, version) => {
+        const nodeVersion = node.innerText;
+        const isPreReleaseVersion = /v?\d+\.\d+\.\d+-.*/.test(version);
+        const isPreReleaseNodeVersion = /v?\d+\.\d+\.\d+-.*/.test(nodeVersion);
+        if (isPreReleaseVersion) {
+          return nodeVersion.includes(version);
+        } else {
+          return nodeVersion.includes(version) && !isPreReleaseNodeVersion;
+        }
+      };
       const isVersionNode = node =>
         ['h1', 'h2', 'h3', 'h4'].includes(node.nodeName.toLowerCase()) &&
         /v?\d+\.\d+\.\d+.*/.test(node.innerText);
@@ -55,7 +65,7 @@ const removeIrrelevantVersions = async (page, selector, version) =>
           if (!isIrrelevantNode && isVersionNode(node)) {
             isIrrelevantNode = true;
           }
-          if (isVersionNode(node) && node.innerText.includes(finalVersion)) {
+          if (isVersionNode(node) && isMatchingVersion(node, finalVersion)) {
             isIrrelevantNode = false;
           }
           return isIrrelevantNode;
@@ -73,6 +83,7 @@ const getScreenShot = async (page, selector) => {
     return { x, y, width, height };
   }, selector);
   return await page.screenshot({
+    omitBackground: true,
     type: 'png',
     clip: { x: x - 40, y: y - 40, width: width + 80, height: height + 110 }
   });
