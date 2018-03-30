@@ -18,9 +18,7 @@ export const getChangelogAsImage = async (project, version, asFile) => {
       ? getChangelogReleaseUrl(repo, version)
       : getChangelogFileUrl(repo, version);
     const selector = isGithub ? '.release-body' : '.markdown-body';
-    browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+    browser = await getBrowser();
     page = await getPage(browser, url, getChangelogStyles(selector));
     if (!isGithub) {
       logger.info('Get changelog as image remove other versions');
@@ -34,9 +32,13 @@ export const getChangelogAsImage = async (project, version, asFile) => {
     logger.error('Get changelog from github release failed', err);
     throw err;
   } finally {
-    page.removeListener('console', puppeteerLogger);
-    await page.close();
-    await browser.close();
+    if (page) {
+      page.removeListener('console', puppeteerLogger);
+      await page.close();
+    }
+    if (browser) {
+      await browser.close();
+    }
   }
 };
 
@@ -85,6 +87,15 @@ const getPage = async (browser, url, styles) => {
   page.on('console', puppeteerLogger);
   return page;
 };
+
+const getBrowser = async () =>
+  puppeteer.launch({
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage'
+    ]
+  });
 
 const saveToFileAndExit = (screenShot, repo) => {
   const filename = `changelog_${repo.replace('/', '_')}.png`;
