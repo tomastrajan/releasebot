@@ -1,11 +1,12 @@
-const COLOR_BACKGROUND = '#322931';
-const COLOR_BACKGROUND_CODE = '#473D47';
+const COLOR_BACKGROUND = '#473D47';
+const COLOR_BACKGROUND_CODE = '#685768';
 const COLOR_TEXT = '#e4eaeb';
 const COLOR_TEXT_LINK = '#ffde24';
 const COLOR_TEXT_HIGHLIGHT = '#ffffff';
 const COLOR_TEXT_HIGHLIGHT_DARKER = '#c4932d';
 
 export const getChangelogStyles = selector => `
+  body { background-color: transparent; }  
   .file {
     border: 0 !important;
   }
@@ -17,6 +18,9 @@ export const getChangelogStyles = selector => `
     border-radius: 5px  !important; 
     background-color: ${COLOR_BACKGROUND} !important;
     color: ${COLOR_TEXT};
+  } 
+  ${selector} table tr { 
+    background-color: ${COLOR_BACKGROUND} !important;
   }
   ${selector} h1 a,
   ${selector} h2 a {
@@ -38,5 +42,9 @@ export const getChangelogStyles = selector => `
   }
   ${selector} pre {
     background-color: ${COLOR_BACKGROUND_CODE} !important;
+    color: ${COLOR_TEXT} !important;
+  }
+  ${selector} pre > * {
+    color: ${COLOR_TEXT} !important;
   }
 `;
