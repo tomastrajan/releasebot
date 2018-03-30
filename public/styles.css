@@ -32,9 +32,9 @@ h1, h2, h3, h4 {
 
 .branding h1 span {
     font-family: 'Roboto', sans-serif;
-    position: relative;
-    top: -15px;
-    left: -5px;
+    position: absolute;
+    top: 0;
+    right: -40px;
     font-size: 12px;
 }
 
@@ -109,7 +109,7 @@ h1, h2, h3, h4 {
     background-color: #473D47;
     box-shadow: rgba(0, 0, 0, 0.55) 0 20px 68px;
     border-radius: 5px  !important;
-    margin: 0 0 60px 0;
+    margin: 0 0 80px 0;
 }
 
 .changelog-form label {
@@ -139,7 +139,7 @@ h1, h2, h3, h4 {
 #changelog-download {
     position: absolute;
     left: 50%;
-    bottom: -70px;
+    bottom: -77px;
     margin-left: -110px;
     box-shadow: rgba(0, 0, 0, 0.40) 0 0 40px;
 }
@@ -170,6 +170,17 @@ h1, h2, h3, h4 {
     .description {
         text-align: center;
         margin: 20px 0;
+    }
+}
+
+@media (max-width: 575px) {
+    .changelog-form {
+        margin: 0 0 90px 0;
+    }
+    #changelog-download {
+        width: 100%;
+        left: 0;
+        margin-left: 0;
     }
 }
 
