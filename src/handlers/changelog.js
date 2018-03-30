@@ -8,7 +8,7 @@ const logger = getLogger('Changelog Handler');
 export const getChangelogImage = (req, res) => {
   const { type, repo, version } = req.query;
   logger.info('Download changelog', type, repo, version);
-  getChangelogAsImage({ type, repo }, version)
+  getChangelogAsImage({ type, repo }, version, false, true)
     .then(imageBuffer => {
       res.set(
         'Content-disposition',

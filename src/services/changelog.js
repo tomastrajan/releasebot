@@ -7,7 +7,7 @@ import { getChangelogFileUrl, getChangelogReleaseUrl } from './url';
 
 const logger = getLogger('Changelog Service');
 
-export const getChangelogAsImage = async (project, version, asFile) => {
+export const getChangelogAsImage = async (project, version, asFile, omitBackground) => {
   let browser;
   let page;
   try {
@@ -25,7 +25,7 @@ export const getChangelogAsImage = async (project, version, asFile) => {
       await removeIrrelevantVersions(page, selector, version);
     }
     logger.info('Get changelog as image start:', selector);
-    const screenShot = await getScreenShot(page, selector);
+    const screenShot = await getScreenShot(page, selector, omitBackground);
     logger.info('Get changelog as image success:', type, repo, version);
     return asFile ? saveToFileAndExit(screenShot, repo) : screenShot;
   } catch (err) {
@@ -76,14 +76,14 @@ const removeIrrelevantVersions = async (page, selector, version) =>
     version
   );
 
-const getScreenShot = async (page, selector) => {
+const getScreenShot = async (page, selector, omitBackground) => {
   const { x, y, width, height } = await page.evaluate(selector => {
     const element = document.querySelector(selector);
     const { x, y, width, height } = element.getBoundingClientRect();
     return { x, y, width, height };
   }, selector);
   return await page.screenshot({
-    omitBackground: true,
+    omitBackground,
     type: 'png',
     clip: { x: x - 40, y: y - 40, width: width + 80, height: height + 110 }
   });
