@@ -81,8 +81,8 @@
             </div>
             <div class="row">
                 <div class="col-lg-1 d-none d-lg-block"></div>
-                <div class="col-md-12 col-lg-10 changelog-form">
-                    <form>
+                <div class="col-md-12 col-lg-10">
+                    <form class="changelog-form">
                         <div class="form-row">
                             <div class="form-group col-md-6 col-lg-3">
                                 <label for="changelog-type">Changelog type</label>
@@ -117,10 +117,10 @@
                                 </button>
                             </div>
                         </div>
+                        <div id="changelog-feedback" class="alert alert-danger" role="alert">
+                            Something went wrong, please check if you used correct values...
+                        </div>
                     </form>
-                    <div id="changelog-feedback" class="alert alert-danger" role="alert">
-                        Something went wrong, please check if you used correct values...
-                    </div>
                 </div>
             </div>
         </div>
