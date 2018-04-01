@@ -22,9 +22,13 @@ export const runReleaseWatcher = cronSchedule => {
         const oldVersions = project.versions;
         const newVersions = resolveNewVersions(oldVersions, currentVersions);
         if (newVersions.length) {
-          logger.info('New versions:', project.name, newVersions);
+          logger.info('New versions:', project.name, newVersions.join(', '));
           for (let newVersion of newVersions) {
-            await tweetNewRelease(project, newVersion);
+            try {
+              await tweetNewRelease(project, newVersion);
+            } catch (err) {
+              logger.error('New version:', project.name, newVersion, 'failed', err);
+            }
           }
           await updateProjectVersions(project.name, currentVersions);
         } else {
