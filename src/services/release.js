@@ -9,12 +9,14 @@ import { tweetNewRelease } from './twitter';
 
 const logger = getLogger('Release Service');
 
+let executionCounter = 0;
+
 export const runReleaseWatcher = cronSchedule => {
   logger.info('Setup scheduler with schedule', cronSchedule);
   schedule.scheduleJob(cronSchedule, async executionDate => {
     try {
       await initDb();
-      logger.info('Execution start', executionDate);
+      logger.info(`Execution #${++executionCounter} start at ${executionDate}`);
       const projects = await findProjects();
       logger.info('Projects:', projects.length);
       for (let project of projects) {
