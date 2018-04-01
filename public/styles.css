@@ -90,12 +90,26 @@ h1, h2, h3, h4 {
 }
 
 .timeline {
-    padding: 5% 0;
+    position: relative;
+    margin: 5% 0;
+    height: 500px;
 }
 
-.timeline .twitter-timeline {
+.timeline .twitter-timeline-placeholder {
+    fill: #efd121;
+    margin: 20%;
+    position: absolute;
+    width: 60%;
+}
+
+.timeline iframe.twitter-timeline {
+    position: fixed;
+    height: 500px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.55) 0 20px 68px;
+    background-color: #fff;
+    opacity: 0;
+    transition: opacity 2s;
 }
 
 .changelog h2 {
@@ -121,6 +135,13 @@ h1, h2, h3, h4 {
     width: 100%;
 }
 
+.changelog-form button svg {
+    fill: #ffc107;
+    height: 17px;
+    position: relative;
+    top: 3px;
+}
+
 #changelog-download,
 #changelog-image,
 .changelog-form #changelog-spinner,
@@ -142,10 +163,6 @@ h1, h2, h3, h4 {
     bottom: -77px;
     margin-left: -110px;
     box-shadow: rgba(0, 0, 0, 0.40) 0 0 40px;
-}
-
-#changelog-download .svg-inline--fa {
-    margin: 0 8px 0 0;
 }
 
 .footer {
@@ -191,4 +208,15 @@ h1, h2, h3, h4 {
 .form-control:focus {
     border-color: #ffde24;
     box-shadow: 0 0 0 0.2rem rgba(255, 222, 36, 0.25);
+}
+
+.spin {
+    animation-name: spin;
+    animation-duration: 3000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes spin {
+    from { transform:rotate(0deg); }
+    to { transform:rotate(360deg); }
 }

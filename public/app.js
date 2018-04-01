@@ -1,6 +1,9 @@
 const $footerYear = document.querySelector('.footer .year');
 const $actionAddLibrary = document.querySelector('.action-add-library');
 const $signup = document.querySelector('.signup');
+const $twitterTimelinePlaceholder = document.querySelector(
+  '.twitter-timeline-placeholder'
+);
 
 const $changelogFormFeedback = document.querySelector('#changelog-feedback');
 const $changelogFormSubmit = document.querySelector('#changelog-submit');
@@ -100,3 +103,17 @@ function analytics(action, label, value) {
     value
   });
 }
+
+window.twttr = {
+  _e: [],
+  ready(f) {
+    this._e.push(f);
+  }
+};
+
+window.twttr.ready(t =>
+  t.events.bind('rendered', e => {
+    e.target.style.opacity = 1;
+    $twitterTimelinePlaceholder.style.display = 'none';
+  })
+);
