@@ -1,6 +1,7 @@
 node . init --name "Vue" --repo "vuejs/vue" --type github --hashtags vue,vuejs
 node . init --name "Angular" --repo angular/angular --type changelog --hashtags angular,typescript
 node . init --name "Angular CLI" --repo angular/angular-cli --type github --hashtags angular,cli,angularcli,tooling
+node . init --name "Angular Material" --repo angular/material2 --type changelog --hashtags angular,material,components,cdk
 node . init --name "RxJS" --repo "ReactiveX/rxjs" --type changelog --hashtags rxjs,observable,reactive
 node . init --name "Typescript" --repo "Microsoft/TypeScript" --type github --hashtags typescript,ts,types
 node . init --name "Webpack" --repo "webpack/webpack" --type github --hashtags webpack,bundler,tooling
