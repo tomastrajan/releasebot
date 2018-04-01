@@ -59,8 +59,9 @@ const removeIrrelevantVersions = async (page, selector, version) =>
       const isVersionNode = node =>
         ['h1', 'h2', 'h3', 'h4'].includes(node.nodeName.toLowerCase()) &&
         /v?\d+\.\d+\.\d+.*/.test(node.innerText);
+      const nodes = document.querySelector(selector).childNodes;
       let isIrrelevantNode = true;
-      Array.from(document.querySelector(selector).childNodes)
+      Array.from(nodes)
         .filter(node => {
           if (!isIrrelevantNode && isVersionNode(node)) {
             isIrrelevantNode = true;
@@ -71,6 +72,9 @@ const removeIrrelevantVersions = async (page, selector, version) =>
           return isIrrelevantNode;
         })
         .forEach(node => node.remove());
+      if (!nodes.length) {
+        throw new Error(`Version ${version} not found`);
+      }
     },
     selector,
     version
@@ -113,8 +117,9 @@ const saveToFileAndExit = (screenShot, repo) => {
   fs.writeFile(filename, screenShot, err => {
     if (err) {
       logger.error(err);
+    } else {
+      logger.info('Get changelog as image file saved:', filename);
     }
-    logger.info('Get changelog as image file saved:', filename);
     process.exit(0);
   });
 };
