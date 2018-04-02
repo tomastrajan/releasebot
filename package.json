@@ -23,6 +23,10 @@
     "query-params": "0.0.1",
     "yargs": "^11.0.0"
   },
+  "devDependencies": {
+    "imagemin": "^5.3.1",
+    "imagemin-pngquant": "^5.1.0"
+  },
   "description": "Release Butler - Releases of popular frontend libraries & frameworks",
   "author": "Tomas Trajan<tomas.trajan@gmail.com>",
   "license": "MIT"
