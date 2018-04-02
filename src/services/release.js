@@ -9,14 +9,17 @@ import { tweetNewRelease } from './twitter';
 
 const logger = getLogger('Release Service');
 
-let executionCounter = 0;
+let counterExec = 0;
+let counterRelease = 0;
 
 export const runReleaseWatcher = cronSchedule => {
   logger.info('Setup scheduler with schedule', cronSchedule);
-  schedule.scheduleJob(cronSchedule, async executionDate => {
+  schedule.scheduleJob(cronSchedule, async () => {
     try {
       await initDb();
-      logger.info(`Execution #${++executionCounter} start at ${executionDate}`);
+      logger.info(
+        `Execution #${++counterExec}, release count since deploy: ${++counterRelease}`
+      );
       const projects = await findProjects();
       logger.info('Projects:', projects.length);
       for (let project of projects) {
@@ -29,7 +32,13 @@ export const runReleaseWatcher = cronSchedule => {
             try {
               await tweetNewRelease(project, newVersion);
             } catch (err) {
-              logger.error('New version:', project.name, newVersion, 'failed', err);
+              logger.error(
+                'New version:',
+                project.name,
+                newVersion,
+                'failed',
+                err
+              );
             }
           }
           await updateProjectVersions(project.name, currentVersions);
