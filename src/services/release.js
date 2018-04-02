@@ -17,9 +17,7 @@ export const runReleaseWatcher = cronSchedule => {
   schedule.scheduleJob(cronSchedule, async () => {
     try {
       await initDb();
-      logger.info(
-        `Execution #${++counterExec}, release count since deploy: ${++counterRelease}`
-      );
+      logger.info(`Execution #${++counterExec} starts`);
       const projects = await findProjects();
       logger.info('Projects:', projects.length);
       for (let project of projects) {
@@ -31,6 +29,7 @@ export const runReleaseWatcher = cronSchedule => {
           for (let newVersion of newVersions) {
             try {
               await tweetNewRelease(project, newVersion);
+              counterRelease++;
             } catch (err) {
               logger.error(
                 'New version:',
@@ -46,7 +45,7 @@ export const runReleaseWatcher = cronSchedule => {
           logger.info('No new versions:', project.name);
         }
       }
-      logger.info('Execution ends\n');
+      logger.info(`Execution ends, releases since deployment: ${counterRelease}\n`);
     } catch (err) {
       logger.error(err);
     }
