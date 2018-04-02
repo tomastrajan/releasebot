@@ -31,6 +31,7 @@ export const getChangelogStyles = selector => `
   ${selector} table tr { 
     background-color: ${COLOR_BACKGROUND} !important;
   }
+  ${selector} h1,
   ${selector} h1 a,
   ${selector} h2 a {
     border: 0 !important;
