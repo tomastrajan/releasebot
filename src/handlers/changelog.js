@@ -9,7 +9,7 @@ let counterDownloads = 0;
 
 export const getChangelogImage = (req, res) => {
   const { type, repo, version } = req.query;
-  logger.info('\nDownload changelog -', type, repo, version);
+  logger.info('Download changelog -', type, repo, version);
   getChangelogAsImage({ type, repo }, version, false, true)
     .then(imageBuffer => {
       res.set(
