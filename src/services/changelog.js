@@ -3,6 +3,7 @@ import { getLogger } from 'log4js';
 import puppeteer from 'puppeteer';
 
 import { getChangelogStyles } from './changelog-styles';
+import { removeIrrelevantVersions, insertSignature } from './changelog-manipulations';
 import { getChangelogFileUrl, getChangelogReleaseUrl } from './url';
 
 const logger = getLogger('Changelog Service');
@@ -24,12 +25,13 @@ export const getChangelogAsImage = async (project, version, asFile, omitBackgrou
       logger.info('Get changelog as image remove other versions');
       await removeIrrelevantVersions(page, selector, version);
     }
+    await insertSignature(page, selector);
     logger.info('Get changelog as image start:', selector);
     const screenShot = await getScreenShot(page, selector, omitBackground);
     logger.info('Get changelog as image success:', type, repo, version);
     return asFile ? saveToFileAndExit(screenShot, repo) : screenShot;
   } catch (err) {
-    logger.error('Get changelog from github release failed', err);
+    logger.error('Get changelog as image failed', type, repo, version);
     throw err;
   } finally {
     if (page) {
@@ -41,44 +43,6 @@ export const getChangelogAsImage = async (project, version, asFile, omitBackgrou
     }
   }
 };
-
-const removeIrrelevantVersions = async (page, selector, version) =>
-  page.evaluate(
-    (selector, version) => {
-      const finalVersion = version[0] === 'v' ? version.slice(1) : version;
-      const isMatchingVersion = (node, version) => {
-        const nodeVersion = node.innerText;
-        const isPreReleaseVersion = /v?\d+\.\d+\.\d+-.*/.test(version);
-        const isPreReleaseNodeVersion = /v?\d+\.\d+\.\d+-.*/.test(nodeVersion);
-        if (isPreReleaseVersion) {
-          return nodeVersion.includes(version);
-        } else {
-          return nodeVersion.includes(version) && !isPreReleaseNodeVersion;
-        }
-      };
-      const isVersionNode = node =>
-        ['h1', 'h2', 'h3', 'h4'].includes(node.nodeName.toLowerCase()) &&
-        /v?\d+\.\d+\.\d+.*/.test(node.innerText);
-      const nodes = document.querySelector(selector).childNodes;
-      let isIrrelevantNode = true;
-      Array.from(nodes)
-        .filter(node => {
-          if (!isIrrelevantNode && isVersionNode(node)) {
-            isIrrelevantNode = true;
-          }
-          if (isVersionNode(node) && isMatchingVersion(node, finalVersion)) {
-            isIrrelevantNode = false;
-          }
-          return isIrrelevantNode;
-        })
-        .forEach(node => node.remove());
-      if (!nodes.length) {
-        throw new Error(`Version ${version} not found`);
-      }
-    },
-    selector,
-    version
-  );
 
 const getScreenShot = async (page, selector, omitBackground) => {
   const { x, y, width, height } = await page.evaluate(selector => {
