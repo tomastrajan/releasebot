@@ -15,3 +15,6 @@ node . init --name "Next.js" --repo "zeit/next.js" --type github --hashtags next
 node . init --name "Svetle" --repo "sveltejs/svelte" --type changelog --hashtags svetlejs,svetle,javascript,compiler
 node . init --name "Redux" --repo "reactjs/redux" --type github --hashtags redux,react,reactjs,flow
 node . init --name "MobX" --repo "mobxjs/mobx" --type changelog --hashtags mobx,reactive,javascript,statemanagement
+node . init --name "Material UI" --repo "mui-org/material-ui" --type github --hashtags materialdesign,react,reactjs,components,javascript
+node . init --name "Mocha.js" --repo "mochajs/mocha" --type github --hashtags mocha,mochajs,testing,tdd,javascript,nodejs
+node . init --name "Puppeteer" --repo "GoogleChrome/puppeteer" --type github --hashtags puppeteer,headlesschrome,nodejs,ssr
