@@ -41,8 +41,6 @@ export const runReleaseWatcher = cronSchedule => {
             }
           }
           await updateProjectVersions(project.name, currentVersions);
-        } else {
-          logger.info('No new versions:', project.name);
         }
       }
       logger.info(`Execution ends, releases since deployment: ${counterRelease}\n`);
