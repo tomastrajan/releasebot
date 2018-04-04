@@ -18,3 +18,4 @@ node . init --name "MobX" --repo "mobxjs/mobx" --type changelog --hashtags mobx,
 node . init --name "Material UI" --repo "mui-org/material-ui" --type github --hashtags materialdesign,react,reactjs,components,javascript
 node . init --name "Mocha.js" --repo "mochajs/mocha" --type github --hashtags mocha,mochajs,testing,tdd,javascript,nodejs
 node . init --name "Puppeteer" --repo "GoogleChrome/puppeteer" --type github --hashtags puppeteer,headlesschrome,nodejs,ssr
+node . init --name "GraphQL.js" --repo "graphql/graphql-js" --type github --hashtags graphql,graphqljs,api,javascript
