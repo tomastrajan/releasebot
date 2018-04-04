@@ -10,6 +10,7 @@ body {
 
 .container {
     flex: 1;
+    overflow: hidden;
 }
 
 h1, h2, h3, h4 {
