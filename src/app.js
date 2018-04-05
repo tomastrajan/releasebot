@@ -109,12 +109,17 @@ const argv = yargs
         type: 'string',
         description: 'Release version name (eg: 6.0.0-rc.0)',
         demandOption: true
+      },
+      theme: {
+        type: 'string',
+        description: 'Theme of the changelog (eg: material)',
+        default: 'default'
       }
     },
-    async ({ debug, repo, type, release }) => {
+    async ({ debug, repo, type, theme, release }) => {
       configureLogger(debug);
       const project = { repo, type };
-      await getChangelogAsImage(project, release, true);
+      await getChangelogAsImage(project, release, theme, true);
     }
   )
   .command(

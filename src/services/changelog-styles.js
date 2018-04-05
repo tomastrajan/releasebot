@@ -1,20 +1,10 @@
 import fs from 'fs';
 
-const COLOR_BACKGROUND_CODE = '#685768';
-const COLOR_BACKGROUND = '#473D47';
-const COLOR_BACKGROUND_FOOTER = '#3d333d';
-const COLOR_TEXT = '#e4eaeb';
-const COLOR_TEXT_FOOTER = '#685768';
-const COLOR_TEXT_MUTED = '#927a92';
-const COLOR_TEXT_LINK = '#ffde24';
-const COLOR_TEXT_HIGHLIGHT = '#ffffff';
-const COLOR_TEXT_HIGHLIGHT_DARKER = '#c4932d';
-
 const logo = new Buffer(
   fs.readFileSync('./public/images/logo-watermark.png')
 ).toString('base64');
 
-export const getChangelogStyles = selector => `
+export const getChangelogStyles = (selector, theme) => `
   body { background-color: transparent; }  
   .file {
     border: 0 !important;
@@ -26,47 +16,51 @@ export const getChangelogStyles = selector => `
     padding: 30px !important;
     box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px; 
     border-radius: 5px  !important; 
-    background-color: ${COLOR_BACKGROUND} !important;
+    background-color: ${theme.background} !important;
     background-size: 96px 96px;
     background-image: url(data:image/png;base64,${logo}) !important;
-    background-blend-mode: overlay;
+    background-blend-mode: ${theme.backgroundBlending};
     background-repeat: no-repeat;
     background-position: top 15px right 10px;
-    color: ${COLOR_TEXT};
+    color: ${theme.text};
   } 
   ${selector} table tr { 
-    background-color: ${COLOR_BACKGROUND} !important;
-  }
-  ${selector} h1,
-  ${selector} h1 a,
-  ${selector} h2 a {
-    border: 0 !important;
-    color: ${COLOR_TEXT_HIGHLIGHT_DARKER} !important;
+    background-color: ${theme.background} !important;
   }
   ${selector} li strong, 
   ${selector} h2, 
   ${selector} h3, 
   ${selector} h4 {
     border: 0 !important;
-    color: ${COLOR_TEXT_HIGHLIGHT} !important;
+    color: ${theme.textHighlight} !important;
+  }
+  ${selector} .project-name {
+    color: ${theme.textHighlightDarker} !important;
+    padding: 0 5px 0 0;
+  }
+  ${selector} h1,
+  ${selector} h1 a,
+  ${selector} h2 a {
+    border: 0 !important;
+    color: ${theme.textHighlightDarker} !important;
   }
   ${selector} li a, 
   ${selector} p a,
   .release-header p a { 
-    color: ${COLOR_TEXT_LINK};
+    color: ${theme.textLink};
   }
   ${selector} .text-gray { 
-    color: ${COLOR_TEXT_MUTED} !important;
+    color: ${theme.textMuted} !important;
   }
   ${selector} code {
-    background-color: ${COLOR_BACKGROUND_CODE} !important;
+    background-color: ${theme.backgroundCode} !important;
   }
   ${selector} pre {
-    background-color: ${COLOR_BACKGROUND_CODE} !important;
-    color: ${COLOR_TEXT} !important;
+    background-color: ${theme.backgroundCode} !important;
+    color: ${theme.text} !important;
   }
   ${selector} pre > * {
-    color: ${COLOR_TEXT} !important;
+    color: ${theme.text} !important;
   }
   ${selector} .release-butler-signature {
     position: relative;
@@ -75,8 +69,8 @@ export const getChangelogStyles = selector => `
     padding: 15px 0 20px 0;
     text-align: center;
     font-size: 16px !important;
-    color: ${COLOR_TEXT_FOOTER};
-    background-color: ${COLOR_BACKGROUND_FOOTER};
+    color: ${theme.textFooter};
+    background-color: ${theme.backgroundFooter};
     border-radius: 0 0 5px 5px  !important; 
   }
   ${selector} .release-butler-signature span {
@@ -84,7 +78,7 @@ export const getChangelogStyles = selector => `
     margin: 0 20px;
   }
   ${selector} .release-butler-signature span svg {
-    fill: ${COLOR_TEXT_FOOTER};
+    fill: ${theme.textFooter};
     height: 20px;
     margin: 0 3px 0 0;
     position: relative;

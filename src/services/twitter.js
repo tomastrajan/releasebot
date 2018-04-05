@@ -33,7 +33,7 @@ export const removeAllTweets = async () => {
 export const tweetNewRelease = async (project, version) => {
   logger.info('Preparing tweet for new release:', project.name, version);
   const status = await buildTweetStatus(project, version);
-  const imageBuffer = await getChangelogAsImage(project, version);
+  const imageBuffer = await getChangelogAsImage(project, version, 'default');
   logger.info('Uploading changelog image for new release');
   const { media_id_string } = await uploadMedia(imageBuffer);
   logger.info('Posting tweet for a new release', project.name, version);

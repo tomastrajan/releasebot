@@ -2,17 +2,28 @@ import fs from 'fs';
 import { getLogger } from 'log4js';
 import puppeteer from 'puppeteer';
 
-import { getChangelogStyles } from './changelog-styles';
-import { removeIrrelevantVersions, insertSignature } from './changelog-manipulations';
 import { getChangelogFileUrl, getChangelogReleaseUrl } from './url';
+import { THEMES } from './changelog-themes';
+import { getChangelogStyles } from './changelog-styles';
+import {
+  removeIrrelevantVersions,
+  insertSignature,
+  addProjectName
+} from './changelog-transforms';
 
 const logger = getLogger('Changelog Service');
 
-export const getChangelogAsImage = async (project, version, asFile, omitBackground) => {
+export const getChangelogAsImage = async (
+  project,
+  version,
+  theme,
+  asFile,
+  omitBackground
+) => {
   let browser;
   let page;
   try {
-    const { type, repo } = project;
+    const { type, name, repo } = project;
     logger.info('Get changelog as image for:', type, repo, version);
     const isGithub = type === 'github';
     const url = isGithub
@@ -20,10 +31,17 @@ export const getChangelogAsImage = async (project, version, asFile, omitBackgrou
       : getChangelogFileUrl(repo, version);
     const selector = isGithub ? '.release-body' : '.markdown-body';
     browser = await getBrowser();
-    page = await getPage(browser, url, getChangelogStyles(selector));
+    page = await getPage(
+      browser,
+      url,
+      getChangelogStyles(selector, THEMES[theme])
+    );
     if (!isGithub) {
       logger.info('Get changelog as image remove other versions');
       await removeIrrelevantVersions(page, selector, version);
+    }
+    if (name) {
+      await addProjectName(page, selector, type, name);
     }
     await insertSignature(page, selector);
     logger.info('Get changelog as image start:', selector);
@@ -31,7 +49,7 @@ export const getChangelogAsImage = async (project, version, asFile, omitBackgrou
     logger.info('Get changelog as image success:', type, repo, version);
     return asFile ? saveToFileAndExit(screenShot, repo) : screenShot;
   } catch (err) {
-    logger.error('Get changelog as image failed', type, repo, version);
+    logger.error('Get changelog as image failed');
     throw err;
   } finally {
     if (page) {

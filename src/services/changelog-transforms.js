@@ -36,6 +36,25 @@ export const removeIrrelevantVersions = async (page, selector, version) =>
     version
   );
 
+export const addProjectName = async (page, selector, type, name) =>
+  page.evaluate(
+    (selector, type, name) => {
+      const isVersion = n => /v?\d+\.\d+\.\d+.*/.test(n.innerText);
+      const container = document.querySelector(selector);
+      const versionNode =
+        type === 'github'
+          ? container.querySelector('h1')
+          : Array.from(container.childNodes).filter(n => isVersion(n))[0];
+      const nameNode = document.createElement('span');
+      nameNode.className = 'project-name';
+      nameNode.textContent = name;
+      versionNode.prepend(nameNode);
+    },
+    selector,
+    type,
+    name
+  );
+
 export const insertSignature = async (page, selector) =>
   page.evaluate(selector => {
     const container = document.querySelector(selector);

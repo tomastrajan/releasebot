@@ -8,6 +8,8 @@ const $twitterTimelinePlaceholder = document.querySelector(
 const $changelogFormFeedback = document.querySelector('#changelog-feedback');
 const $changelogFormSubmit = document.querySelector('#changelog-submit');
 const $changelogFormSpinner = document.querySelector('#changelog-spinner');
+const $changelogFormName = document.querySelector('#changelog-name');
+const $changelogFormTheme = document.querySelector('#changelog-theme');
 const $changelogFormType = document.querySelector('#changelog-type');
 const $changelogFormRepo = document.querySelector('#changelog-repo');
 const $changelogFormVersion = document.querySelector('#changelog-version');
@@ -27,13 +29,20 @@ $changelogFormSubmit.addEventListener('click', event => {
   event.preventDefault();
   const e = encodeURIComponent;
   const type = $changelogFormType.value;
+  const name = $changelogFormName.value;
+  const theme = $changelogFormTheme.value;
   const repo = $changelogFormRepo.value;
   const version = $changelogFormVersion.value;
   const filename = `changelog-${repo}-${version}.png`;
-  const params = `type=${type}&repo=${e(repo)}&version=${e(version)}`;
-  if (!!type && !!repo && !!version) {
+
+  let params = `type=${type}&repo=${e(repo)}&version=${e(version)}&theme=${theme}`;
+  if (name) {
+    params += `&name=${e(name)}`;
+  }
+
+  if (!!type && !!repo && !!version && !!theme) {
     analytics('download-changelog', repo, version);
-    console.log('Download changelog', type, repo, version);
+    console.log('Download changelog', type, repo, name, version, theme);
     downloadStart();
     fetch(`/changelog?${params}`)
       .then(fetchStatusHandler)
