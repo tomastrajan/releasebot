@@ -31,9 +31,9 @@ export const THEMES = {
     textFooter: '#545764',
     textMuted: '#636673',
     text: '#e4eaeb',
-    textHighlight: '#66d9ef',
+    textHighlight: '#ff79c6',
     textLink: '#50fa7b',
-    textHighlightDarker: '#ff79c6',
+    textHighlightDarker: '#66d9ef',
   },
   paraiso: {
     backgroundBlending: 'overlay',
