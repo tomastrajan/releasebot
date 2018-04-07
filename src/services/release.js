@@ -9,6 +9,7 @@ import { tweetNewRelease } from './twitter';
 
 const logger = getLogger('Release Service');
 
+const releases = {};
 let counterExec = 0;
 let counterRelease = 0;
 
@@ -30,6 +31,8 @@ export const runReleaseWatcher = cronSchedule => {
             try {
               await tweetNewRelease(project, newVersion);
               counterRelease++;
+              releases[project.name] = releases[project.name] || [];
+              releases[project.name].push(newVersion)
             } catch (err) {
               logger.error(
                 'New version:',
@@ -43,7 +46,9 @@ export const runReleaseWatcher = cronSchedule => {
           await updateProjectVersions(project.name, currentVersions);
         }
       }
-      logger.info(`Execution ends, releases since deployment: ${counterRelease}\n`);
+      logger.info(`Releases since deployment: ${counterRelease}`);
+      Object.keys().forEach(key => logger.info(`${key}: ${releases[key].join(', ')}`));
+      logger.info(`Execution end\n`);
     } catch (err) {
       logger.error(err);
     }
