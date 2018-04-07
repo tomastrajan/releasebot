@@ -6,6 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
 }
 
 .container {
@@ -28,7 +29,6 @@ h1, h2, h3, h4 {
     position: relative;
     top: 8px;
     display: inline-block;
-    overflow: hidden;
 }
 
 .branding h1 span {
