@@ -1,3 +1,4 @@
+import semver from 'semver';
 import fetch from 'node-fetch';
 import { getLogger } from 'log4js';
 
@@ -13,7 +14,8 @@ export const getCommitDate = async (repo, sha) => {
 export const getRepoVersions = async repo =>
   (await getRepoTags(repo))
     .filter(tag => /^(v[0-9]|[0-9])/.test(tag.name))
-    .map(tag => tag.name);
+    .map(tag => tag.name)
+    .sort((t1, t2) => semver.rcompare(semver.coerce(t1), semver.coerce(t2)));
 
 export const getRepoTags = async repo =>
   await request(`/repos/${repo}/tags?per_page=30`);

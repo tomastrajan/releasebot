@@ -21,6 +21,7 @@
     "oauth": "^0.9.15",
     "puppeteer": "^1.2.0",
     "query-params": "0.0.1",
+    "semver": "^5.5.0",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
