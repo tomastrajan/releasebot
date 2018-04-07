@@ -32,7 +32,7 @@ export const runReleaseWatcher = cronSchedule => {
               await tweetNewRelease(project, newVersion);
               counterRelease++;
               releases[project.name] = releases[project.name] || [];
-              releases[project.name].push(newVersion)
+              releases[project.name].push(newVersion);
             } catch (err) {
               logger.error(
                 'New version:',
@@ -47,7 +47,9 @@ export const runReleaseWatcher = cronSchedule => {
         }
       }
       logger.info(`Releases since deployment: ${counterRelease}`);
-      Object.keys().forEach(key => logger.info(`${key}: ${releases[key].join(', ')}`));
+      Object.keys(releases).forEach(key =>
+        logger.info(`${key}: ${releases[key].join(', ')}`)
+      );
       logger.info(`Execution end\n`);
     } catch (err) {
       logger.error(err);
