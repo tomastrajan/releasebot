@@ -1,3 +1,19 @@
+const PROJECTS = [
+  { type: 'github', repo: 'prettier/prettier', name: 'Prettier' },
+  { type: 'github', repo: 'Microsoft/TypeScript', name: 'Typescript' },
+  { type: 'github', repo: 'webpack/webpack', name: 'Webpack' },
+  { type: 'github', repo: 'nestjs/nest', name: 'nest' },
+  { type: 'github', repo: 'reactjs/redux', name: 'Redux' },
+  { type: 'github', repo: 'facebook/react', name: 'React' },
+  { type: 'github', repo: 'vuejs/vue', name: 'Vue' },
+  { type: 'github', repo: 'emberjs/ember.js', name: 'Ember.js' },
+  { type: 'changelog', repo: 'angular/angular', name: 'Angular' },
+  { type: 'changelog', repo: 'ReactiveX/rxjs', name: 'RxJS' },
+  { type: 'changelog', repo: 'mobxjs/mobx', name: 'MobX' },
+];
+
+const THEMES = ['default', 'dracula', 'github', 'material', 'paraiso'];
+
 const $footerYear = document.querySelector('.footer .year');
 const $actionAddLibrary = document.querySelector('.action-add-library');
 const $signup = document.querySelector('.signup');
@@ -15,6 +31,19 @@ const $changelogFormRepo = document.querySelector('#changelog-repo');
 const $changelogFormVersion = document.querySelector('#changelog-version');
 const $changelogImage = document.querySelector('#changelog-image');
 const $changelogDownload = document.querySelector('#changelog-download');
+
+const { type, repo, name } = getRandomItem(PROJECTS);
+$changelogFormRepo.value = repo;
+$changelogFormName.value = name;
+$changelogFormType.value = type;
+
+THEMES.forEach(theme => {
+  const themeOption = document.createElement('option');
+  themeOption.value = theme;
+  themeOption.textContent = theme.replace(/\b\w/g, s => s.toUpperCase());
+  $changelogFormTheme.appendChild(themeOption);
+});
+$changelogFormTheme.value = getRandomItem(THEMES);
 
 let changelogBlobUrl;
 
@@ -103,6 +132,10 @@ function fetchStatusHandler(response) {
   } else {
     throw new Error(response);
   }
+}
+
+function getRandomItem(items) {
+  return items[Math.floor(Math.random() * items.length)];
 }
 
 function analytics(action, label, value) {
