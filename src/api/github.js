@@ -11,11 +11,23 @@ export const getCommitDate = async (repo, sha) => {
   return commit.commit.committer.date;
 };
 
+export const getLatestVersion = async repo => (await getRepoVersions(repo))[0];
+
 export const getRepoVersions = async repo =>
   (await getRepoTags(repo))
     .filter(tag => /^(v[0-9]|[0-9])/.test(tag.name))
     .map(tag => tag.name)
-    .sort((t1, t2) => semver.rcompare(semver.coerce(t1), semver.coerce(t2)));
+    .sort((t1, t2) => {
+      try {
+        return semver.rcompare(t1, t2);
+      } catch (e) {
+        return semver.rcompare(semver.coerce(t1), semver.coerce(t2))
+      }
+    })
+    .map(tag => {
+      logger.debug(repo, tag);
+      return tag;
+    });
 
 export const getRepoTags = async repo =>
   await request(`/repos/${repo}/tags?per_page=30`);
