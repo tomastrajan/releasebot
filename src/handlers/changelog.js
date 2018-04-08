@@ -1,8 +1,8 @@
 import { getLogger } from 'log4js';
 import stream from 'stream';
 
+import { getLatestVersion, getNextVersion } from '../api/github';
 import { getChangelogAsImage } from '../services/changelog';
-import { getLatestVersion } from '../api/github';
 
 const logger = getLogger('Changelog Handler');
 
@@ -12,12 +12,20 @@ export const getChangelogImage = async (req, res) => {
   try {
     const { type, repo, name, theme, version: sourceVersion } = req.query;
     const project = { type, name, repo };
-    const isVersion = sourceVersion && sourceVersion !== 'latest';
-    let version = isVersion ? sourceVersion : (await getLatestVersion(repo));
+    let version =
+      sourceVersion === 'latest' ? await getLatestVersion(repo)
+        : sourceVersion === 'next' ? await getNextVersion(repo)
+        : sourceVersion;
 
     logger.info('Download changelog -', type, repo, version);
 
-    const image = await getChangelogAsImage(project, version, theme, false, true);
+    const image = await getChangelogAsImage(
+      project,
+      version,
+      theme,
+      false,
+      true
+    );
     res.set(
       'Content-disposition',
       `attachment; filename=changelog-${repo}-${version}.png`

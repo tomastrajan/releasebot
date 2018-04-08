@@ -11,7 +11,25 @@ export const getCommitDate = async (repo, sha) => {
   return commit.commit.committer.date;
 };
 
-export const getLatestVersion = async repo => (await getRepoVersions(repo))[0];
+export const getNextVersion = async repo =>
+  (await getRepoVersions(repo))
+    .filter(version => {
+      try {
+        return semver.prerelease(version)
+      } catch (e) {
+        return false;
+      }
+    })[0];
+
+export const getLatestVersion = async repo =>
+  (await getRepoVersions(repo))
+    .filter(version => {
+      try {
+        return !semver.prerelease(version)
+      } catch (e) {
+        return false;
+      }
+    })[0];
 
 export const getRepoVersions = async repo =>
   (await getRepoTags(repo))
