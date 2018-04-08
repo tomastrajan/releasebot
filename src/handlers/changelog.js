@@ -13,9 +13,13 @@ export const getChangelogImage = async (req, res) => {
     const { type, repo, name, theme, version: sourceVersion } = req.query;
     const project = { type, name, repo };
     let version =
-      sourceVersion === 'latest' ? await getLatestVersion(repo)
-        : sourceVersion === 'next' ? await getNextVersion(repo)
-        : sourceVersion;
+      sourceVersion === 'latest'
+        ? await getLatestVersion(repo)
+        : sourceVersion === 'next' ? await getNextVersion(repo) : sourceVersion;
+
+    if (!version) {
+      throw new Error(`Version not found for ${sourceVersion}`)
+    }
 
     logger.info('Download changelog -', type, repo, version);
 
@@ -33,11 +37,8 @@ export const getChangelogImage = async (req, res) => {
     res.set('Content-Type', 'image/png');
     const imageStream = new stream.PassThrough();
     imageStream.end(image);
-    logger.info(
-      `Download changelog success - ${type} ${repo} ${
-        version
-      } - since deployment: ${++counterDownloads}\n`
-    );
+    logger.info(`Download changelog success - ${type} ${repo} ${version}`);
+    logger.info(`Downloads since deployment: ${++counterDownloads}\n`);
     imageStream.pipe(res);
   } catch (err) {
     logger.error('Download changelog failed -', err, '\n');
