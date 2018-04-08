@@ -17,7 +17,12 @@ const logger = getLogger('App');
 
 const configureLogger = debug =>
   configure({
-    appenders: { out: { type: 'stdout' } },
+    appenders: {
+      out: {
+        type: 'stdout',
+        layout: { type: 'pattern', pattern: '%[[%p] %c - %]%m' }
+      }
+    },
     categories: {
       default: { appenders: ['out'], level: debug ? 'debug' : 'info' }
     }
