@@ -32,17 +32,17 @@ export const getChangelogStyles = (selector, theme) => `
   ${selector} h3, 
   ${selector} h4 {
     border: 0 !important;
-    color: ${theme.textHighlight} !important;
+    color: ${theme.textStrong} !important;
   }
   ${selector} .project-name {
-    color: ${theme.textHighlightDarker} !important;
+    color: ${theme.textTitle} !important;
     padding: 0 5px 0 0;
   }
   ${selector} h1,
   ${selector} h1 a,
   ${selector} h2 a {
     border: 0 !important;
-    color: ${theme.textHighlightDarker} !important;
+    color: ${theme.textTitle} !important;
   }
   ${selector} li a, 
   ${selector} p a,

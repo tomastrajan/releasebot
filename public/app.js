@@ -9,10 +9,11 @@ const PROJECTS = [
   { type: 'github', repo: 'emberjs/ember.js', name: 'Ember.js' },
   { type: 'changelog', repo: 'angular/angular', name: 'Angular' },
   { type: 'changelog', repo: 'ReactiveX/rxjs', name: 'RxJS' },
-  { type: 'changelog', repo: 'mobxjs/mobx', name: 'MobX' },
+  { type: 'changelog', repo: 'mobxjs/mobx', name: 'MobX' }
 ];
 
-const THEMES = ['default', 'dracula', 'github', 'material', 'paraiso'];
+// TODO cupcake, flower, reggae
+const THEMES = ['default', 'beach', 'dracula', 'github', 'material', 'paraiso'];
 
 const $footerYear = document.querySelector('.footer .year');
 const $actionAddLibrary = document.querySelector('.action-add-library');
@@ -64,7 +65,9 @@ $changelogFormSubmit.addEventListener('click', event => {
   const version = $changelogFormVersion.value;
   const filename = `changelog-${repo}-${version}.png`;
 
-  let params = `type=${type}&repo=${e(repo)}&version=${e(version)}&theme=${theme}`;
+  let params = `type=${type}&repo=${e(repo)}&version=${e(version)}&theme=${
+    theme
+  }`;
   if (name) {
     params += `&name=${e(name)}`;
   }

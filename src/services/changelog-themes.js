@@ -7,9 +7,9 @@ export const THEMES = {
     textFooter: '#685768',
     textMuted: '#927a92',
     text: '#e4eaeb',
-    textHighlight: '#ffffff',
+    textStrong: '#ffffff',
     textLink: '#ffde24',
-    textHighlightDarker: '#c4932d',
+    textTitle: '#c4932d'
   },
   material: {
     backgroundBlending: 'overlay',
@@ -19,9 +19,9 @@ export const THEMES = {
     textFooter: '#475e69',
     textMuted: '#475e69',
     text: '#e4eaeb',
-    textHighlight: '#80cbc4',
+    textStrong: '#80cbc4',
     textLink: '#c792ea',
-    textHighlightDarker: '#f77669',
+    textTitle: '#f77669'
   },
   dracula: {
     backgroundBlending: 'overlay',
@@ -31,9 +31,9 @@ export const THEMES = {
     textFooter: '#545764',
     textMuted: '#636673',
     text: '#e4eaeb',
-    textHighlight: '#ff79c6',
+    textStrong: '#ff79c6',
     textLink: '#50fa7b',
-    textHighlightDarker: '#66d9ef',
+    textTitle: '#66d9ef'
   },
   paraiso: {
     backgroundBlending: 'overlay',
@@ -43,9 +43,9 @@ export const THEMES = {
     textFooter: '#644f63',
     textMuted: '#91738f',
     text: '#e4eaeb',
-    textHighlight: '#ef6155',
+    textStrong: '#ef6155',
     textLink: '#f99b15',
-    textHighlightDarker: '#48b685',
+    textTitle: '#48b685'
   },
   github: {
     backgroundBlending: 'multiply',
@@ -55,10 +55,20 @@ export const THEMES = {
     textFooter: '#a0a0a0',
     textMuted: '#b4b4b4',
     text: '#000000',
-    textHighlight: '#000000',
+    textStrong: '#000000',
     textLink: '#0366d6',
-    textHighlightDarker: '#0366d6',
+    textTitle: '#0366d6'
+  },
+  beach: {
+    backgroundBlending: 'multiply',
+    backgroundCode: '#ebdece',
+    background: '#f9ecdc',
+    backgroundFooter: '#4bafc9',
+    textFooter: '#a2dbf0',
+    textMuted: '#b9ac9e',
+    text: '#585858',
+    textStrong: '#a04c23',
+    textLink: '#dca652',
+    textTitle: '#4bafc9'
   }
 };
-
-
