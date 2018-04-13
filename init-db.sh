@@ -19,3 +19,4 @@ node . init --name "Material UI" --repo "mui-org/material-ui" --type github --ha
 node . init --name "Mocha.js" --repo "mochajs/mocha" --type github --hashtags mocha,mochajs,testing,tdd,javascript,nodejs
 node . init --name "Puppeteer" --repo "GoogleChrome/puppeteer" --type github --hashtags puppeteer,headlesschrome,nodejs,ssr
 node . init --name "GraphQL.js" --repo "graphql/graphql-js" --type github --hashtags graphql,graphqljs,api,javascript
+node . init --name "Bootstrap" --repo "twbs/bootstrap" --type github --hashtags bootstrap,css,scss,cssframework,responsive,design,components
