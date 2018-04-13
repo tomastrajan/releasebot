@@ -24,7 +24,7 @@ export const getChangelogAsImage = async (
   let page;
   try {
     const { type, name, repo } = project;
-    logger.info('Get changelog as image for:', type, repo, version);
+    logger.info('Get changelog as image for:', type, repo, version, theme);
     const isGithub = type === 'github';
     const url = isGithub
       ? getChangelogReleaseUrl(repo, version)
