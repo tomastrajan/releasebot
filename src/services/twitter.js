@@ -64,6 +64,7 @@ ${RELEASE_TYPES[getReleaseType(version)]}
 const RELEASE_TYPES = {
   alpha: '🚧 ALPHA PRE-RELEASE',
   beta: '🚧 BETA PRE-RELEASE',
+  canary: '🐤 CANARY PRE-RELEASE',
   rc: '🏗 RELEASE CANDIDATE',
   other: '🤷 OTHER RELEASE',
   patch: '🐛 FIX RELEASE 🎉',
@@ -76,12 +77,14 @@ const getReleaseType = version =>
     ? 'alpha'
     : version.includes('beta')
       ? 'beta'
-      : version.includes('rc')
-        ? 'rc'
-        : version.includes('-')
-          ? 'other'
-          : semver.patch(version) !== 0
-            ? 'patch'
-            : semver.minor(version) !== 0
-              ? 'minor'
-              : 'major';
+      : version.includes('canary')
+        ? 'canary'
+        : version.includes('rc')
+          ? 'rc'
+          : version.includes('-')
+            ? 'other'
+            : semver.patch(version) !== 0
+              ? 'patch'
+              : semver.minor(version) !== 0
+                ? 'minor'
+                : 'major';
