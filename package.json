@@ -1,6 +1,6 @@
 {
   "name": "releasebot",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "main": "main.js",
   "scripts": {
     "start": "node main.js start",
@@ -8,7 +8,8 @@
     "dev:server": "nodemon main.js start --schedule \"* * * 31 2 *\"",
     "debug": "nodemon --inspect main.js start --schedule \"0 * * * * *\" --debug",
     "format": "prettier {src,e2e}/**/*.{js,ts,json,md,scss} --write",
-    "format:check": "prettier {src,e2e}/**/*.{js,ts,json,md,scss} --list-different"
+    "format:check": "prettier {src,e2e}/**/*.{js,ts,json,md,scss} --list-different",
+    "release": "standard-version && git push --follow-tags origin master"
   },
   "@std/esm": "cjs",
   "dependencies": {
