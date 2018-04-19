@@ -15,10 +15,12 @@ export const getChangelogImage = async (req, res) => {
     let version =
       sourceVersion === 'latest'
         ? await getLatestVersion(repo)
-        : sourceVersion === 'next' ? await getNextVersion(repo) : sourceVersion;
+        : sourceVersion === 'next'
+          ? await getNextVersion(repo)
+          : sourceVersion;
 
     if (!version) {
-      throw new Error(`Version not found for ${sourceVersion}`)
+      throw new Error(`Version not found for ${sourceVersion}`);
     }
 
     logger.info('Download changelog -', type, repo, version);

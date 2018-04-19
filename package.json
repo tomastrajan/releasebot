@@ -6,7 +6,9 @@
     "start": "node main.js start",
     "nodemodev": "nodemon main.js start --schedule \"0 * * * * *\"",
     "dev:server": "nodemon main.js start --schedule \"* * * 31 2 *\"",
-    "debug": "nodemon --inspect main.js start --schedule \"0 * * * * *\" --debug"
+    "debug": "nodemon --inspect main.js start --schedule \"0 * * * * *\" --debug",
+    "format": "prettier {src,e2e}/**/*.{js,ts,json,md,scss} --write",
+    "format:check": "prettier {src,e2e}/**/*.{js,ts,json,md,scss} --list-different"
   },
   "@std/esm": "cjs",
   "dependencies": {
@@ -27,7 +29,9 @@
   "devDependencies": {
     "imagemin": "^5.3.1",
     "imagemin-pngquant": "^5.1.0",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "prettier": "^1.12.1",
+    "standard-version": "^4.3.0"
   },
   "description": "Release Butler - Releases of popular frontend libraries & frameworks",
   "author": "Tomas Trajan<tomas.trajan@gmail.com>",

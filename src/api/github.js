@@ -12,24 +12,22 @@ export const getCommitDate = async (repo, sha) => {
 };
 
 export const getNextVersion = async repo =>
-  (await getRepoVersions(repo))
-    .filter(version => {
-      try {
-        return semver.prerelease(version)
-      } catch (e) {
-        return false;
-      }
-    })[0];
+  (await getRepoVersions(repo)).filter(version => {
+    try {
+      return semver.prerelease(version);
+    } catch (e) {
+      return false;
+    }
+  })[0];
 
 export const getLatestVersion = async repo =>
-  (await getRepoVersions(repo))
-    .filter(version => {
-      try {
-        return !semver.prerelease(version)
-      } catch (e) {
-        return false;
-      }
-    })[0];
+  (await getRepoVersions(repo)).filter(version => {
+    try {
+      return !semver.prerelease(version);
+    } catch (e) {
+      return false;
+    }
+  })[0];
 
 export const getRepoVersions = async repo =>
   (await getRepoTags(repo))
@@ -39,7 +37,7 @@ export const getRepoVersions = async repo =>
       try {
         return semver.rcompare(t1, t2);
       } catch (e) {
-        return semver.rcompare(semver.coerce(t1), semver.coerce(t2))
+        return semver.rcompare(semver.coerce(t1), semver.coerce(t2));
       }
     })
     .map(tag => {

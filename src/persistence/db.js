@@ -12,7 +12,9 @@ let connection;
 export const initDb = async () => {
   if (!connection) {
     logger.info('CONNECTING...');
-    connection = await mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_URL}`);
+    connection = await mongoose.connect(
+      `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_URL}`
+    );
     logger.info('CONNECTION OK');
   }
   return connection;

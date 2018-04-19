@@ -68,7 +68,7 @@ const RELEASE_TYPES = {
   other: '🤷 OTHER RELEASE',
   patch: '🐛 FIX RELEASE 🎉',
   minor: '✨ FEATURE RELEASE 🎉🎉',
-  major: '🏛 MAJOR RELEASE 🎉🎉🎉',
+  major: '🏛 MAJOR RELEASE 🎉🎉🎉'
 };
 
 const getReleaseType = version =>
@@ -82,4 +82,6 @@ const getReleaseType = version =>
           ? 'other'
           : semver.patch(version) !== 0
             ? 'patch'
-            : semver.minor(version) !== 0 ? 'minor' : 'major';
+            : semver.minor(version) !== 0
+              ? 'minor'
+              : 'major';
