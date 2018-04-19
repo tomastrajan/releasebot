@@ -1,3 +1,4 @@
+import semver from 'semver';
 import { getLogger } from 'log4js';
 
 import {
@@ -54,7 +55,7 @@ const buildTweetStatus = async (project, version) => {
 📦 ${version} 
 ${RELEASE_TYPES[getReleaseType(version)]}
 
-${hashtags.map(h => `#${h}`).join(' ')} #release #changelog #releasebutler
+🏷️${hashtags.map(h => `#${h}`).join(' ')} #release #changelog #releasebutler
 
 🔗 ${url}
 `;
@@ -65,7 +66,9 @@ const RELEASE_TYPES = {
   beta: '🚧 BETA PRE-RELEASE',
   rc: '🏗 RELEASE CANDIDATE',
   other: '🤷 OTHER RELEASE',
-  stable: '🏛 STABLE RELEASE 🎉🎉🎉'
+  patch: '🐛 FIX RELEASE 🎉',
+  minor: '✨ FEATURE RELEASE 🎉🎉',
+  major: '🏛 MAJOR RELEASE 🎉🎉🎉',
 };
 
 const getReleaseType = version =>
@@ -75,4 +78,8 @@ const getReleaseType = version =>
       ? 'beta'
       : version.includes('rc')
         ? 'rc'
-        : version.includes('-') ? 'other' : 'stable';
+        : version.includes('-')
+          ? 'other'
+          : semver.patch(version) !== 0
+            ? 'patch'
+            : semver.minor(version) !== 0 ? 'minor' : 'major';
