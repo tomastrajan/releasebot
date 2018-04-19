@@ -20,3 +20,4 @@ node . init --name "Mocha.js" --repo "mochajs/mocha" --type github --hashtags mo
 node . init --name "Puppeteer" --repo "GoogleChrome/puppeteer" --type github --hashtags puppeteer,headlesschrome,nodejs,ssr
 node . init --name "GraphQL.js" --repo "graphql/graphql-js" --type github --hashtags graphql,graphqljs,api,javascript
 node . init --name "Bootstrap" --repo "twbs/bootstrap" --type github --hashtags bootstrap,css,scss,cssframework,responsive,design,components
+node . init --name "Release Butler" --repo "tomastrajan/releasebot" --type changelog --hashtags bot,twitterbot,frontend,community,frameworks
