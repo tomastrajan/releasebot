@@ -55,7 +55,7 @@ const buildTweetStatus = async (project, version) => {
 📦 ${version} 
 ${RELEASE_TYPES[getReleaseType(version)]}
 
-🏷️${hashtags.map(h => `#${h}`).join(' ')} #release #changelog #releasebutler
+🏷️ ${hashtags.map(h => `#${h}`).join(' ')} #release #changelog #releasebutler
 
 🔗 ${url}
 `;
