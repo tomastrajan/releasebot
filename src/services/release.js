@@ -48,7 +48,11 @@ export const runReleaseWatcher = cronSchedule => {
       }
       logger.info(`Releases since deployment: ${counterRelease}`);
       Object.keys(releases).forEach(key =>
-        logger.info(`${key}: ${releases[key].join(', ')}`)
+        logger.info(
+          `${key}: ${releases[key].length} (${
+            releases[key][releases[key].length - 1]
+          })`
+        )
       );
       logger.info(`Execution end\n`);
     } catch (err) {
