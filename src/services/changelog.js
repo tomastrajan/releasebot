@@ -13,6 +13,8 @@ import {
 
 const logger = getLogger('Changelog Service');
 
+let browser;
+
 export const getChangelogAsImage = async (
   project,
   version,
@@ -20,7 +22,6 @@ export const getChangelogAsImage = async (
   asFile,
   omitBackground
 ) => {
-  let browser;
   let page;
   try {
     const { type, name, repo } = project;
@@ -30,7 +31,10 @@ export const getChangelogAsImage = async (
       ? getChangelogReleaseUrl(repo, version)
       : getChangelogFileUrl(repo, version);
     const selector = isGithub ? '.release-body' : '.markdown-body';
-    browser = await getBrowser();
+    if (!browser || !browser.process()) {
+      browser = await getBrowser();
+      logger.info('Browser created:', await browser.version());
+    }
     page = await getPage(
       browser,
       url,
@@ -55,9 +59,6 @@ export const getChangelogAsImage = async (
     if (page) {
       page.removeListener('console', puppeteerLogger);
       await page.close();
-    }
-    if (browser) {
-      await browser.close();
     }
   }
 };
