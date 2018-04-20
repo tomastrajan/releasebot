@@ -21,3 +21,5 @@ node . init --name "Puppeteer" --repo "GoogleChrome/puppeteer" --type github --h
 node . init --name "GraphQL.js" --repo "graphql/graphql-js" --type github --hashtags graphql,graphqljs,api,javascript
 node . init --name "Bootstrap" --repo "twbs/bootstrap" --type github --hashtags bootstrap,css,scss,cssframework,responsive,design,components
 node . init --name "Release Butler" --repo "tomastrajan/releasebot" --type changelog --hashtags bot,twitterbot,frontend,community,frameworks
+node . init --name "ngx-model" --repo "tomastrajan/ngx-model" --type changelog --hashtags angular,statemanagement,model,reactive,immutable
+node . init --name "Angular Ngrx Material Starter" --repo "tomastrajan/angular-ngrx-material-starter" --type changelog --hashtags angular,ngrx,material,materialdesign,seed,starter
