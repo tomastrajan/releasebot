@@ -5,6 +5,7 @@ const logo = new Buffer(
 ).toString('base64');
 
 export const getChangelogStyles = (selector, theme) => `
+  @import url(https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto:300);
   body { background-color: transparent; }  
   .file {
     border: 0 !important;
@@ -23,6 +24,7 @@ export const getChangelogStyles = (selector, theme) => `
     background-repeat: no-repeat;
     background-position: top 15px right 10px;
     color: ${theme.text};
+    font-family: 'Roboto', sans-serif !important;
   } 
   ${selector} table tr { 
     background-color: ${theme.background} !important;
@@ -33,16 +35,19 @@ export const getChangelogStyles = (selector, theme) => `
   ${selector} h4 {
     border: 0 !important;
     color: ${theme.textStrong} !important;
+    font-family: 'Roboto Slab', serif !important;
   }
   ${selector} .project-name {
     color: ${theme.textTitle} !important;
     padding: 0 5px 0 0;
+    font-family: 'Roboto Slab', serif !important;
   }
   ${selector} h1,
   ${selector} h1 a,
   ${selector} h2 a {
     border: 0 !important;
     color: ${theme.textTitle} !important;
+    font-family: 'Roboto Slab', serif !important;
   }
   ${selector} li a, 
   ${selector} p a,
@@ -54,6 +59,10 @@ export const getChangelogStyles = (selector, theme) => `
   }
   ${selector} code {
     background-color: ${theme.backgroundCode} !important;
+    padding: 1px 6px 2px 6px;
+    white-space: nowrap;
+    position: relative;
+    top: -1px;
   }
   ${selector} pre {
     background-color: ${theme.backgroundCode} !important;
