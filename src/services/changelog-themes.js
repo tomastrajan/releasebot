@@ -70,5 +70,41 @@ export const THEMES = {
     textStrong: '#a04c23',
     textLink: '#dca652',
     textTitle: '#4bafc9'
+  },
+  cupcake: {
+    backgroundBlending: 'multiply',
+    backgroundCode: '#f0d0d0',
+    background: '#ffdede',
+    backgroundFooter: '#72493e',
+    textFooter: '#ffdede',
+    textMuted: '#7c574a',
+    text: '#563d33',
+    textStrong: '#d7636c',
+    textLink: '#2da38e',
+    textTitle: '#8b4ca3'
+  },
+  forrest: {
+    backgroundBlending: 'multiply',
+    backgroundCode: '#c2de95',
+    background: '#b4cd8b',
+    backgroundFooter: '#72493e',
+    textFooter: '#ccb9b0',
+    textMuted: '#858f74',
+    text: '#22270b',
+    textStrong: '#fffbee',
+    textLink: '#5b7a19',
+    textTitle: '#72493e'
+  },
+  reggae: {
+    backgroundBlending: 'luminosity',
+    backgroundCode: '#2d2125',
+    background: '#190a0c',
+    backgroundFooter: '#741414',
+    textFooter: '#c16864',
+    textMuted: '#674a52',
+    text: '#f6e887',
+    textStrong: '#d34a2f',
+    textLink: '#429f14',
+    textTitle: '#ffffff'
   }
 };

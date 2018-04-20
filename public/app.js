@@ -12,8 +12,17 @@ const PROJECTS = [
   { type: 'changelog', repo: 'mobxjs/mobx', name: 'MobX' }
 ];
 
-// TODO cupcake, flower, reggae
-const THEMES = ['default', 'beach', 'dracula', 'github', 'material', 'paraiso'];
+const THEMES = [
+  'default',
+  'beach',
+  'cupcake',
+  'dracula',
+  'forrest',
+  'github',
+  'material',
+  'paraiso',
+  'reggae'
+];
 
 const $footerYear = document.querySelector('.footer .year');
 const $actionAddLibrary = document.querySelector('.action-add-library');
@@ -65,9 +74,9 @@ $changelogFormSubmit.addEventListener('click', event => {
   const version = $changelogFormVersion.value;
   const filename = `changelog-${repo}-${version}.png`;
 
-  let params = `type=${type}&repo=${e(repo)}&version=${e(version)}&theme=${
-    theme
-  }`;
+  let params = `type=${type}&repo=${e(repo)}&version=${e(
+    version
+  )}&theme=${theme}`;
   if (name) {
     params += `&name=${e(name)}`;
   }
