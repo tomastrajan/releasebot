@@ -81,6 +81,7 @@ const getPage = async (browser, url, styles) => {
   await page.goto(url, { waitUntil: 'networkidle2' });
   await page.setViewport({ width: 1024, height: 768, deviceScaleFactor: 2 });
   await page.addStyleTag({ content: styles });
+  await page.waitFor(1000);
   page.setDefaultNavigationTimeout(60);
   page.on('console', puppeteerLogger);
   return page;
