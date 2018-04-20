@@ -1,5 +1,31 @@
 # Change Log
 
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.0.0-beta.0"></a>
+# [1.0.0-beta.0](https://github.com/tomastrajan/releasebot/compare/v0.9.0...v1.0.0-beta.0) (2018-04-20)
+
+
+### Bug Fixes
+
+* **changelog:** delay page to prevent missing webfonts ([03f389f](https://github.com/tomastrajan/releasebot/commit/03f389f))
+* **changelog:** force bold headers, style table borders ([427ea9a](https://github.com/tomastrajan/releasebot/commit/427ea9a))
+
+
+### Features
+
+* **changelog:** add 3 new themes - forrest, reggae and cupcake ([947d0b9](https://github.com/tomastrajan/releasebot/commit/947d0b9))
+* **changelog:** use release butler fonts for generated changelogs ([6780f58](https://github.com/tomastrajan/releasebot/commit/6780f58))
+* **data:** add ngx-model and angular-ngrx-material-starter ([77a6113](https://github.com/tomastrajan/releasebot/commit/77a6113))
+* **data:** add release butler project ([970dc52](https://github.com/tomastrajan/releasebot/commit/970dc52))
+* **twitter:** add canary release type ([dd783c7](https://github.com/tomastrajan/releasebot/commit/dd783c7))
+
+
+### Performance Improvements
+
+* **changelog:** use long term browser instance instead of recreating on every request ([26dcdcb](https://github.com/tomastrajan/releasebot/commit/26dcdcb))
+
+
 
 <a name="0.9.0"></a>
 # 0.9.0 (2018-04-19)
