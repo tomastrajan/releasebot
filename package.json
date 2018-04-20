@@ -11,9 +11,12 @@
     "format:check": "prettier {src,e2e}/**/*.{js,ts,json,md,scss} --list-different",
     "release": "standard-version && git push --follow-tags origin master"
   },
-  "@std/esm": "cjs",
+  "esm": {
+    "mode": "auto",
+    "cjs": true
+  },
   "dependencies": {
-    "@std/esm": "^0.25.3",
+    "esm": "^3.0.20",
     "express": "^4.16.3",
     "http-debug": "^0.1.2",
     "log4js": "^2.5.3",
