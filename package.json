@@ -7,8 +7,8 @@
     "nodemodev": "nodemon main.js start --schedule \"0 * * * * *\"",
     "dev:server": "nodemon main.js start --schedule \"* * * 31 2 *\"",
     "debug": "nodemon --inspect main.js start --schedule \"0 * * * * *\" --debug",
-    "format": "prettier {src,e2e}/**/*.{js,ts,json,md,scss} --write",
-    "format:check": "prettier {src,e2e}/**/*.{js,ts,json,md,scss} --list-different",
+    "format": "prettier {src,public}/**/*.{js,ts,json,md,scss} --write",
+    "format:check": "prettier {src,public}/**/*.{js,ts,json,md,scss} --list-different",
     "release": "standard-version && git push --follow-tags origin master"
   },
   "esm": {
