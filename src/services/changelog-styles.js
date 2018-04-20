@@ -28,6 +28,9 @@ export const getChangelogStyles = (selector, theme) => `
   } 
   ${selector} table tr { 
     background-color: ${theme.background} !important;
+  } 
+  ${selector} table tr th, ${selector} table tr td { 
+    border-color: ${theme.backgroundCode} !important;
   }
   ${selector} li strong, 
   ${selector} h2, 
@@ -39,12 +42,14 @@ export const getChangelogStyles = (selector, theme) => `
   }
   ${selector} .project-name {
     color: ${theme.textTitle} !important;
+    font-weight: bold;
     padding: 0 5px 0 0;
     font-family: 'Roboto Slab', serif !important;
   }
   ${selector} h1,
   ${selector} h1 a,
   ${selector} h2 a {
+    font-weight: bold;
     border: 0 !important;
     color: ${theme.textTitle} !important;
     font-family: 'Roboto Slab', serif !important;
