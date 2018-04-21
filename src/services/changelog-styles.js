@@ -64,10 +64,8 @@ export const getChangelogStyles = (selector, theme) => `
   }
   ${selector} code {
     background-color: ${theme.backgroundCode} !important;
-    padding: 1px 6px 2px 6px;
+    padding: 2px 6px 1px 6px;
     white-space: nowrap;
-    position: relative;
-    top: -1px;
   }
   ${selector} pre {
     background-color: ${theme.backgroundCode} !important;

@@ -78,12 +78,13 @@ const getScreenShot = async (page, selector, omitBackground) => {
 
 const getPage = async (browser, url, styles) => {
   const page = await browser.newPage();
+  page.on('console', puppeteerLogger);
+  page.setDefaultNavigationTimeout(60000);
+  await page.setBypassCSP(true);
   await page.goto(url, { waitUntil: 'networkidle2' });
   await page.setViewport({ width: 1024, height: 768, deviceScaleFactor: 2 });
   await page.addStyleTag({ content: styles });
   await page.waitFor(1000);
-  page.setDefaultNavigationTimeout(60);
-  page.on('console', puppeteerLogger);
   return page;
 };
 
@@ -92,7 +93,9 @@ const getBrowser = async () =>
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage'
+      '--disable-dev-shm-usage',
+      '--disable-web-security',
+      '--user-data-dir'
     ]
   });
 
