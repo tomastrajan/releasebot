@@ -12,6 +12,7 @@ export const getChangelogStyles = (selector, theme) => `
   }
   ${selector} { 
     width: 93% !important;
+    max-height: 8000px !important;
     border: 0 !important; 
     margin: 40px 40px 70px 40px; 
     padding: 30px !important;
