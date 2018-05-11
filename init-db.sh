@@ -23,3 +23,4 @@ node . init --name "Bootstrap" --repo "twbs/bootstrap" --type github --hashtags 
 node . init --name "Release Butler" --repo "tomastrajan/releasebot" --type changelog --hashtags bot,twitterbot,frontend,community,frameworks
 node . init --name "ngx-model" --repo "tomastrajan/ngx-model" --type changelog --hashtags angular,statemanagement,model,reactive,immutable
 node . init --name "Angular Ngrx Material Starter" --repo "tomastrajan/angular-ngrx-material-starter" --type changelog --hashtags angular,ngrx,material,materialdesign,seed,starter
+node . init --name "Rollup" --repo "rollup/rollup" --type changelog --hashtags rollup,bundler,es6,modules,javascript
