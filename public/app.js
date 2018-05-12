@@ -64,7 +64,9 @@ $actionAddLibrary.addEventListener(
   () => ($signup.style.height = 'auto')
 );
 
-$changelogFormSubmit.addEventListener('click', event => {
+$changelogFormSubmit.addEventListener('click', downloadChangelog);
+
+function downloadChangelog(event) {
   event.preventDefault();
   const e = encodeURIComponent;
   const type = $changelogFormType.value;
@@ -98,7 +100,7 @@ $changelogFormSubmit.addEventListener('click', event => {
         console.error('Download changelog', JSON.stringify(err));
       });
   }
-});
+}
 
 function downloadStart() {
   $changelogImage.style.display = 'none';
