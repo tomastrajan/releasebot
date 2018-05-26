@@ -24,3 +24,4 @@ node . init --name "Release Butler" --repo "tomastrajan/releasebot" --type chang
 node . init --name "ngx-model" --repo "tomastrajan/ngx-model" --type changelog --hashtags angular,statemanagement,model,reactive,immutable
 node . init --name "Angular Ngrx Material Starter" --repo "tomastrajan/angular-ngrx-material-starter" --type changelog --hashtags angular,ngrx,material,materialdesign,seed,starter
 node . init --name "Rollup" --repo "rollup/rollup" --type changelog --hashtags rollup,bundler,es6,modules,javascript
+node . init --name "ng-packagr" --repo "dherges/ng-packagr" --type changelog --hashtags ngpackagr,angular,angular-library,typescript,library
