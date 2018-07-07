@@ -55,7 +55,7 @@ export const addProjectName = async (page, selector, type, name) =>
     name
   );
 
-export const insertSignature = async (page, selector) =>
+export const addBranding = async (page, selector) =>
   page.evaluate(selector => {
     const container = document.querySelector(selector);
     const signature = document.createElement('div');
@@ -71,4 +71,5 @@ export const insertSignature = async (page, selector) =>
       </span>
     `;
     container.appendChild(signature);
+    container.classList.add('release-butler-logo');
   }, selector);

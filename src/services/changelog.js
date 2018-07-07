@@ -7,7 +7,7 @@ import { THEMES } from './changelog-themes';
 import { getChangelogStyles } from './changelog-styles';
 import {
   removeIrrelevantVersions,
-  insertSignature,
+  addBranding,
   addProjectName
 } from './changelog-transforms';
 
@@ -20,7 +20,8 @@ export const getChangelogAsImage = async (
   version,
   theme,
   asFile,
-  omitBackground
+  omitBackground,
+  omitBranding
 ) => {
   let page;
   try {
@@ -47,7 +48,9 @@ export const getChangelogAsImage = async (
     if (name) {
       await addProjectName(page, selector, type, name);
     }
-    await insertSignature(page, selector);
+    if (!omitBranding) {
+      await addBranding(page, selector);
+    }
     logger.info('Get changelog as image start:', selector);
     const screenShot = await getScreenShot(page, selector, omitBackground);
     logger.info('Get changelog as image success:', type, repo, version);

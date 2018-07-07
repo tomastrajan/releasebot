@@ -39,6 +39,7 @@ const $changelogFormTheme = document.querySelector('#changelog-theme');
 const $changelogFormType = document.querySelector('#changelog-type');
 const $changelogFormRepo = document.querySelector('#changelog-repo');
 const $changelogFormVersion = document.querySelector('#changelog-version');
+const $changelogFormBranding = document.querySelector('#changelog-branding');
 const $changelogImage = document.querySelector('#changelog-image');
 const $changelogDownload = document.querySelector('#changelog-download');
 
@@ -74,18 +75,20 @@ function downloadChangelog(event) {
   const theme = $changelogFormTheme.value;
   const repo = $changelogFormRepo.value;
   const version = $changelogFormVersion.value;
+  const branding = $changelogFormBranding.checked;
   const filename = `changelog-${repo}-${version}.png`;
 
-  let params = `type=${type}&repo=${e(repo)}&version=${e(
-    version
-  )}&theme=${theme}`;
+  let params = `type=${type}&repo=${e(repo)}&version=${e(version)}&theme=${theme}`;
   if (name) {
     params += `&name=${e(name)}`;
   }
+  if (branding) {
+    params += `&branding=${branding}`;
+  }
 
   if (!!type && !!repo && !!version && !!theme) {
-    analytics('download-changelog', repo, version);
-    console.log('Download changelog', type, repo, name, version, theme);
+    analytics('download-changelog', repo, version, theme);
+    console.log('Download changelog', type, repo, name, version, theme, branding);
     downloadStart();
     fetch(`/changelog?${params}`)
       .then(fetchStatusHandler)

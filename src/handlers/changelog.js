@@ -10,7 +10,7 @@ let counterDownloads = 0;
 
 export const getChangelogImage = async (req, res) => {
   try {
-    const { type, repo, name, theme, version: sourceVersion } = req.query;
+    const { type, repo, name, theme, version: sourceVersion, branding } = req.query;
     const project = { type, name, repo };
     let version =
       sourceVersion === 'latest'
@@ -30,7 +30,8 @@ export const getChangelogImage = async (req, res) => {
       version,
       theme,
       false,
-      true
+      true,
+      !branding
     );
     res.set(
       'Content-disposition',

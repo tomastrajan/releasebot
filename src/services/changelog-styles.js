@@ -19,13 +19,15 @@ export const getChangelogStyles = (selector, theme) => `
     box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px; 
     border-radius: 5px  !important; 
     background-color: ${theme.background} !important;
+    color: ${theme.text};
+    font-family: 'Roboto', sans-serif !important;
+  } 
+  ${selector}.release-butler-logo { 
     background-size: 96px 96px;
     background-image: url(data:image/png;base64,${logo}) !important;
     background-blend-mode: ${theme.backgroundBlending};
     background-repeat: no-repeat;
     background-position: top 15px right 10px;
-    color: ${theme.text};
-    font-family: 'Roboto', sans-serif !important;
   } 
   ${selector} table tr { 
     background-color: ${theme.background} !important;

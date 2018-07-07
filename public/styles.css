@@ -129,10 +129,17 @@ h1, h2, h3, h4 {
 
 .changelog-form label {
     color: #c4932d;
+    user-select: none;
+    cursor: default;
+}
+
+.changelog-form input[type=checkbox] {
+    position: relative;
+    top: 2px;
+    left: 5px;
 }
 
 .changelog-form button {
-    margin: 32px 0 0 0;
     width: 100%;
 }
 
@@ -178,6 +185,12 @@ h1, h2, h3, h4 {
 
 .footer .year {
     padding: 0 5px;
+}
+
+.footer a {
+    color: #ffde24;
+    margin: 0 0 0 5px;
+    text-decoration: none;
 }
 
 @media (max-width: 767px) {
