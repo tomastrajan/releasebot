@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-beta.3"></a>
+# [1.0.0-beta.3](https://github.com/tomastrajan/releasebot/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2018-07-07)
+
+
+### Features
+
+* **app:** lower checking frequency to increase probability of populated github release notes ([ee82dec](https://github.com/tomastrajan/releasebot/commit/ee82dec))
+* **changelog:** add option to disable release butler attribution in generated changelog ([741b1c3](https://github.com/tomastrajan/releasebot/commit/741b1c3))
+* **data:** add ng-packagr ([23cd0d8](https://github.com/tomastrajan/releasebot/commit/23cd0d8))
+* **data:** add Parcel.js ([ae75798](https://github.com/tomastrajan/releasebot/commit/ae75798))
+* **data:** add rollup ([5bf405e](https://github.com/tomastrajan/releasebot/commit/5bf405e))
+
+
+
 <a name="1.0.0-beta.2"></a>
 # [1.0.0-beta.2](https://github.com/tomastrajan/releasebot/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2018-05-04)
 
