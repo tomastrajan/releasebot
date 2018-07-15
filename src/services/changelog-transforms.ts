@@ -27,7 +27,7 @@ export const removeIrrelevantVersions = async (page, selector, version) =>
           }
           return isIrrelevantNode;
         })
-        .forEach(node => node.remove());
+        .forEach((node: ChildNode) => node.remove());
       if (!nodes.length) {
         throw new Error(`Version ${version} not found`);
       }

@@ -22,7 +22,7 @@ const logger = getLogger('Twitter Service');
 export const removeAllTweets = async () => {
   try {
     logger.info('Remove all tweets');
-    const tweets = await getTweets(TWITTER_USER_ID);
+    const tweets: any = await getTweets(TWITTER_USER_ID);
     await Promise.all(tweets.map(tweet => deleteTweet(tweet.id_str)));
     logger.info(`Removed ${tweets.length} tweets`);
   } catch (err) {
@@ -36,7 +36,7 @@ export const tweetNewRelease = async (project, version) => {
   const status = await buildTweetStatus(project, version);
   const imageBuffer = await getChangelogAsImage(project, version, 'default');
   logger.info('Uploading changelog image for new release');
-  const { media_id_string } = await uploadMedia(imageBuffer);
+  const { media_id_string } = (await uploadMedia(imageBuffer)) as any;
   logger.info('Posting tweet for a new release', project.name, version);
   await tweetWithMedia(status, media_id_string);
 };

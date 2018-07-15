@@ -1,6 +1,6 @@
-import fs from 'fs';
+import { writeFile } from 'fs';
 import { getLogger } from 'log4js';
-import puppeteer from 'puppeteer';
+import * as puppeteer from 'puppeteer';
 
 import { getChangelogFileUrl, getChangelogReleaseUrl } from './url';
 import { THEMES } from './changelog-themes';
@@ -19,9 +19,9 @@ export const getChangelogAsImage = async (
   project,
   version,
   theme,
-  asFile,
-  omitBackground,
-  omitBranding
+  asFile?,
+  omitBackground?,
+  omitBranding?
 ) => {
   let page;
   try {
@@ -30,7 +30,7 @@ export const getChangelogAsImage = async (
     const isGithub = type === 'github';
     const url = isGithub
       ? getChangelogReleaseUrl(repo, version)
-      : getChangelogFileUrl(repo, version);
+      : getChangelogFileUrl(repo);
     const selector = isGithub ? '.release-body' : '.markdown-body';
     if (!browser || !browser.process()) {
       browser = await getBrowser();
@@ -104,9 +104,9 @@ const getBrowser = async () =>
 
 const saveToFileAndExit = (screenShot, repo) => {
   const filename = `changelog_${repo.replace('/', '_')}.png`;
-  fs.writeFile(filename, screenShot, err => {
+  writeFile(filename, screenShot, err => {
     if (err) {
-      logger.error(err);
+      logger.error(err.toString());
     } else {
       logger.info('Get changelog as image file saved:', filename);
     }

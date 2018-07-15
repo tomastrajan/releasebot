@@ -1,5 +1,5 @@
-import oauth from 'oauth';
-import qp from 'query-params';
+import { OAuth } from 'oauth';
+import { encode } from 'query-params';
 import { getLogger } from 'log4js';
 
 const logger = getLogger('Twitter API');
@@ -15,7 +15,7 @@ const {
 
 const place_id = '5a110d312052166f';
 
-const client = new oauth.OAuth(
+const client = new OAuth(
   `${TWITTER_URL}/oauth/request_token`,
   `${TWITTER_URL}/oauth/access_token`,
   TWITTER_CONSUMER_KEY,
@@ -26,7 +26,7 @@ const client = new oauth.OAuth(
 );
 
 export const getPlaceId = async query => {
-  const places = await get('/geo/search', { query });
+  const places: any = await get('/geo/search', { query });
   return places.result.places[0].id;
 };
 
@@ -46,16 +46,16 @@ export const uploadMedia = dataBuffer =>
 const get = (url, params) =>
   request(
     'get',
-    `${TWITTER_URL}${TWITTER_VERSION}${url}.json?${qp.encode(params)}`
+    `${TWITTER_URL}${TWITTER_VERSION}${url}.json?${encode(params)}`
   );
 
-const post = (url, body) =>
+const post = (url, body?) =>
   request('post', `${TWITTER_URL}${TWITTER_VERSION}${url}.json`, body);
 
 const upload = (url, body) =>
   request('post', `${TWITTER_URL}${TWITTER_VERSION}${url}.json`, body, true);
 
-const request = (type, url, body, isUpload) => {
+const request = (type, url, body?, isUpload?) => {
   logger.debug(type.toUpperCase(), url, isUpload ? '' : body);
   return new Promise((resolve, reject) => {
     const callback = (err, res) => {

@@ -12,6 +12,18 @@ import { getRepoVersions } from '../api/github';
 
 const logger = getLogger('Project Service');
 
+export const getProjectVersions = async repo => {
+  try {
+    await initDb();
+    logger.info('Get project versions', repo);
+    const versions = await getRepoVersions(repo);
+    logger.info('Project versions', versions.length, versions.join(', '));
+  } catch (err) {
+    logger.error('Get project versions failed', err);
+  }
+  process.exit(0);
+};
+
 export const initProjectData = async (
   name,
   repo,

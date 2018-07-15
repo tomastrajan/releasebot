@@ -1,4 +1,4 @@
-import schedule from 'node-schedule';
+import { scheduleJob } from 'node-schedule';
 import { getLogger } from 'log4js';
 
 import { initDb } from '../persistence/db';
@@ -15,7 +15,7 @@ let counterRelease = 0;
 
 export const runReleaseWatcher = cronSchedule => {
   logger.info('Setup scheduler with schedule', cronSchedule);
-  schedule.scheduleJob(cronSchedule, async () => {
+  scheduleJob(cronSchedule, async () => {
     try {
       await initDb();
       logger.info(`Execution #${++counterExec} starts`);

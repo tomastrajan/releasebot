@@ -78,7 +78,9 @@ function downloadChangelog(event) {
   const branding = $changelogFormBranding.checked;
   const filename = `changelog-${repo}-${version}.png`;
 
-  let params = `type=${type}&repo=${e(repo)}&version=${e(version)}&theme=${theme}`;
+  let params = `type=${type}&repo=${e(repo)}&version=${e(
+    version
+  )}&theme=${theme}`;
   if (name) {
     params += `&name=${e(name)}`;
   }
@@ -88,7 +90,15 @@ function downloadChangelog(event) {
 
   if (!!type && !!repo && !!version && !!theme) {
     analytics('download-changelog', repo, version, theme);
-    console.log('Download changelog', type, repo, name, version, theme, branding);
+    console.log(
+      'Download changelog',
+      type,
+      repo,
+      name,
+      version,
+      theme,
+      branding
+    );
     downloadStart();
     fetch(`/changelog?${params}`)
       .then(fetchStatusHandler)

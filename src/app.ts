@@ -1,11 +1,12 @@
 import 'now-env';
-import yargs from 'yargs';
-import express from 'express';
+import * as express from 'express';
+import { command } from 'yargs';
 import { configure, getLogger } from 'log4js';
 
 import { removeAllTweets } from './services/twitter';
 import { runReleaseWatcher } from './services/release';
 import {
+  getProjectVersions,
   initProjectData,
   removeAllProjectData,
   removeProjectLastVersion
@@ -28,7 +29,21 @@ const configureLogger = debug =>
     }
   });
 
-const argv = yargs
+command(
+    'versions',
+    'Resolve project versions',
+    {
+      repo: {
+        demandOption: true,
+        type: 'string',
+        description: 'Project repo (eg: angular/angular)'
+      }
+    },
+    async ({ repo, debug }) => {
+      configureLogger(debug);
+      await getProjectVersions(repo);
+    }
+  )
   .command(
     'remove',
     'Removes application data',

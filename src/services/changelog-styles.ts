@@ -1,7 +1,7 @@
-import fs from 'fs';
+import { readFileSync } from 'fs';
 
 const logo = new Buffer(
-  fs.readFileSync('./public/images/logo-watermark.png')
+  readFileSync('./public/images/logo-watermark.png')
 ).toString('base64');
 
 export const getChangelogStyles = (selector, theme) => `

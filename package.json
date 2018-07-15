@@ -1,23 +1,19 @@
 {
   "name": "releasebot",
   "version": "1.0.0-beta.3",
-  "main": "main.js",
+  "main": "src/app.ts",
   "scripts": {
-    "start": "node main.js start",
-    "dev": "nodemon main.js start --schedule \"0 * * * * *\"",
-    "dev:server": "nodemon main.js start --schedule \"* * * 31 2 *\"",
-    "debug": "env DEBUG=\"*\" nodemon --inspect main.js start --schedule \"0 * * * * *\" --debug",
-    "test:server": "node main.js start --schedule \"* * * 31 2 *\"",
+    "cli": "ts-node src/app.ts",
+    "start": "ts-node src/app.ts start",
+    "dev": "nodemon -- start --schedule \"0 * * * * *\"",
+    "dev:server": "nodemon -- start --schedule \"* * * 31 2 *\"",
+    "debug": "env DEBUG=\"*\" nodemon -- start --schedule \"0 * * * * *\" --debug --inspect",
     "format": "prettier {src,public}/**/*.{js,ts,json,md,scss} --write",
     "format:check": "prettier {src,public}/**/*.{js,ts,json,md,scss} --list-different",
     "release": "standard-version && git push --follow-tags origin master"
   },
-  "esm": {
-    "mode": "auto",
-    "cjs": true
-  },
   "dependencies": {
-    "esm": "^3.0.20",
+    "@types/node": "^10.5.2",
     "express": "^4.16.3",
     "http-debug": "^0.1.2",
     "log4js": "^2.5.3",
@@ -29,12 +25,14 @@
     "puppeteer": "^1.3.0",
     "query-params": "0.0.1",
     "semver": "^5.5.0",
+    "ts-node": "^7.0.0",
+    "typescript": "^2.9.2",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
     "imagemin": "^5.3.1",
     "imagemin-pngquant": "^5.1.0",
-    "nodemon": "^1.17.3",
+    "nodemon": "^1.18.2",
     "prettier": "^1.12.1",
     "standard-version": "^4.3.0"
   },
