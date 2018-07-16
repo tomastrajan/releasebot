@@ -40,22 +40,27 @@ export const tweetWithMedia = (status, mediaId) =>
 
 export const deleteTweet = id => post(`/statuses/destroy/${id}`);
 
+export const getMessages = () => get('/direct_messages/events/list');
+
+export const sendMessage = (recipientId, message) =>
+  post('/direct_messages/events/new', buildMessage(recipientId, message), true);
+
 export const uploadMedia = dataBuffer =>
   upload(`/media/upload`, { media_data: dataBuffer.toString('base64') });
 
-const get = (url, params) =>
+const get = (url, params?) =>
   request(
     'get',
-    `${TWITTER_URL}${TWITTER_VERSION}${url}.json?${encode(params)}`
+    `${TWITTER_URL}${TWITTER_VERSION}${url}.json?${params ? encode(params) : ''}`
   );
 
-const post = (url, body?) =>
-  request('post', `${TWITTER_URL}${TWITTER_VERSION}${url}.json`, body);
+const post = (url, body?, isJson?) =>
+  request('post', `${TWITTER_URL}${TWITTER_VERSION}${url}.json`, body, false, isJson);
 
 const upload = (url, body) =>
   request('post', `${TWITTER_URL}${TWITTER_VERSION}${url}.json`, body, true);
 
-const request = (type, url, body?, isUpload?) => {
+const request = (type, url, body?, isUpload?, isJson?) => {
   logger.debug(type.toUpperCase(), url, isUpload ? '' : body);
   return new Promise((resolve, reject) => {
     const callback = (err, res) => {
@@ -72,7 +77,7 @@ const request = (type, url, body?, isUpload?) => {
     };
     const args = [url, TWITTER_TOKEN, TWITTER_TOKEN_SECRET];
     if (type === 'post') {
-      args.push(body, 'application/x-www-form-urlencoded');
+      args.push(body, `application/${isJson ? 'json' : 'x-www-form-urlencoded'}`);
     }
     if (isUpload) {
       args[0] = url.replace('api', 'upload');
@@ -81,3 +86,19 @@ const request = (type, url, body?, isUpload?) => {
     client[type](...args);
   });
 };
+
+function buildMessage(recipientId, message) {
+  return JSON.stringify({
+    event: {
+      type: 'message_create',
+      message_create: {
+        target: {
+          recipient_id: recipientId
+        },
+        message_data: {
+          text: message
+        }
+      }
+    }
+  });
+}

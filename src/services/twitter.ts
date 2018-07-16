@@ -5,7 +5,9 @@ import {
   getTweets,
   tweetWithMedia,
   deleteTweet,
-  uploadMedia
+  uploadMedia,
+  sendMessage,
+  getMessages
 } from '../api/twitter';
 
 import { getChangelogAsImage } from './changelog';
@@ -27,6 +29,32 @@ export const removeAllTweets = async () => {
     logger.info(`Removed ${tweets.length} tweets`);
   } catch (err) {
     logger.error('Remove all tweets failed', err);
+  }
+  process.exit(0);
+};
+
+export const sendDirectMessage = async (recipientId, message) => {
+  try {
+    logger.info('Send message to Twitter user', recipientId);
+    await sendMessage(recipientId, message);
+    logger.info(`Message ${message} was sent to ${recipientId}`);
+  } catch (err) {
+    logger.error('Send message to Twitter user failed', err);
+  }
+  process.exit(0);
+};
+
+export const getDirectMessages = async () => {
+  try {
+    logger.info('Get Twitter messages');
+    const messages: any = await getMessages();
+    logger.info(`Retrieved messages: ${messages.events.length}`);
+    messages.events.forEach(event => {
+      const { sender_id , message_data } = event[event.type];
+      logger.info(`Message from ${sender_id}: ${message_data.text}`);
+    });
+  } catch (err) {
+    logger.error('Get Twitter messages failed', err);
   }
   process.exit(0);
 };

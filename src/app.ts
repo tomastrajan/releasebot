@@ -3,7 +3,11 @@ import * as express from 'express';
 import { command } from 'yargs';
 import { configure, getLogger } from 'log4js';
 
-import { removeAllTweets } from './services/twitter';
+import {
+  getDirectMessages,
+  removeAllTweets,
+  sendDirectMessage
+} from './services/twitter';
 import { runReleaseWatcher } from './services/release';
 import {
   getProjectVersions,
@@ -42,6 +46,27 @@ command(
     async ({ repo, debug }) => {
       configureLogger(debug);
       await getProjectVersions(repo);
+    }
+  )
+  .command(
+    'message',
+    'Get or sends a message to Twitter user',
+    {
+      recipientId: {
+        type: 'string',
+        description: 'eg: 1234567890'
+      },
+      message: {
+        type: 'string',
+        description: 'Message text'
+      }
+    },
+    async ({ recipientId, message, debug }) => {
+      configureLogger(debug);
+      if (recipientId && message) {
+        await sendDirectMessage(recipientId, message);
+      }
+      await getDirectMessages();
     }
   )
   .command(
