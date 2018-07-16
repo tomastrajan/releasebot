@@ -1,4 +1,4 @@
-import semver from 'semver';
+import * as semver from 'semver';
 import { getLogger } from 'log4js';
 
 import {
