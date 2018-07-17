@@ -1,7 +1,5 @@
 import 'now-env';
-import * as express from 'express';
 import { command } from 'yargs';
-import { configure, getLogger } from 'log4js';
 
 import {
   getDirectMessages,
@@ -16,22 +14,8 @@ import {
   removeProjectLastVersion
 } from './services/project';
 import { getChangelogAsImage } from './services/changelog';
-import { getChangelogImage } from './handlers/changelog';
-
-const logger = getLogger('App');
-
-const configureLogger = debug =>
-  configure({
-    appenders: {
-      out: {
-        type: 'stdout',
-        layout: { type: 'pattern', pattern: '%[[%p] %c - %]%m' }
-      }
-    },
-    categories: {
-      default: { appenders: ['out'], level: debug ? 'debug' : 'info' }
-    }
-  });
+import { runServer } from './core/server';
+import { configureLogger } from './core/log';
 
 command(
     'versions',
@@ -181,12 +165,7 @@ command(
     ({ debug, schedule }) => {
       configureLogger(debug);
       runReleaseWatcher(schedule);
-
-      const app = express();
-      app.use(express.static('public'));
-      app.get('/changelog', getChangelogImage);
-      app.listen(8080);
-      logger.info('Server started, port:', 8080);
+      runServer();
     }
   )
   .option('debug', { type: 'boolean', description: 'Set debug log level' })

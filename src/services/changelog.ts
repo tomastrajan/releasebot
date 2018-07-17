@@ -26,7 +26,7 @@ export const getChangelogAsImage = async (
   let page;
   try {
     const { type, name, repo } = project;
-    logger.info('Get changelog as image for:', type, repo, version, theme);
+    logger.debug('Get changelog as image for:', type, repo, version, theme, !omitBranding);
     const isGithub = type === 'github';
     const url = isGithub
       ? getChangelogReleaseUrl(repo, version)
@@ -34,7 +34,7 @@ export const getChangelogAsImage = async (
     const selector = isGithub ? '.release-body' : '.markdown-body';
     if (!browser || !browser.process()) {
       browser = await getBrowser();
-      logger.info('Browser created:', await browser.version());
+      logger.debug('Browser created:', await browser.version());
     }
     page = await getPage(
       browser,
@@ -42,7 +42,7 @@ export const getChangelogAsImage = async (
       getChangelogStyles(selector, THEMES[theme])
     );
     if (!isGithub) {
-      logger.info('Get changelog as image remove other versions');
+      logger.debug('Get changelog as image remove other versions');
       await removeIrrelevantVersions(page, selector, version);
     }
     if (name) {
@@ -51,9 +51,9 @@ export const getChangelogAsImage = async (
     if (!omitBranding) {
       await addBranding(page, selector);
     }
-    logger.info('Get changelog as image start:', selector);
+    logger.debug('Get changelog as image start:', selector);
     const screenShot = await getScreenShot(page, selector, omitBackground);
-    logger.info('Get changelog as image success:', type, repo, version);
+    logger.debug('Get changelog as image success:', type, repo, version);
     return asFile ? saveToFileAndExit(screenShot, repo) : screenShot;
   } catch (err) {
     logger.error('Get changelog as image failed');

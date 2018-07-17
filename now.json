@@ -15,6 +15,7 @@
     "TWITTER_CONSUMER_SECRET": "@twitter_consumer_secret",
     "TWITTER_TOKEN": "@twitter_token",
     "TWITTER_TOKEN_SECRET": "@twitter_token_secret",
-    "TWITTER_USER_ID": "@twitter_user_id"
+    "TWITTER_USER_ID": "@twitter_user_id",
+    "LOGGLY_TOKEN": "@loggly_token"
   }
 }

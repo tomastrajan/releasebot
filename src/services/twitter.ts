@@ -50,7 +50,7 @@ export const getDirectMessages = async () => {
     const messages: any = await getMessages();
     logger.info(`Retrieved messages: ${messages.events.length}`);
     messages.events.forEach(event => {
-      const { sender_id , message_data } = event[event.type];
+      const { sender_id, message_data } = event[event.type];
       logger.info(`Message from ${sender_id}: ${message_data.text}`);
     });
   } catch (err) {

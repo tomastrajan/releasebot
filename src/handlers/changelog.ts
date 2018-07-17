@@ -5,6 +5,7 @@ import { getLatestVersion, getNextVersion } from '../api/github';
 import { getChangelogAsImage } from '../services/changelog';
 
 const logger = getLogger('Changelog Handler');
+const loggerRemote = getLogger('remote');
 
 let counterDownloads = 0;
 
@@ -30,7 +31,11 @@ export const getChangelogImage = async (req, res) => {
       throw new Error(`Version not found for ${sourceVersion}`);
     }
 
-    logger.info('Download changelog -', type, repo, version);
+    logger.info('Download changelog -', repo, version, sourceVersion, type, theme, branding);
+    loggerRemote.info(
+      { repo, version, sourceVersion, type, theme, branding },
+      { tags: ['RB-download', 'RB-stats'] }
+    );
 
     const image = await getChangelogAsImage(
       project,
@@ -47,7 +52,7 @@ export const getChangelogImage = async (req, res) => {
     res.set('Content-Type', 'image/png');
     const imageStream = new PassThrough();
     imageStream.end(image);
-    logger.info(`Download changelog success - ${type} ${repo} ${version}`);
+    logger.debug(`Download changelog success - ${type} ${repo} ${version}`);
     logger.info(`Downloads since deployment: ${++counterDownloads}\n`);
     imageStream.pipe(res);
   } catch (err) {
