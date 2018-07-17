@@ -17,47 +17,7 @@ import {
   getChangelogReleaseUrl
 } from './url';
 
-const { TWITTER_USER_ID } = process.env;
-
 const logger = getLogger('Twitter Service');
-
-export const removeAllTweets = async () => {
-  try {
-    logger.info('Remove all tweets');
-    const tweets: any = await getTweets(TWITTER_USER_ID);
-    await Promise.all(tweets.map(tweet => deleteTweet(tweet.id_str)));
-    logger.info(`Removed ${tweets.length} tweets`);
-  } catch (err) {
-    logger.error('Remove all tweets failed', err);
-  }
-  process.exit(0);
-};
-
-export const sendDirectMessage = async (recipientId, message) => {
-  try {
-    logger.info('Send message to Twitter user', recipientId);
-    await sendMessage(recipientId, message);
-    logger.info(`Message ${message} was sent to ${recipientId}`);
-  } catch (err) {
-    logger.error('Send message to Twitter user failed', err);
-  }
-  process.exit(0);
-};
-
-export const getDirectMessages = async () => {
-  try {
-    logger.info('Get Twitter messages');
-    const messages: any = await getMessages();
-    logger.info(`Retrieved messages: ${messages.events.length}`);
-    messages.events.forEach(event => {
-      const { sender_id, message_data } = event[event.type];
-      logger.info(`Message from ${sender_id}: ${message_data.text}`);
-    });
-  } catch (err) {
-    logger.error('Get Twitter messages failed', err);
-  }
-  process.exit(0);
-};
 
 export const tweetNewRelease = async (project, version) => {
   logger.info('Preparing tweet for new release:', project.name, version);

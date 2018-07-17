@@ -8,17 +8,12 @@ const Project = mongoose.model('Project', {
   versions: [String]
 });
 
-export const findProjectNames = () =>
-  Project.find()
-    .exec()
-    .then(projects => projects.map(p => p.name));
-
 export const findProjects = () => Project.find().exec();
 
-export const findProject = name => Project.findOne({ name }).exec();
+export const findProject = repo => Project.findOne({ repo }).exec();
 
-export const updateProjectVersions = (name, versions) =>
-  Project.findOneAndUpdate({ name }, { versions });
+export const updateProjectVersions = (repo, versions) =>
+  Project.findOneAndUpdate({ repo }, { versions });
 
 export const insertProject = (name, repo, type, hashtags, versions) =>
   Project.create({
@@ -29,4 +24,4 @@ export const insertProject = (name, repo, type, hashtags, versions) =>
     versions
   });
 
-export const removeProject = name => Project.remove({ name });
+export const removeProject = repo => Project.remove({ repo });

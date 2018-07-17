@@ -45,8 +45,19 @@ export const getRepoVersions = async repo =>
       return tag;
     });
 
-export const getRepoTags = async repo =>
-  await request(`/repos/${repo}/tags?per_page=30`);
+export const getRepoTags = async repo => {
+  try {
+    const tags = await request(`/repos/${repo}/tags?per_page=30`);
+    if (!tags.length) {
+      logger.warn(`No tags found for repository: ${repo}, does it exists?`);
+      return [];
+    }
+    return tags;
+  } catch (err) {
+    logger.error("Get tags for repo failed", repo, err);
+    return [];
+  }
+};
 
 const request = url => {
   logger.debug('GET', url);

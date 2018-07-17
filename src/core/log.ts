@@ -4,7 +4,7 @@ const { LOGGLY_TOKEN } = process.env;
 
 addLayout('json', () => logEvent => logEvent.data[0]);
 
-export const configureLogger = debug =>
+export const configureLogger = ({ debug }) =>
   configure({
     appenders: {
       out: {

@@ -43,7 +43,7 @@ export const runReleaseWatcher = cronSchedule => {
               );
             }
           }
-          await updateProjectVersions(project.name, currentVersions);
+          await updateProjectVersions(project.repo, currentVersions);
         }
       }
       logger.info(`Releases since deployment: ${counterRelease}`);
