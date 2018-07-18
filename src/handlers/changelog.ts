@@ -33,7 +33,7 @@ export const getChangelogImage = async (req, res) => {
 
     logger.info('Download changelog -', repo, version, sourceVersion, type, theme, branding);
     loggerRemote.info(
-      { repo, version, sourceVersion, type, theme, branding },
+      { repo, version, sourceVersion, type, theme, branding: branding ? 'yes' : 'no' },
       { tags: ['RB-download', 'RB-stats'] }
     );
 

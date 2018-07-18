@@ -61,9 +61,7 @@ export const getChangelogAsImage = async (
   } finally {
     if (page) {
       page.removeListener('console', puppeteerLogger);
-      console.log('close 1');
       await page.close();
-      console.log('close 2');
     }
   }
 };
