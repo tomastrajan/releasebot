@@ -17,5 +17,5 @@ COPY . .
 # Expose port and run
 EXPOSE 8080
 ENTRYPOINT ["dumb-init", "--"]
-CMD [ "npm", "start" ]
+CMD [ "npm", "start", "*/30 * * * *"]
 # CMD [ "npm", "run", "test:server" ]
