@@ -5,7 +5,7 @@ import { findProject, updateProjectVersions } from '../persistence/project';
 import { getRepoVersions } from '../api/github';
 
 export const command = 'versions <repo>';
-export const desc = 'Get latest versions of a project';
+export const desc = 'Get (or remove) latest versions of a project';
 export const builder = yargs => yargs
   .positional('repo', {
     describe: 'Project repo (eg: angular/angular)',

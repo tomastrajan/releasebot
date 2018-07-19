@@ -2,8 +2,11 @@
 import 'now-env';
 import * as yargs from 'yargs';
 import * as yargonaut from 'yargonaut';
+import { textSync } from 'figlet';
 
 import { configureLogger } from './core/log';
+
+console.log(textSync('Release Butler', 'Standard'));
 
 yargonaut
   .style('blue')
