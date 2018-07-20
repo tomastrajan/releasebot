@@ -1,14 +1,7 @@
 import * as semver from 'semver';
 import { getLogger } from 'log4js';
 
-import {
-  getTweets,
-  tweetWithMedia,
-  deleteTweet,
-  uploadMedia,
-  sendMessage,
-  getMessages
-} from '../api/twitter';
+import { tweetWithMedia, uploadMedia } from '../api/twitter';
 
 import { getChangelogAsImage } from './changelog';
 import {

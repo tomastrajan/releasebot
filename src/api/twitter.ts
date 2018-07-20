@@ -30,6 +30,9 @@ export const getPlaceId = async query => {
   return places.result.places[0].id;
 };
 
+export const getUser = (userId: string): Promise<TwitterUser> =>
+  get('/users/show', { user_id: userId }) as Promise<TwitterUser>;
+
 export const getTweets = userId =>
   get('/statuses/user_timeline', { user_id: userId });
 
@@ -40,7 +43,8 @@ export const tweetWithMedia = (status, mediaId) =>
 
 export const deleteTweet = id => post(`/statuses/destroy/${id}`);
 
-export const getMessages = () => get('/direct_messages/events/list');
+export const getMessages = async () =>
+  (await get('/direct_messages/events/list') as any).events.map(messageTransformer);
 
 export const sendMessage = (recipientId, message) =>
   post('/direct_messages/events/new', buildMessage(recipientId, message), true);
@@ -101,4 +105,21 @@ function buildMessage(recipientId, message) {
       }
     }
   });
+}
+
+const messageTransformer = (data: any) => ({
+  id: data.id,
+  type: data.type,
+  created: data.created_timestamp,
+  recipientId: data[data.type].target.recipient_id,
+  senderId: data[data.type].sender_id,
+  text: data[data.type].message_data.text,
+  entities: data[data.type].message_data.entities,
+  attachment: data[data.type].message_data.attachment
+});
+
+export interface TwitterUser {
+  id: number;
+  name: string;
+  screen_name: string;
 }
