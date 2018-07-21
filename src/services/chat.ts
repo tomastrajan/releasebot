@@ -17,6 +17,7 @@ import { getUser, getMessages, sendMessage, uploadMedia } from '../api/twitter';
 import { getChangelogAsImage } from './changelog';
 
 const logger = getLogger('Chat Service');
+const loggerRemote = getLogger('remote');
 const { TWITTER_USER_ID } = process.env;
 const SCHEDULE = '* * * * *'; // once a minute as per rate limit
 
@@ -46,6 +47,15 @@ export const runChatWatcher = () => {
             `Received new message from @${user.screen_name}: ${m.text}`
           );
           const { replyType, replyParams } = resolveReplyTypeAndParams(m.text);
+          loggerRemote.info(
+            {
+              replyType,
+              replyParams,
+              message: m.text,
+              sender: `@${user.screen_name}`
+            },
+            { tags: ['RB-chat', 'RB-stats'] }
+          );
           const replyBuilder = REPLY_BUILDER[replyType];
           const { reply, mediaId } = await replyBuilder(replyParams, user.name);
           await sendMessage(m.senderId, reply, mediaId);
