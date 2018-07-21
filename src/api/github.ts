@@ -59,6 +59,16 @@ export const getRepoTags = async repo => {
   }
 };
 
+export const isChangelogRepository = async repo => {
+  try {
+    const response = await request(`/repos/${repo}/contents/CHANGELOG.md`);
+    return response.name === 'CHANGELOG.md';
+  } catch (err) {
+    logger.error("Is changelog repository failed", repo, err);
+    return false;
+  }
+};
+
 const request = url => {
   logger.debug('GET', url);
   return fetch(`${GITHUB_URL}${url}`, {

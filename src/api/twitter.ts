@@ -46,8 +46,8 @@ export const deleteTweet = id => post(`/statuses/destroy/${id}`);
 export const getMessages = async () =>
   (await get('/direct_messages/events/list') as any).events.map(messageTransformer);
 
-export const sendMessage = (recipientId, message) =>
-  post('/direct_messages/events/new', buildMessage(recipientId, message), true);
+export const sendMessage = (recipientId: string, message: string, mediaId?: string) =>
+  post('/direct_messages/events/new', buildMessage(recipientId, message, mediaId), true);
 
 export const uploadMedia = dataBuffer =>
   upload(`/media/upload`, { media_data: dataBuffer.toString('base64') });
@@ -91,8 +91,8 @@ const request = (type, url, body?, isUpload?, isJson?) => {
   });
 };
 
-function buildMessage(recipientId, message) {
-  return JSON.stringify({
+function buildMessage(recipientId: string, message: string, mediaId?: string) {
+  const data: any = {
     event: {
       type: 'message_create',
       message_create: {
@@ -104,7 +104,16 @@ function buildMessage(recipientId, message) {
         }
       }
     }
-  });
+  };
+  if (mediaId) {
+    data.event.message_create.message_data.attachment = {
+      type: 'media',
+      media: {
+        id: mediaId
+      }
+    }
+  }
+  return JSON.stringify(data);
 }
 
 const messageTransformer = (data: any) => ({
