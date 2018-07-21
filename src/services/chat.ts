@@ -19,7 +19,7 @@ import { getChangelogAsImage } from './changelog';
 const logger = getLogger('Chat Service');
 const loggerRemote = getLogger('remote');
 const { TWITTER_USER_ID } = process.env;
-const SCHEDULE = '*/2 * * * *'; // once every two minutes
+const SCHEDULE = '* * * * *'; // once every minute based on Twitter rate limit
 
 let counterExec = 0;
 let counterSkippedExec = 0;
