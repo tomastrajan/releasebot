@@ -4,6 +4,7 @@ import { getLogger } from 'log4js';
 import { initDb } from '../persistence/db';
 import { findProjects, updateProjectVersions } from '../persistence/project';
 import { getRepoVersions } from '../api/github';
+import { sendAdminAlertMessage } from '../api/twitter';
 
 import { tweetNewRelease } from './twitter';
 
@@ -34,13 +35,11 @@ export const runReleaseWatcher = cronSchedule => {
               releases[project.name] = releases[project.name] || [];
               releases[project.name].push(newVersion);
             } catch (err) {
-              logger.error(
-                'New version:',
-                project.name,
-                newVersion,
-                'failed',
-                err
-              );
+              const message = `Release of a new version ${newVersion} of ${
+                project.name
+              } project failed`;
+              logger.error(message, err);
+              await sendAdminAlertMessage(message);
             }
           }
           await updateProjectVersions(project.repo, currentVersions);

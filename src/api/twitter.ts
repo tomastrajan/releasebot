@@ -10,7 +10,8 @@ const {
   TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_SECRET,
   TWITTER_TOKEN,
-  TWITTER_TOKEN_SECRET
+  TWITTER_TOKEN_SECRET,
+  TWITTER_ADMIN_USER_ID
 } = process.env;
 
 const place_id = '5a110d312052166f';
@@ -45,6 +46,9 @@ export const deleteTweet = id => post(`/statuses/destroy/${id}`);
 
 export const getMessages = async () =>
   (await get('/direct_messages/events/list') as any).events.map(messageTransformer);
+
+export const sendAdminAlertMessage = (message: string) =>
+  post('/direct_messages/events/new', buildMessage(TWITTER_ADMIN_USER_ID, message), true);
 
 export const sendMessage = (recipientId: string, message: string, mediaId?: string) =>
   post('/direct_messages/events/new', buildMessage(recipientId, message, mediaId), true);
