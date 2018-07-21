@@ -22,10 +22,19 @@ const { TWITTER_USER_ID } = process.env;
 const SCHEDULE = '* * * * *'; // once a minute as per rate limit
 
 let counterExec = 0;
+let counterSkippedExec = 0;
+let executionInProgress = false;
 
 export const runChatWatcher = () => {
   logger.info('Setup scheduler with schedule', SCHEDULE);
   scheduleJob(SCHEDULE, async () => {
+    if (executionInProgress) {
+      logger.warn(
+        `Chat execution #${++counterExec} skipped, skipped count: ${++counterSkippedExec}`
+      );
+      return;
+    }
+    executionInProgress = true;
     try {
       await initDb();
       const storedMessages = await findMessages();
@@ -70,6 +79,8 @@ export const runChatWatcher = () => {
       });
     } catch (err) {
       logger.error(err);
+    } finally {
+      executionInProgress = false;
     }
   });
 };
