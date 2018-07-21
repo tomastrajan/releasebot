@@ -19,7 +19,7 @@ import { getChangelogAsImage } from './changelog';
 const logger = getLogger('Chat Service');
 const loggerRemote = getLogger('remote');
 const { TWITTER_USER_ID } = process.env;
-const SCHEDULE = '* * * * *'; // once a minute as per rate limit
+const SCHEDULE = '*/2 * * * *'; // once every two minutes
 
 let counterExec = 0;
 let counterSkippedExec = 0;
@@ -36,6 +36,7 @@ export const runChatWatcher = () => {
     }
     executionInProgress = true;
     try {
+      logger.info(`Chat execution #${++counterExec} starts`);
       await initDb();
       const storedMessages = await findMessages();
       const storedMessagesIds = storedMessages.map(m => m.id);
@@ -43,12 +44,12 @@ export const runChatWatcher = () => {
       const newMessages = messages
         .filter(m => m.senderId !== TWITTER_USER_ID)
         .filter(m => !storedMessagesIds.includes(m.id));
-
       logger.info(
-        `Chat execution #${++counterExec} starts, found ${
+        `Chat execution #${counterExec}, found ${
           newMessages.length
         } new messages`
       );
+
       newMessages.forEach(async m => {
         try {
           const user = await getUser(m.senderId);
