@@ -59,8 +59,10 @@ export const getChangelogStyles = (selector, theme) => `
   }
   ${selector} li a, 
   ${selector} p a,
-  .release-header p a { 
-    color: ${theme.textLink};
+  .release-header a {
+    font-weight: bold;
+    color: ${theme.textTitle};
+    font-family: 'Roboto Slab', serif !important;
   }
   ${selector} .text-gray { 
     color: ${theme.textMuted} !important;

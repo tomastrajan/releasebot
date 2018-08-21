@@ -31,7 +31,7 @@ export const getChangelogAsImage = async (
     const url = isGithub
       ? getChangelogReleaseUrl(repo, version)
       : getChangelogFileUrl(repo);
-    const selector = isGithub ? '.release-body' : '.markdown-body';
+    const selector = isGithub ? '.release-main-section' : '.markdown-body';
     if (!browser || !browser.process()) {
       browser = await getBrowser();
       logger.debug('Browser created:', await browser.version());

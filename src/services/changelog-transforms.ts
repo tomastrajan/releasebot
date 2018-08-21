@@ -43,7 +43,7 @@ export const addProjectName = async (page, selector, type, name) =>
       const container = document.querySelector(selector);
       const versionNode =
         type === 'github'
-          ? container.querySelector('h1')
+          ? container.querySelector('.release-header a')
           : Array.from(container.childNodes).filter(n => isVersion(n))[0];
       const nameNode = document.createElement('span');
       nameNode.className = 'project-name';
