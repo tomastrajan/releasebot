@@ -57,12 +57,14 @@ export const getChangelogStyles = (selector, theme) => `
     color: ${theme.textTitle} !important;
     font-family: 'Roboto Slab', serif !important;
   }
-  ${selector} li a, 
-  ${selector} p a,
-  .release-header a {
+  ${selector} .release-header a {
     font-weight: bold;
     color: ${theme.textTitle};
     font-family: 'Roboto Slab', serif !important;
+  }
+  ${selector} li a, 
+  ${selector} p a {
+    color: ${theme.textTitle};
   }
   ${selector} .text-gray { 
     color: ${theme.textMuted} !important;
