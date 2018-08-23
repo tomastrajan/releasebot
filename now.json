@@ -8,6 +8,9 @@
       "max": 1
     }
   },
+  "features": {
+    "cloud": "v1"
+  },
   "env": {
     "DB_URL": "@db_url",
     "DB_USER": "@db_user",
