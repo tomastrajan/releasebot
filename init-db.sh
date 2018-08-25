@@ -12,7 +12,7 @@ ts-node . init "Prettier" "prettier/prettier" github prettier,codestyle,tooling
 ts-node . init "NPM" "npm/npm" github npm,node,packagemanager
 ts-node . init "nest" "nestjs/nest" github nest,nestjs,nodejs-framework,typescript
 ts-node . init "Next.js" "zeit/next.js" github nextjs,react,node,universal,ssr
-ts-node . init "Svetle" "sveltejs/svelte" changelog svetlejs,svetle,javascript,compiler
+ts-node . init "Svelte" "sveltejs/svelte" changelog sveltejs,svelte,javascript,compiler
 ts-node . init "Redux" "reactjs/redux" github redux,react,reactjs,flow
 ts-node . init "MobX" "mobxjs/mobx" changelog mobx,reactive,javascript,statemanagement
 ts-node . init "Material UI" "mui-org/material-ui" github materialdesign,react,reactjs,components,javascript
