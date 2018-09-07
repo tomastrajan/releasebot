@@ -27,3 +27,4 @@ ts-node . init "Rollup" "rollup/rollup" changelog rollup,bundler,es6,modules,jav
 ts-node . init "ng-packagr" "dherges/ng-packagr" changelog ngpackagr,angular,angular-library,typescript,library
 ts-node . init "Parcel.js" "parcel-bundler/parcel" changelog parcel,parceljs,zeroconfig,0config,bundler,javascript
 ts-node . init "Stencil.js" "ionic-team/stencil" changelog stencil,ionic,stenciljs,webcomponents,pwa
+ts-node . init "AngularFire" "angular/angularfire2" github angular,firebase,angularfire,database
