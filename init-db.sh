@@ -21,7 +21,7 @@ ts-node . init "Puppeteer" "GoogleChrome/puppeteer" github puppeteer,headlesschr
 ts-node . init "GraphQL.js" "graphql/graphql-js" github graphql,graphqljs,api,javascript
 ts-node . init "Bootstrap" "twbs/bootstrap" github bootstrap,css,scss,cssframework,responsive,design,components
 ts-node . init "Release Butler" "tomastrajan/releasebot" changelog bot,twitterbot,frontend,community,frameworks
-ts-node . init "ngx-model" "tomastrajan/ngx-model" changelog angular,statemanagement,model,reactive,immutable
+ts-node . init "Angular Model" "angular-extensions/model" changelog angular,statemanagement,model,reactive,immutable,rxjs
 ts-node . init "Angular Ngrx Material Starter" "tomastrajan/angular-ngrx-material-starter" changelog angular,ngrx,material,materialdesign,seed,starter
 ts-node . init "Rollup" "rollup/rollup" changelog rollup,bundler,es6,modules,javascript
 ts-node . init "ng-packagr" "dherges/ng-packagr" changelog ngpackagr,angular,angular-library,typescript,library
