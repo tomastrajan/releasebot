@@ -29,3 +29,4 @@ ts-node . init "Parcel.js" "parcel-bundler/parcel" changelog parcel,parceljs,zer
 ts-node . init "Stencil.js" "ionic-team/stencil" changelog stencil,ionic,stenciljs,webcomponents,pwa
 ts-node . init "AngularFire" "angular/angularfire2" github angular,firebase,angularfire,database
 ts-node . init "NgRx" "ngrx/platform" changelog ngrx,angular,rxjs,reactive,store,effects,devtools
+ts-node . init "xLayers" "xlayers/xlayers" changelog angular,design,developer,ui,ux,codegen,sketch,react,vuejs,litelement,stenciljs,webcomponents
