@@ -17,6 +17,7 @@
   "dependencies": {
     "@log4js-node/loggly": "^1.0.0",
     "@types/node": "^10.5.2",
+    "cors": "^2.8.5",
     "express": "^4.16.3",
     "figlet": "^1.2.0",
     "http-debug": "^0.1.2",
