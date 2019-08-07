@@ -30,3 +30,5 @@ ts-node . init "Stencil.js" "ionic-team/stencil" changelog stencil,ionic,stencil
 ts-node . init "AngularFire" "angular/angularfire2" github angular,firebase,angularfire,database
 ts-node . init "NgRx" "ngrx/platform" changelog ngrx,angular,rxjs,reactive,store,effects,devtools
 ts-node . init "xLayers" "xlayers/xlayers" changelog angular,design,developer,ui,ux,codegen,sketch,react,vuejs,litelement,stenciljs,webcomponents
+ts-node . init "nestjs-addons" "nestjs-addons/in-memory-db" github nest,nestjs,nodejs-framework,typescript
+ts-node . init "Angular Extensions Elements" "angular-extensions/elements" changelog angular,elements,webcomponents,stenciljs,litelement,lazyloading,microfrontends
