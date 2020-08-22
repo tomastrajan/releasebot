@@ -6,7 +6,7 @@
     "releasebutler": "src/app.ts"
   },
   "scripts": {
-    "start": "ts-node src/app.ts start \"*/25 * * * * *\"",
+    "start": "ts-node src/app.ts start \"*/25 * * * * *\" --debug",
     "dev": "nodemon -- start \"0 * * * * *\"",
     "dev:server": "nodemon -- start \"* * * 31 2 *\"",
     "debug": "env DEBUG=\"*\" nodemon -- start \"0 * * * * *\" --debug --inspect",
