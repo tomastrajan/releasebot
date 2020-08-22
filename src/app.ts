@@ -1,5 +1,5 @@
 #!/usr/bin/env ts-node
-import 'now-env';
+require('dotenv').config()
 import * as yargs from 'yargs';
 import * as yargonaut from 'yargonaut';
 import { textSync } from 'figlet';

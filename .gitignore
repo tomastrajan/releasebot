@@ -2,3 +2,4 @@ now-secrets.json
 node_modules/
 .idea/
 changelog_*.png
+.env
