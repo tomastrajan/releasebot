@@ -5,7 +5,7 @@ import { getLogger } from 'log4js';
 import { getChangelogImage } from '../handlers/changelog';
 
 const logger = getLogger('Server');
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const CORS_ALLOWED = [
   'https://releasebutler.now.sh',
   'https://releasebutler.stackblitz.io'
