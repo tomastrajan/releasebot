@@ -42,7 +42,7 @@
     "imagemin-pngquant": "^5.1.0",
     "nodemon": "^1.18.2",
     "prettier": "^1.12.1",
-    "standard-version": "^4.3.0"
+    "standard-version": "^8.0.1"
   },
   "description": "Release Butler - Releases of popular frontend libraries & frameworks",
   "author": "Tomas Trajan<tomas.trajan@gmail.com>",
