@@ -5,8 +5,8 @@ const { GITHUB_CHANGELOG_URL } = process.env;
 export const getChangelogReleaseUrl = (repo, version) =>
   `${GITHUB_CHANGELOG_URL}/${repo}/releases/tag/${version}`;
 
-export const getChangelogFileUrl = repo =>
-  `${GITHUB_CHANGELOG_URL}/${repo}/blob/master/CHANGELOG.md`;
+export const getChangelogFileUrl = (repo, path = '') =>
+  `${GITHUB_CHANGELOG_URL}/${repo}/blob/master${path ? `/${path}` : ''}/CHANGELOG.md`;
 
 export const getChangelogFileUrlHash = async (repo, version) => {
   const tags = await getRepoTags(repo);
