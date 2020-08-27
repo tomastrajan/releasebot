@@ -13,14 +13,13 @@ export const getChangelogImage = async (req, res) => {
   try {
     const {
       type,
-      path,
       repo,
       name,
       theme,
       version: sourceVersion,
       branding
     } = req.query;
-    const project = { type, name, repo, path };
+    const project = { type, name, repo };
     let version =
       sourceVersion === 'latest'
         ? await getLatestVersion(repo)
@@ -32,9 +31,9 @@ export const getChangelogImage = async (req, res) => {
       throw new Error(`Version not found for ${sourceVersion}`);
     }
 
-    logger.info('Download changelog -', repo, path, version, sourceVersion, type, theme, branding);
+    logger.info('Download changelog -', repo, version, sourceVersion, type, theme, branding);
     loggerRemote.info(
-      { repo, path, version, sourceVersion, type, theme, branding: branding ? 'yes' : 'no' },
+      { repo, version, sourceVersion, type, theme, branding: branding ? 'yes' : 'no' },
       { tags: ['RB-download', 'RB-stats'] }
     );
 

@@ -38,7 +38,6 @@ const $changelogFormName = document.querySelector('#changelog-name');
 const $changelogFormTheme = document.querySelector('#changelog-theme');
 const $changelogFormType = document.querySelector('#changelog-type');
 const $changelogFormRepo = document.querySelector('#changelog-repo');
-const $changelogFormPath = document.querySelector('#changelog-path');
 const $changelogFormVersion = document.querySelector('#changelog-version');
 const $changelogFormBranding = document.querySelector('#changelog-branding');
 const $changelogImage = document.querySelector('#changelog-image');
@@ -75,12 +74,11 @@ function downloadChangelog(event) {
   const name = $changelogFormName.value;
   const theme = $changelogFormTheme.value;
   const repo = $changelogFormRepo.value;
-  const path = $changelogFormPath.value;
   const version = $changelogFormVersion.value;
   const branding = $changelogFormBranding.checked;
   const filename = `changelog-${repo}-${version}.png`;
 
-  let params = `type=${type}&repo=${e(repo)}&path=${e(path||'')}&version=${e(
+  let params = `type=${type}&repo=${e(repo)}&version=${e(
     version
   )}&theme=${theme}`;
   if (name) {

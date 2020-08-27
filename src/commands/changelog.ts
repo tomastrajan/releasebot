@@ -22,22 +22,16 @@ export const builder = yargs => yargs
     describe: 'Theme of the changelog (eg: material)',
     type: 'string'
   })
-  .option('path', {
-    demandOption: false,
-    describe: 'Project Github repo nested path (for monorepos eg: libs/lib-name)',
-    default: '',
-    type: 'string'
-  })
   .option('branding', {
     demandOption: false,
     default: true,
     describe: 'Include Release Butler branding',
     type: 'boolean'
   });
-export const handler = async ({ repo, path, type, theme, release, branding }) => {
+export const handler = async ({ repo, type, theme, release, branding }) => {
   try {
-    logger.info('Retrieve changelog of a release', repo, path);
-    const project = { repo, type, path };
+    logger.info('Retrieve changelog of a release', repo);
+    const project = { repo, type };
     await getChangelogAsImage(project, release, theme, true, false, !branding);
     console.log('exit');
   } catch (err) {

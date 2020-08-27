@@ -25,12 +25,12 @@ export const getChangelogAsImage = async (
 ) => {
   let page;
   try {
-    const { type, name, repo, path } = project;
+    const { type, name, repo } = project;
     logger.debug('Get changelog as image for:', type, repo, version, theme, !omitBranding);
     const isGithub = type === 'github';
     const url = isGithub
       ? getChangelogReleaseUrl(repo, version)
-      : getChangelogFileUrl(repo, path);
+      : getChangelogFileUrl(repo);
     const selector = isGithub ? '.release-main-section' : '.markdown-body';
     if (!browser || !browser.process()) {
       browser = await getBrowser();
