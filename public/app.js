@@ -75,7 +75,7 @@ function downloadChangelog(event) {
   const name = $changelogFormName.value;
   const theme = $changelogFormTheme.value;
   const repo = $changelogFormRepo.value;
-  const path = $changelogFormRepo.path;
+  const path = $changelogFormPath.value;
   const version = $changelogFormVersion.value;
   const branding = $changelogFormBranding.checked;
   const filename = `changelog-${repo}-${version}.png`;
