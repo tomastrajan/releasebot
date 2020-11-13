@@ -81,7 +81,7 @@ const getScreenShot = async (page, selector, omitBackground, asFile) => {
       width: width + 80,
       height: asFile
         ? height + 110
-        : Math.min(height + 110, 7500)
+        : Math.min(height + 110, 4050) // Twitter limit ~8k (val * 2)
     }
   });
 };
