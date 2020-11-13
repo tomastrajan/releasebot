@@ -52,7 +52,7 @@ export const getChangelogAsImage = async (
       await addBranding(page, selector);
     }
     logger.debug('Get changelog as image start:', selector);
-    const screenShot = await getScreenShot(page, selector, omitBackground);
+    const screenShot = await getScreenShot(page, selector, omitBackground, asFile);
     logger.debug('Get changelog as image success:', type, repo, version);
     return asFile ? saveToFileAndExit(screenShot, repo) : screenShot;
   } catch (err) {
@@ -66,7 +66,7 @@ export const getChangelogAsImage = async (
   }
 };
 
-const getScreenShot = async (page, selector, omitBackground) => {
+const getScreenShot = async (page, selector, omitBackground, asFile) => {
   const { x, y, width, height } = await page.evaluate(selector => {
     const element = document.querySelector(selector);
     const { x, y, width, height } = element.getBoundingClientRect();
@@ -75,7 +75,14 @@ const getScreenShot = async (page, selector, omitBackground) => {
   return await page.screenshot({
     omitBackground,
     type: 'png',
-    clip: { x: x - 40, y: y - 40, width: width + 80, height: Math.min(height + 110, 7500) }
+    clip: {
+      x: x - 40,
+      y: y - 40,
+      width: width + 80,
+      height: asFile
+        ? height + 110
+        : Math.min(height + 110, 7500)
+    }
   });
 };
 
