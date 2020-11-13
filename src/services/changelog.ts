@@ -75,7 +75,7 @@ const getScreenShot = async (page, selector, omitBackground) => {
   return await page.screenshot({
     omitBackground,
     type: 'png',
-    clip: { x: x - 40, y: y - 40, width: width + 80, height: height + 110 }
+    clip: { x: x - 40, y: y - 40, width: width + 80, height: Math.min(height + 110, 7500) }
   });
 };
 
