@@ -25,8 +25,6 @@ const THEMES = [
 ];
 
 const $footerYear = document.querySelector('.footer .year');
-const $actionAddLibrary = document.querySelector('.action-add-library');
-const $signup = document.querySelector('.signup');
 const $twitterTimelinePlaceholder = document.querySelector(
   '.twitter-timeline-placeholder'
 );
@@ -59,11 +57,6 @@ $changelogFormTheme.value = getRandomItem(THEMES);
 let changelogBlobUrl;
 
 $footerYear.innerText = new Date().getFullYear();
-
-$actionAddLibrary.addEventListener(
-  'click',
-  () => ($signup.style.height = 'auto')
-);
 
 $changelogFormSubmit.addEventListener('click', downloadChangelog);
 
