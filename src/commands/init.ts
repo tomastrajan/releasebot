@@ -40,12 +40,14 @@ export const handler = async ({ name, repo, type, hashtags, skip }) => {
       logger.info('Skipping latest project version to trigger first release', skipped);
     }
     if (versions.length) {
+      logger.info('Init project data', name, repo, type, hashtags, ': ', versions.length, 'versions');
       await insertProject(name, repo, type, hashtags, versions);
     } else {
       logger.warn('No versions found');
     }
     logger.info('Project data initialized', name, versions.length, 'versions');
   } catch (err) {
+    console.error(err);
     logger.error('Project data initialization failed', err);
   }
   process.exit(0);
