@@ -27,7 +27,7 @@ export const handler = async ({ repo, removeLast }) => {
       await updateProjectVersions(repo, versions);
       logger.warn(`Removed version ${removedVersion} of a ${repo} repo from DB`);
     } else {
-      logger.info('Get latest versions of a projec', repo);
+      logger.info('Get latest versions of a project', repo);
       const versions = await getRepoVersions(repo);
       logger.info('Project versions', versions.length, versions.join(', '));
     }
