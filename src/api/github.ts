@@ -47,7 +47,7 @@ export const getRepoVersions = async repo =>
 
 export const getRepoTags = async repo => {
   try {
-    const tags = await request(`/repos/${repo}/tags?per_page=60`);
+    const tags = await request(`/repos/${repo}/tags?per_page=30`);
     if (!tags.length) {
       logger.warn(`No tags found for repository: ${repo}, does it exists?`);
       return [];
