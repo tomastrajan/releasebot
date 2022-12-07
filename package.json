@@ -21,7 +21,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "dotenv-defaults": "^2.0.1",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "figlet": "^1.2.0",
     "http-debug": "^0.1.2",
     "log4js": "^2.5.3",
